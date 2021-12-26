@@ -1,0 +1,8 @@
+[
+  { "name": "Blond beard", "occurs": 13, "percentage": 0.82 },
+  { "name": "Dark beard", "occurs": 20, "percentage": 1.26 },
+  { "name": "Brown beard", "occurs": 32, "percentage": 2.01 },
+  { "name": "Ginger beard", "occurs": 34, "percentage": 2.14 },
+  { "name": "Grey beard", "occurs": 64, "percentage": 4.02 },
+  { "name": "None", "occurs": 1428, "percentage": 89.75 }
+]

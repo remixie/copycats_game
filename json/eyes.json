@@ -1,0 +1,13 @@
+[
+  { "name": "VR glasses", "occurs": 10, "percentage": 0.63 },
+  { "name": "Laser eyes", "occurs": 15, "percentage": 0.94 },
+  { "name": "Solana shades", "occurs": 18, "percentage": 1.13 },
+  { "name": "Golden shades", "occurs": 19, "percentage": 1.19 },
+  { "name": "Raphael bandana", "occurs": 45, "percentage": 2.83 },
+  { "name": "3D glasses", "occurs": 47, "percentage": 2.95 },
+  { "name": "Heart glasses", "occurs": 47, "percentage": 2.95 },
+  { "name": "Zorro bandana", "occurs": 56, "percentage": 3.52 },
+  { "name": "Green shades", "occurs": 118, "percentage": 7.42 },
+  { "name": "Sunglasses", "occurs": 137, "percentage": 8.61 },
+  { "name": "None", "occurs": 1079, "percentage": 67.82 }
+]

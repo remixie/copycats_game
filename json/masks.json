@@ -1,0 +1,10 @@
+[
+  { "name": "Pennywise", "occurs": 2, "percentage": 0.13 },
+  { "name": "Lego", "occurs": 3, "percentage": 0.19 },
+  { "name": "Jason voorhees", "occurs": 6, "percentage": 0.38 },
+  { "name": "Pumpkin", "occurs": 7, "percentage": 0.44 },
+  { "name": "Red ninja", "occurs": 11, "percentage": 0.69 },
+  { "name": "Black ninja", "occurs": 19, "percentage": 1.19 },
+  { "name": "Indigo ninja", "occurs": 20, "percentage": 1.26 },
+  { "name": "None", "occurs": 1523, "percentage": 95.73 }
+]

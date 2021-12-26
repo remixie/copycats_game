@@ -1,0 +1,242 @@
+[
+  {
+    "name": "Neon Pink",
+    "occurs": 1,
+    "percentage": 0.06
+  },
+  {
+    "name": "Death star",
+    "occurs": 1,
+    "percentage": 0.06
+  },
+  {
+    "name": "Purple 2",
+    "occurs": 1,
+    "percentage": 0.06
+  },
+  {
+    "name": "Rave party",
+    "occurs": 3,
+    "percentage": 0.19
+  },
+  {
+    "name": "Space",
+    "occurs": 3,
+    "percentage": 0.19
+  },
+  {
+    "name": "Birthday party",
+    "occurs": 6,
+    "percentage": 0.38
+  },
+  {
+    "name": "Snow",
+    "occurs": 9,
+    "percentage": 0.57
+  },
+  {
+    "name": "Night sky",
+    "occurs": 9,
+    "percentage": 0.57
+  },
+  {
+    "name": "Egg shell",
+    "occurs": 88,
+    "percentage": 5.53
+  },
+  {
+    "name": "Blue",
+    "occurs": 89,
+    "percentage": 5.59
+  },
+  {
+    "name": "Indigo",
+    "occurs": 89,
+    "percentage": 5.59
+  },
+  {
+    "name": "Charcoal",
+    "occurs": 91,
+    "percentage": 5.72
+  },
+  {
+    "name": "Fur 2",
+    "occurs": 92,
+    "percentage": 5.78
+  },
+  {
+    "name": "Fur",
+    "occurs": 93,
+    "percentage": 5.85
+  },
+  {
+    "name": "Orange",
+    "occurs": 94,
+    "percentage": 5.91
+  },
+  {
+    "name": "Violet",
+    "occurs": 95,
+    "percentage": 5.97
+  },
+  {
+    "name": "Militar green",
+    "occurs": 95,
+    "percentage": 5.97
+  },
+  {
+    "name": "Fuschia",
+    "occurs": 96,
+    "percentage": 6.03
+  },
+  {
+    "name": "Charcoal 2",
+    "occurs": 97,
+    "percentage": 6.1
+  },
+  {
+    "name": "Purple",
+    "occurs": 98,
+    "percentage": 6.16
+  },
+  {
+    "name": "Yellow",
+    "occurs": 104,
+    "percentage": 6.54
+  },
+  {
+    "name": "Red",
+    "occurs": 109,
+    "percentage": 6.85
+  },
+  {
+    "name": "Egg shell 2",
+    "occurs": 110,
+    "percentage": 6.91
+  },
+  {
+    "name": "Evergreen",
+    "occurs": 118,
+    "percentage": 7.42
+  },
+  {
+    "name": "Neon Pink",
+    "occurs": 1,
+    "percentage": 0.06
+  },
+  {
+    "name": "Death star",
+    "occurs": 1,
+    "percentage": 0.06
+  },
+  {
+    "name": "Purple 2",
+    "occurs": 1,
+    "percentage": 0.06
+  },
+  {
+    "name": "Rave party",
+    "occurs": 3,
+    "percentage": 0.19
+  },
+  {
+    "name": "Space",
+    "occurs": 3,
+    "percentage": 0.19
+  },
+  {
+    "name": "Birthday party",
+    "occurs": 6,
+    "percentage": 0.38
+  },
+  {
+    "name": "Snow",
+    "occurs": 9,
+    "percentage": 0.57
+  },
+  {
+    "name": "Night sky",
+    "occurs": 9,
+    "percentage": 0.57
+  },
+  {
+    "name": "Egg shell",
+    "occurs": 88,
+    "percentage": 5.53
+  },
+  {
+    "name": "Blue",
+    "occurs": 89,
+    "percentage": 5.59
+  },
+  {
+    "name": "Indigo",
+    "occurs": 89,
+    "percentage": 5.59
+  },
+  {
+    "name": "Charcoal",
+    "occurs": 91,
+    "percentage": 5.72
+  },
+  {
+    "name": "Fur 2",
+    "occurs": 92,
+    "percentage": 5.78
+  },
+  {
+    "name": "Fur",
+    "occurs": 93,
+    "percentage": 5.85
+  },
+  {
+    "name": "Orange",
+    "occurs": 94,
+    "percentage": 5.91
+  },
+  {
+    "name": "Violet",
+    "occurs": 95,
+    "percentage": 5.97
+  },
+  {
+    "name": "Militar green",
+    "occurs": 95,
+    "percentage": 5.97
+  },
+  {
+    "name": "Fuschia",
+    "occurs": 96,
+    "percentage": 6.03
+  },
+  {
+    "name": "Charcoal 2",
+    "occurs": 97,
+    "percentage": 6.1
+  },
+  {
+    "name": "Purple",
+    "occurs": 98,
+    "percentage": 6.16
+  },
+  {
+    "name": "Yellow",
+    "occurs": 104,
+    "percentage": 6.54
+  },
+  {
+    "name": "Red",
+    "occurs": 109,
+    "percentage": 6.85
+  },
+  {
+    "name": "Egg shell 2",
+    "occurs": 110,
+    "percentage": 6.91
+  },
+  {
+    "name": "Evergreen",
+    "occurs": 118,
+    "percentage": 7.42
+  }
+]

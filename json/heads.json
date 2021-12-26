@@ -1,0 +1,242 @@
+[
+  {
+    "name": "Solana headphones",
+    "occurs": 1,
+    "percentage": 0.06
+  },
+  {
+    "name": "Deadmau5",
+    "occurs": "1",
+    "percentage": 0.06
+  },
+  {
+    "name": "Squid game triangle",
+    "occurs": "1",
+    "percentage": 0.06
+  },
+  {
+    "name": "Darth vader",
+    "occurs": "1",
+    "percentage": 0.06
+  },
+  {
+    "name": "Pikachu",
+    "occurs": "1",
+    "percentage": 0.06
+  },
+  {
+    "name": "Crown",
+    "occurs": "1",
+    "percentage": 0.06
+  },
+  {
+    "name": "Sock",
+    "occurs": "1",
+    "percentage": 0.06
+  },
+  {
+    "name": "Halo ring",
+    "occurs": "3",
+    "percentage": 0.19
+  },
+  {
+    "name": "Solana punk hair",
+    "occurs": "4",
+    "percentage": 0.25
+  },
+  {
+    "name": "Gold snob hat",
+    "occurs": 6,
+    "percentage": 0.38
+  },
+  {
+    "name": "Devil horns",
+    "occurs": 6,
+    "percentage": 0.38
+  },
+  {
+    "name": "Flower",
+    "occurs": 7,
+    "percentage": 0.44
+  },
+  {
+    "name": "Viking helmet",
+    "occurs": 8,
+    "percentage": 0.5
+  },
+  {
+    "name": "Gold headphones",
+    "occurs": 8,
+    "percentage": 0.5
+  },
+  {
+    "name": "Solana party hat",
+    "occurs": 9,
+    "percentage": 0.57
+  },
+  {
+    "name": "Silver snob hat",
+    "occurs": 10,
+    "percentage": 0.63
+  },
+  {
+    "name": "Reindeer horns",
+    "occurs": 11,
+    "percentage": 0.69
+  },
+  {
+    "name": "Penguin cap",
+    "occurs": 12,
+    "percentage": 0.75
+  },
+  {
+    "name": "Bunny ears",
+    "occurs": 16,
+    "percentage": 1.01
+  },
+  {
+    "name": "Bronze snob hat",
+    "occurs": 18,
+    "percentage": 1.13
+  },
+  {
+    "name": "Santa beanie",
+    "occurs": 20,
+    "percentage": 1.26
+  },
+  {
+    "name": "Croc cap",
+    "occurs": 21,
+    "percentage": 1.32
+  },
+  {
+    "name": "Bee cap",
+    "occurs": 24,
+    "percentage": 1.51
+  },
+  {
+    "name": "Pirate bandana",
+    "occurs": 27,
+    "percentage": 1.7
+  },
+  {
+    "name": "Karate kid bandana",
+    "occurs": 31,
+    "percentage": 1.95
+  },
+  {
+    "name": "Witch hat",
+    "occurs": 33,
+    "percentage": 2.07
+  },
+  {
+    "name": "Gangster bandana",
+    "occurs": 34,
+    "percentage": 2.14
+  },
+  {
+    "name": "Gnome beanie",
+    "occurs": 34,
+    "percentage": 2.14
+  },
+  {
+    "name": "Pirate hat",
+    "occurs": 35,
+    "percentage": 2.2
+  },
+  {
+    "name": "Indigo flipped cap",
+    "occurs": 35,
+    "percentage": 2.2
+  },
+  {
+    "name": "White headphones",
+    "occurs": 36,
+    "percentage": 2.26
+  },
+  {
+    "name": "Cowboy hat",
+    "occurs": 39,
+    "percentage": 2.45
+  },
+  {
+    "name": "Indigo snob hat",
+    "occurs": 39,
+    "percentage": 2.45
+  },
+  {
+    "name": "Green beret",
+    "occurs": 39,
+    "percentage": 2.45
+  },
+  {
+    "name": "Police hat",
+    "occurs": 40,
+    "percentage": 2.51
+  },
+  {
+    "name": "Sailor hat",
+    "occurs": 41,
+    "percentage": 2.58
+  },
+  {
+    "name": "Black flipped cap",
+    "occurs": 42,
+    "percentage": 2.64
+  },
+  {
+    "name": "Red flipped cap",
+    "occurs": 43,
+    "percentage": 2.7
+  },
+  {
+    "name": "Sombrero",
+    "occurs": 45,
+    "percentage": 2.83
+  },
+  {
+    "name": "Black cap",
+    "occurs": 46,
+    "percentage": 2.89
+  },
+  {
+    "name": "Red cap",
+    "occurs": 47,
+    "percentage": 2.95
+  },
+  {
+    "name": "Black snob hat",
+    "occurs": 47,
+    "percentage": 2.95
+  },
+  {
+    "name": "Indigo cap",
+    "occurs": 52,
+    "percentage": 3.27
+  },
+  {
+    "name": "Yellow flipped cap",
+    "occurs": 57,
+    "percentage": 3.58
+  },
+  {
+    "name": "Yellow cap",
+    "occurs": 58,
+    "percentage": 3.65
+  },
+  {
+    "name": "Green flipped cap",
+    "occurs": 60,
+    "percentage": 3.77
+  },
+  {
+    "name": "Green cap",
+    "occurs": 61,
+    "percentage": 3.83
+  },
+  {
+    "name": "None",
+    "occurs": 380,
+    "percentage": 23.88
+  }
+]

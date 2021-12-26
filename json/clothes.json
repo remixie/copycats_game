@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Solana collar",
+    "occurs": 16,
+    "percentage": 1.01
+  },
+  {
+    "name": "Bow tie",
+    "occurs": 18,
+    "percentage": 1.13
+  },
+  {
+    "name": "Pirate vest",
+    "occurs": 21,
+    "percentage": 1.32
+  },
+  {
+    "name": "Roman armor",
+    "occurs": 30,
+    "percentage": 1.89
+  },
+  {
+    "name": "Poncho",
+    "occurs": 35,
+    "percentage": 2.2
+  },
+  {
+    "name": "Gold collar",
+    "occurs": 35,
+    "percentage": 2.2
+  },
+  {
+    "name": "Police vest",
+    "occurs": 38,
+    "percentage": 2.39
+  },
+  {
+    "name": "Sailor vest",
+    "occurs": 42,
+    "percentage": 2.64
+  },
+  {
+    "name": "Militar jacket",
+    "occurs": 44,
+    "percentage": 2.77
+  },
+  {
+    "name": "Red kimono",
+    "occurs": 50,
+    "percentage": 3.14
+  },
+  {
+    "name": "Evergreen bomber jacket",
+    "occurs": 54,
+    "percentage": 3.39
+  },
+  {
+    "name": "Purple bomber jacket",
+    "occurs": 55,
+    "percentage": 3.46
+  },
+  {
+    "name": "Indigo bomber jacket",
+    "occurs": 57,
+    "percentage": 3.58
+  },
+  {
+    "name": "Jeans jacket",
+    "occurs": 59,
+    "percentage": 3.71
+  },
+  {
+    "name": "Indigo kimono",
+    "occurs": 61,
+    "percentage": 3.83
+  },
+  {
+    "name": "Leather jacket",
+    "occurs": 61,
+    "percentage": 3.83
+  },
+  {
+    "name": "Orange bomber jacket",
+    "occurs": 63,
+    "percentage": 3.96
+  },
+  {
+    "name": "Fuschia bomber jacket",
+    "occurs": 64,
+    "percentage": 4.02
+  },
+  {
+    "name": "Black kimono",
+    "occurs": 65,
+    "percentage": 4.09
+  },
+  {
+    "name": "Yellow bomber jacket",
+    "occurs": 68,
+    "percentage": 4.27
+  },
+  {
+    "name": "Red collar",
+    "occurs": 74,
+    "percentage": 4.65
+  },
+  {
+    "name": "Black collar",
+    "occurs": 75,
+    "percentage": 4.71
+  },
+  {
+    "name": "Evergreen collar",
+    "occurs": 75,
+    "percentage": 4.71
+  },
+  {
+    "name": "Red bomber jacket",
+    "occurs": 75,
+    "percentage": 4.71
+  },
+  {
+    "name": "Robe",
+    "occurs": 79,
+    "percentage": 4.97
+  },
+  {
+    "name": "Yellow collar",
+    "occurs": 79,
+    "percentage": 4.97
+  },
+  {
+    "name": "Indigo collar",
+    "occurs": 81,
+    "percentage": 5.09
+  },
+  {
+    "name": "None",
+    "occurs": 117,
+    "percentage": 7.35
+  }
+]
