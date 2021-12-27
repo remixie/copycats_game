@@ -24,6 +24,8 @@
         <br />
         Type:
         {{ selected_cat.attributes[1].value }}
+        <br />
+        <button @click="changeCat">Choose a different Cat</button>
       </div>
     </div>
     <p v-else>
@@ -34,6 +36,7 @@
 
 <script>
 import rarities from "@/assets/json/rarity.json";
+import imagemap from "@/assets/json/img_map.json";
 import { Connection } from "@solana/web3.js";
 import axios from "axios";
 import {
@@ -51,9 +54,12 @@ export default {
     msg: String,
   },
   methods: {
+    changeCat() {
+      this.selected_cat = [];
+    },
     select(cat_obj) {
-      console.log(cat_obj);
-      console.log(cat_obj.name.split("#")[1]);
+      //console.log(cat_obj);
+      //console.log(cat_obj.name.split("#")[1]);
 
       let rarity = rarities.filter(
         (item) => item.id == cat_obj.name.split("#")[1]
@@ -81,23 +87,33 @@ export default {
         let copycat_nfts = nfts.filter(
           (cat) =>
             cat.updateAuthority ===
-            "9mmdJRBi9zU5t4n633TzMEGyXnRjNEEyogV98uCNH7GD"
+            "9mmdJRBi9zU5t4n633TzMEGyXnRjNEEyogV98uCNH7GD" //address of the copycats project
         );
         let arr = [];
         let n = copycat_nfts.length;
+
         for (let i = 0; i < n; i++) {
           //console.log(copycat_nfts[i].data.uri);
           let val = await axios.get(copycat_nfts[i].data.uri);
+
+          //console.log(val.data);
+
+          //console.log(val.name.split("#")[1]);
           arr.push({
             mint: copycat_nfts[i].mint,
-            image: val.data.image,
+            image:
+              "/24px_files/" +
+              imagemap
+                .filter((obj) => obj.id == val.data.name.split("#")[1])[0]
+                .img.toString() +
+              ".png",
             attributes: val.data.attributes,
             name: val.data.name,
           });
         }
         this.copycats_metadata = arr;
 
-        console.log(arr);
+        //console.log(arr);
 
         //this.copycats_metadata = copycat_nfts;
       } catch (err) {
@@ -119,9 +135,9 @@ h1 {
 }
 img {
   cursor: pointer;
-  width: 100px;
-  height: 100px;
-  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
 }
 h3 {
   margin: 40px 0 0;
