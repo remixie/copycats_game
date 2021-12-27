@@ -16,15 +16,15 @@
               :key="cc.mint"
               @click="select(cc)"
             >
-              <CopyCatImage :img="cc.image" />
+              <CopyCatImage :img="cc.image" :spacing="0" :w="3" :h="3" />
               <!--<img :src="cc.image" />-->
             </td>
           </tr>
         </table>
       </div>
-      <div v-else>
+      <div v-else-if="!playing">
         <h2>You selected {{ selected_cat.name.replace("CopyCats ", "") }}</h2>
-        <CopyCatImage :img="selected_cat.img" />
+        <CopyCatImage :img="selected_cat.img" :spacing="0" :w="5" :h="5" />
         <br />
         Rarity Rank:
         {{ selected_cat.rank }}
@@ -32,7 +32,10 @@
         Type: {{}}
         <br />
         <button @click="changeCat">Choose a different Cat</button>
+        <br />
+        <button @click="play">Play!</button>
       </div>
+      <Play :img="selected_cat.img" v-if="playing" />
     </div>
     <p v-else>
       <button @click="connectToWallet()">Connect</button>
@@ -45,6 +48,7 @@ import rarities from "@/assets/json/rarity.json";
 import imagemap from "@/assets/json/img_map.json";
 import { Connection } from "@solana/web3.js";
 import CopyCatImage from "./CopyCatImage.vue";
+import Play from "./Play.vue";
 import {
   getParsedNftAccountsByOwner,
   //isValidSolanaAddress,
@@ -52,17 +56,27 @@ import {
 const connection = new Connection("https://api.mainnet-beta.solana.com");
 
 export default {
-  name: "HelloWorld",
+  name: "Base",
   components: {
     CopyCatImage,
+    Play,
   },
   data: () => {
-    return { account: "", error: [], copycats_metadata: [], selected_cat: [] };
+    return {
+      account: "",
+      error: [],
+      copycats_metadata: [],
+      selected_cat: [],
+      playing: false,
+    };
   },
   props: {
     msg: String,
   },
   methods: {
+    play() {
+      this.playing = true;
+    },
     changeCat() {
       this.selected_cat = [];
     },
@@ -135,12 +149,6 @@ h1 {
   margin: 0;
   padding-top: 10px;
 }
-img {
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  border-radius: 100%;
-}
 h3 {
   margin: 40px 0 0;
 }
@@ -154,5 +162,8 @@ li {
 }
 a {
   color: #42b983;
+}
+table {
+  margin: 0 auto;
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
-  <HelloWorld msg="CopyCats Game" />
+  <Base msg="CopyCats Game" />
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Base from "./components/Base.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Base,
   },
 };
 </script>
@@ -17,7 +17,7 @@ export default {
 html,
 body {
   margin: 0;
-  background-color: #222;
+  background-color: #666;
   color: white;
   height: 100%;
 }
