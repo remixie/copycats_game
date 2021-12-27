@@ -19,11 +19,16 @@
       </div>
       <div v-else>
         <h2>You selected {{ selected_cat.name.replace("CopyCats ", "") }}</h2>
+        <CopyCatImage
+          :img="
+            selected_cat.img.replace('.png', '').replace('/24px_files/', '')
+          "
+        />
+        <br />
         Rarity Rank:
         {{ selected_cat.rank }}
         <br />
-        Type:
-        {{ selected_cat.attributes[1].value }}
+        Type: {{}}
         <br />
         <button @click="changeCat">Choose a different Cat</button>
       </div>
@@ -38,7 +43,8 @@
 import rarities from "@/assets/json/rarity.json";
 import imagemap from "@/assets/json/img_map.json";
 import { Connection } from "@solana/web3.js";
-import axios from "axios";
+import CopyCatImage from "./CopyCatImage.vue";
+//import axios from "axios";
 import {
   getParsedNftAccountsByOwner,
   //isValidSolanaAddress,
@@ -47,6 +53,9 @@ const connection = new Connection("https://api.mainnet-beta.solana.com");
 
 export default {
   name: "HelloWorld",
+  components: {
+    CopyCatImage,
+  },
   data: () => {
     return { account: "", error: [], copycats_metadata: [], selected_cat: [] };
   },
@@ -58,9 +67,6 @@ export default {
       this.selected_cat = [];
     },
     select(cat_obj) {
-      //console.log(cat_obj);
-      //console.log(cat_obj.name.split("#")[1]);
-
       let rarity = rarities.filter(
         (item) => item.id == cat_obj.name.split("#")[1]
       );
@@ -70,6 +76,7 @@ export default {
         attributes: cat_obj.attributes,
         name: cat_obj.name,
         rank: rarity[0].rank,
+        img: cat_obj.image,
       };
     },
     async connectToWallet() {
@@ -92,9 +99,12 @@ export default {
         let arr = [];
         let n = copycat_nfts.length;
 
+        //console.log(copycat_nfts);
+
         for (let i = 0; i < n; i++) {
           //console.log(copycat_nfts[i].data.uri);
-          let val = await axios.get(copycat_nfts[i].data.uri);
+
+          //let val = await axios.get(copycat_nfts[i].data.uri);
 
           //console.log(val.data);
 
@@ -104,17 +114,18 @@ export default {
             image:
               "/24px_files/" +
               imagemap
-                .filter((obj) => obj.id == val.data.name.split("#")[1])[0]
+                .filter(
+                  (obj) => obj.id == copycat_nfts[i].data.name.split("#")[1]
+                )[0]
                 .img.toString() +
               ".png",
-            attributes: val.data.attributes,
-            name: val.data.name,
+            attributes: [], //val.data.attributes,
+            name: copycat_nfts[i].data.name,
           });
         }
         this.copycats_metadata = arr;
 
         //console.log(arr);
-
         //this.copycats_metadata = copycat_nfts;
       } catch (err) {
         this.error = { code: 4001, message: "User rejected the request." };
