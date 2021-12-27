@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table cellspacing="1">
+    <table cellspacing="0">
       <tr v-for="d in dimensions" :key="d">
         <td
           v-for="i in dimensions"
@@ -41,8 +41,8 @@ table {
   margin: 0 auto;
 }
 td {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
   padding: 0;
 }
 </style>

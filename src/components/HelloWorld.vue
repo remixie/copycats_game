@@ -4,7 +4,11 @@
     <div v-if="account != ''">
       <p>Your Address: {{ account }}</p>
       <div v-if="selected_cat.length == 0" class="cat-selector">
-        Select a CopyCat:
+        {{
+          copycats_metadata.length &lt; 1
+            ? "Loading..."
+            : "Select a CopyCat:"
+        }}
         <table>
           <tr>
             <td
@@ -12,18 +16,15 @@
               :key="cc.mint"
               @click="select(cc)"
             >
-              <img :src="cc.image" />
+              <CopyCatImage :img="cc.image" />
+              <!--<img :src="cc.image" />-->
             </td>
           </tr>
         </table>
       </div>
       <div v-else>
         <h2>You selected {{ selected_cat.name.replace("CopyCats ", "") }}</h2>
-        <CopyCatImage
-          :img="
-            selected_cat.img.replace('.png', '').replace('/24px_files/', '')
-          "
-        />
+        <CopyCatImage :img="selected_cat.img" />
         <br />
         Rarity Rank:
         {{ selected_cat.rank }}
@@ -44,7 +45,6 @@ import rarities from "@/assets/json/rarity.json";
 import imagemap from "@/assets/json/img_map.json";
 import { Connection } from "@solana/web3.js";
 import CopyCatImage from "./CopyCatImage.vue";
-//import axios from "axios";
 import {
   getParsedNftAccountsByOwner,
   //isValidSolanaAddress,
@@ -99,32 +99,23 @@ export default {
         let arr = [];
         let n = copycat_nfts.length;
 
-        //console.log(copycat_nfts);
-
-        for (let i = 0; i < n; i++) {
-          //console.log(copycat_nfts[i].data.uri);
-
-          //let val = await axios.get(copycat_nfts[i].data.uri);
-
-          //console.log(val.data);
-
-          //console.log(val.name.split("#")[1]);
-          arr.push({
-            mint: copycat_nfts[i].mint,
-            image:
-              "/24px_files/" +
-              imagemap
+        if (n < 1) {
+          this.copycats_metadata = [];
+        } else {
+          for (let i = 0; i < n; i++) {
+            arr.push({
+              mint: copycat_nfts[i].mint,
+              image: imagemap
                 .filter(
                   (obj) => obj.id == copycat_nfts[i].data.name.split("#")[1]
                 )[0]
-                .img.toString() +
-              ".png",
-            attributes: [], //val.data.attributes,
-            name: copycat_nfts[i].data.name,
-          });
+                .img.toString(),
+              attributes: [], //val.data.attributes,
+              name: copycat_nfts[i].data.name,
+            });
+          }
+          this.copycats_metadata = arr;
         }
-        this.copycats_metadata = arr;
-
         //console.log(arr);
         //this.copycats_metadata = copycat_nfts;
       } catch (err) {
