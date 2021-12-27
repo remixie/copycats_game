@@ -70,27 +70,19 @@ export default {
       try {
         const resp = await window.solana.connect();
         this.account = resp.publicKey.toString();
-        //console.log(resp);
 
         let ownerToken = this.account;
-        //const result = isValidSolanaAddress(ownerToken);
-        //console.log("result", result);
         const nfts = await getParsedNftAccountsByOwner({
           publicAddress: ownerToken,
           connection,
           serialization: true,
         });
-        //return nfts;
-        //console.log(nfts);
 
         let copycat_nfts = nfts.filter(
           (cat) =>
             cat.updateAuthority ===
             "9mmdJRBi9zU5t4n633TzMEGyXnRjNEEyogV98uCNH7GD"
         );
-
-        //console.log(copycat_nfts);
-
         let arr = [];
         let n = copycat_nfts.length;
         for (let i = 0; i < n; i++) {
@@ -104,6 +96,8 @@ export default {
           });
         }
         this.copycats_metadata = arr;
+
+        console.log(arr);
 
         //this.copycats_metadata = copycat_nfts;
       } catch (err) {
