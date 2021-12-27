@@ -19,7 +19,10 @@
       </div>
       <div v-else>
         <h2>You selected {{ selected_cat.name.replace("CopyCats ", "") }}</h2>
-        Rarity: Type:
+        Rarity Rank:
+        {{ selected_cat.rank }}
+        <br />
+        Type:
         {{ selected_cat.attributes[1].value }}
       </div>
     </div>
@@ -30,6 +33,7 @@
 </template>
 
 <script>
+import rarities from "@/assets/json/rarity.json";
 import { Connection } from "@solana/web3.js";
 import axios from "axios";
 import {
@@ -49,10 +53,17 @@ export default {
   methods: {
     select(cat_obj) {
       console.log(cat_obj);
+      console.log(cat_obj.name.split("#")[1]);
+
+      let rarity = rarities.filter(
+        (item) => item.id == cat_obj.name.split("#")[1]
+      );
+
       this.selected_cat = {
         mint: cat_obj.mint,
         attributes: cat_obj.attributes,
         name: cat_obj.name,
+        rank: rarity[0].rank,
       };
     },
     async connectToWallet() {
