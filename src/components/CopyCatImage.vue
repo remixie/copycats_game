@@ -14,7 +14,7 @@
             opacity: opacity[(d - 1) * dimensions + i - 1],
           }"
         >
-          {{ (d - 1) * dimensions + i - 1 }}
+          <!--{{ (d - 1) * dimensions + i - 1 }}-->
         </td>
       </tr>
     </table>
@@ -26,12 +26,13 @@ export default {
   name: "CopyCatImage",
   async mounted() {
     this.pixel_data = await img_data.filter((item) => item.img == this.img);
-    this.opacity = new Array(this.pixel_data[0].data.length).fill(1);
-    this.background_color = this.pixel_data[0].data[0];
+    this.pixel_data = this.pixel_data[0].data;
+    this.opacity = new Array(this.pixel_data.length).fill(1);
+    this.background_color = this.pixel_data[0];
 
-    this.num_of_game_pixels = this.pixel_data[0].data.filter((item, index) =>
-      this.isThisAnEdgePixel(this.pixel_data[0].data, index)
-    );
+    this.num_of_game_pixels = this.pixel_data.filter((item, index) =>
+      this.isThisAnEdgePixel(index)
+    ).length;
   },
   props: {
     img: String,
@@ -42,17 +43,17 @@ export default {
   },
   computed: {},
   methods: {
-    isThisAnEdgePixel(arr, index) {
+    isThisAnEdgePixel(index) {
       let neighbors = this.getNeighborIndexes(index);
       for (let i = 0; i < neighbors.length; i++) {
         if (
           //if any neighbors is not the background color, this might be an edge pixel
-          arr[neighbors[i]][0] != this.background_color[0] &&
-          arr[neighbors[i]][1] != this.background_color[1] &&
-          arr[neighbors[i]][2] != this.background_color[2] &&
-          arr[index][0] == this.background_color[0] && //this edge pixel has to be a background color pixel
-          arr[index][1] == this.background_color[1] &&
-          arr[index][2] == this.background_color[2]
+          this.pixel_data[neighbors[i]][0] !== this.background_color[0] &&
+          this.pixel_data[neighbors[i]][1] !== this.background_color[1] &&
+          this.pixel_data[neighbors[i]][2] !== this.background_color[2] &&
+          this.pixel_data[index][0] === this.background_color[0] && //this edge pixel has to be a background color pixel
+          this.pixel_data[index][1] === this.background_color[1] &&
+          this.pixel_data[index][2] === this.background_color[2]
         ) {
           return true;
         }
@@ -82,26 +83,31 @@ export default {
       return arr;
     },
     exactPixel(index) {
-      if (this.pixel_data[0] != null) {
-        return this.pixel_data[0].data[index].toString();
+      if (this.pixel_data[index] != null) {
+        return this.pixel_data[index].toString();
       }
       return "0,0,0";
     },
     popPixel(index) {
       if (this.interactive) {
         if (
-          this.opacity[index] != 0 &&
-          this.pixel_data[0].data[index][0] != this.background_color[0] &&
-          this.pixel_data[0].data[index][1] != this.background_color[1] &&
-          this.pixel_data[0].data[index][2] != this.background_color[2]
+          this.opacity[index] == 1 &&
+          this.pixel_data[index][0] == this.background_color[0] &&
+          this.pixel_data[index][1] == this.background_color[1] &&
+          this.pixel_data[index][2] == this.background_color[2]
         ) {
-          alert("game over!");
-        } else {
+          if (this.isThisAnEdgePixel(index)) {
+            this.num_of_game_pixels -= 1;
+          }
+          this.opacity[index] = 0;
+          if (this.num_of_game_pixels == 0) {
+            alert("You Win!");
+          }
+        } else if (this.opacity[index] == 1) {
           //console.log(this.getNeighborIndexes(index));
-          console.log(this.isThisAnEdgePixel(this.pixel_data[0].data, index));
+          alert("game over!");
 
           //this.pixel_data[0].data[index] = [0, 0, 0];
-          this.opacity[index] = 0;
         }
       }
     },
@@ -110,7 +116,7 @@ export default {
     return {
       dimensions: 24,
       pixel_data: [],
-      num_of_game_pixels: 0,
+      num_of_game_pixels: 576,
       opacity: [],
       background_color: [],
     };
@@ -120,6 +126,7 @@ export default {
 <style scoped>
 table {
   margin: 0 auto;
+  border: 2px solid white;
 }
 td {
   padding: 0;
@@ -127,7 +134,7 @@ td {
   cursor: pointer;
 }
 td:hover {
-  border: 2px solid white;
+  border: 2px solid black;
   filter: invert(100%);
 }
 </style>

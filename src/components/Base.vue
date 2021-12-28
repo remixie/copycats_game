@@ -1,14 +1,17 @@
 <template>
   <div class="gameplay_area">
     <h1>{{ msg }}</h1>
+    <h4>{{ subheading }}</h4>
     <div v-if="account != ''">
-      <p>Your Address: {{ account }}</p>
-      <div v-if="selected_cat.length == 0" class="cat-selector">
-        {{
+      <!--<p>Your Address: {{ account }}</p>-->
+      <div v-if="selected_cat.length == 0" class="selector">
+        <h2>
+          {{
           copycats_metadata.length &lt; 1
             ? "Loading..."
             : "Select a CopyCat:"
-        }}
+          }}
+        </h2>
         <table>
           <tr>
             <td
@@ -24,6 +27,10 @@
       </div>
       <div v-else-if="!playing">
         <h2>You selected {{ selected_cat.name.replace("CopyCats ", "") }}</h2>
+        <br />
+        <button @click="changeCat">Choose a different Cat</button>
+        <br />
+        <br />
         <CopyCatImage
           :img="selected_cat.img"
           :spacing="0"
@@ -36,8 +43,6 @@
         {{ selected_cat.rank }}
         <br />
         Type: {{}}
-        <br />
-        <button @click="changeCat">Choose a different Cat</button>
       </div>
       <Play :img="selected_cat.img" v-if="playing" />
     </div>
@@ -76,6 +81,7 @@ export default {
   },
   props: {
     msg: String,
+    subheading: String,
   },
   methods: {
     play() {
@@ -146,15 +152,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.cat-selector {
-  margin: 3rem;
-}
 h1 {
+  font-size: 50px;
   margin: 0;
   padding-top: 10px;
 }
-h3 {
-  margin: 40px 0 0;
+h4 {
+  margin: 0;
+}
+button {
+  padding: 5px;
+  cursor: pointer;
+}
+.selector {
+  margin-top: 20px;
 }
 ul {
   list-style-type: none;

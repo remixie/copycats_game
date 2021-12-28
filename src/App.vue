@@ -1,5 +1,5 @@
 <template>
-  <Base msg="CopyCats Game" />
+  <Base msg="Cut-A-Cat" subheading="by the CopyCats Team" />
 </template>
 
 <script>
