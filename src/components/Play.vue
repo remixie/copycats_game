@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CopyCatImage :img="img" :spacing="0" :w="14" :h="14" :interactive="true" />
+    <CopyCatImage :img="img" :spacing="0" :w="20" :h="20" :interactive="true" />
   </div>
 </template>
 <script>

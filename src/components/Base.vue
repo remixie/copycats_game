@@ -16,7 +16,7 @@
               :key="cc.mint"
               @click="select(cc)"
             >
-              <CopyCatImage :img="cc.image" :spacing="0" :w="3" :h="3" />
+              <CopyCatImage :img="cc.image" :spacing="0" :w="2" :h="2" />
               <!--<img :src="cc.image" />-->
             </td>
           </tr>
@@ -24,7 +24,13 @@
       </div>
       <div v-else-if="!playing">
         <h2>You selected {{ selected_cat.name.replace("CopyCats ", "") }}</h2>
-        <CopyCatImage :img="selected_cat.img" :spacing="0" :w="5" :h="5" />
+        <CopyCatImage
+          :img="selected_cat.img"
+          :spacing="0"
+          :w="5"
+          :h="5"
+          @click="play"
+        />
         <br />
         Rarity Rank:
         {{ selected_cat.rank }}
@@ -32,8 +38,6 @@
         Type: {{}}
         <br />
         <button @click="changeCat">Choose a different Cat</button>
-        <br />
-        <button @click="play">Play!</button>
       </div>
       <Play :img="selected_cat.img" v-if="playing" />
     </div>
