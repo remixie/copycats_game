@@ -1,23 +1,23 @@
 <template>
-  <div>
-    <table :cellspacing="spacing">
-      <tr v-for="d in dimensions" :key="d">
-        <td
-          @click="popPixel((d - 1) * dimensions + i - 1)"
-          :width="w + 'px'"
-          :height="h + 'px'"
-          v-for="i in dimensions"
-          :key="i"
-          :style="{
-            backgroundColor:
-              'rgb(' + exactPixel((d - 1) * dimensions + i - 1) + ')',
-            opacity: opacity[(d - 1) * dimensions + i - 1],
-          }"
-        >
-          <!--{{ (d - 1) * dimensions + i - 1 }}-->
-        </td>
-      </tr>
-    </table>
+  <div class="border-white border-2">
+    <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
+      <div
+        @click="popPixel(getMyIndex(d, i, dimensions))"
+        v-for="i in dimensions"
+        :key="i"
+        @mouseenter="hover[getMyIndex(d, i, dimensions)] = true"
+        @mouseleave="hover[getMyIndex(d, i, dimensions)] = false"
+        :style="{
+          backgroundColor:
+            'rgb(' + exactPixel(getMyIndex(d, i, dimensions)) + ')',
+          'hover:backgroundColor': 'red',
+          opacity: opacity[getMyIndex(d, i, dimensions)],
+          height: h,
+          width: w,
+        }"
+        :class="[{ pixel: hover[getMyIndex(d, i, dimensions)] }]"
+      ></div>
+    </div>
   </div>
 </template>
 <script>
@@ -38,11 +38,13 @@ export default {
     img: String,
     spacing: Number,
     interactive: Boolean,
-    h: Number,
-    w: Number,
+    h: String,
+    w: String,
   },
-  computed: {},
   methods: {
+    getMyIndex(d, i, dimensions) {
+      return (d - 1) * dimensions + i - 1;
+    },
     isThisAnEdgePixel(index) {
       let neighbors = this.getNeighborIndexes(index);
       for (let i = 0; i < neighbors.length; i++) {
@@ -104,16 +106,14 @@ export default {
             alert("You Win!");
           }
         } else if (this.opacity[index] == 1) {
-          //console.log(this.getNeighborIndexes(index));
           alert("game over!");
-
-          //this.pixel_data[0].data[index] = [0, 0, 0];
         }
       }
     },
   },
   data: () => {
     return {
+      hover: [],
       dimensions: 24,
       pixel_data: [],
       num_of_game_pixels: 576,
@@ -124,16 +124,7 @@ export default {
 };
 </script>
 <style scoped>
-table {
-  margin: 0 auto;
-  border: 2px solid white;
-}
-td {
-  padding: 0;
-  border: 2px solid transparent;
-  cursor: pointer;
-}
-td:hover {
+.pixel {
   border: 2px solid black;
   filter: invert(100%);
 }
