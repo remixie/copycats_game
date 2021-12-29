@@ -11,7 +11,7 @@
       <span class="" v-for="cc in my_cats" :key="cc.mint">
         <copy-cat-image
           class="mt-5"
-          style="width: 96px"
+          :style="{ width: '96px' }"
           @click="selectCat(cc)"
           :img="cc.image"
           :spacing="0"

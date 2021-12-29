@@ -2,10 +2,15 @@
   <div class="border-white border-2">
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
       <div
-        @click="popPixel(getMyIndex(d, i, dimensions))"
+        @mousedown="popPixel(getMyIndex(d, i, dimensions))"
         v-for="i in dimensions"
         :key="i"
-        @mouseenter="hover[getMyIndex(d, i, dimensions)] = true"
+        @mouseenter="
+          [
+            (hover[getMyIndex(d, i, dimensions)] = true),
+            isGlide($event, d, i, dimensions),
+          ]
+        "
         @mouseleave="hover[getMyIndex(d, i, dimensions)] = false"
         :style="{
           backgroundColor:
@@ -68,6 +73,23 @@ export default {
         }
       }
       return false;
+    },
+    isGlide(event, d, i, dimensions) {
+      if (this.detectLeftButton(event)) {
+        console.log("left click must be down");
+        this.popPixel(this.getMyIndex(d, i, dimensions));
+      }
+    },
+    detectLeftButton(event) {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
+        return false;
+      } else if ("buttons" in event) {
+        return event.buttons === 1;
+      } else if ("which" in event) {
+        return event.which === 1;
+      } else {
+        return event.button == 1 || event.type == "click";
+      }
     },
     getNeighborIndexes(index) {
       let arr = [
