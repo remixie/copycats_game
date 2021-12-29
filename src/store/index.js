@@ -6,7 +6,8 @@ export default createStore({
     connection: [],
     cat_list: [],
     current_cat: [],
-    playing: false
+    playing: false,
+    current_score: 0
   },
   getters: {
     getWallet(state) {
@@ -23,6 +24,9 @@ export default createStore({
     },
     isPlaying(state) {
       return state.playing
+    },
+    currentScore(state) {
+      return state.current_score
     }
   },
   mutations: {
@@ -40,6 +44,9 @@ export default createStore({
     },
     setPlayStatus(state, status) {
       state.playing = status
+    },
+    changeScore(state, increment) {
+      state.current_score += increment
     }
   },
   actions: {
@@ -57,6 +64,12 @@ export default createStore({
     },
     setPlayStatus({ commit }, status) {
       commit('setPlayStatus', status)
+    },
+    addToScore({ commit }, increment) {
+      commit('changeScore', increment)
+    },
+    resetScore({ dispatch, getters }) {
+      dispatch('addToScore', -getters.currentScore);
     }
   },
 })

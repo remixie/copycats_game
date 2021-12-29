@@ -1,5 +1,6 @@
 <template>
   <div class="mt-6">
+    <div class="text-center text-2xl">Score: {{ score }}</div>
     <copy-cat-image
       class="mx-auto mt-2"
       style="width: 480px"
@@ -20,7 +21,7 @@ export default {
     CopyCatImage,
   },
   computed: {
-    ...mapGetters({ selected_cat: "getChosenCat" }),
+    ...mapGetters({ selected_cat: "getChosenCat", score: "currentScore" }),
   },
   props: {
     img: String,

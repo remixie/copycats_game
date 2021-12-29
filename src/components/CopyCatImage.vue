@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import img_data from "@/assets/json/extract_img_data.json";
 export default {
   name: "CopyCatImage",
@@ -42,6 +43,12 @@ export default {
     w: String,
   },
   methods: {
+    ...mapActions({
+      addPoint: "addToScore",
+      setPlayStatus: "setPlayStatus",
+      changeCat: "selectCat",
+      resetScore: "resetScore",
+    }),
     getMyIndex(d, i, dimensions) {
       return (d - 1) * dimensions + i - 1;
     },
@@ -90,6 +97,11 @@ export default {
       }
       return "0,0,0";
     },
+    resetGame() {
+      this.setPlayStatus(false);
+      this.changeCat("");
+      this.resetScore();
+    },
     popPixel(index) {
       if (this.interactive) {
         if (
@@ -100,17 +112,21 @@ export default {
         ) {
           if (this.isThisAnEdgePixel(index)) {
             this.num_of_game_pixels -= 1;
+            this.addPoint(1);
           }
           this.opacity[index] = 0;
           if (this.num_of_game_pixels == 0) {
             alert("You Win!");
+            this.resetGame();
           }
         } else if (this.opacity[index] == 1) {
-          alert("game over!");
+          alert("Game Over!");
+          this.resetGame();
         }
       }
     },
   },
+
   data: () => {
     return {
       hover: [],
