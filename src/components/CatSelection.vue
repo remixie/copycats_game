@@ -15,7 +15,7 @@
         ' grid-cols-' + Math.min(my_cats.length, 5),
       ]"
     >
-      <span class="" v-for="cc in my_cats" :key="cc.mint">
+      <div class="" v-for="cc in my_cats" :key="cc.mint">
         <copy-cat-image
           class="mt-5 mx-auto"
           :style="{ width: '96px' }"
@@ -25,7 +25,7 @@
           h="4px"
           w="4px"
         />
-      </span>
+      </div>
     </div>
   </div>
 </template>
