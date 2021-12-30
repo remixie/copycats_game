@@ -1,17 +1,21 @@
 <template>
   <headings :title="msg" :subtitle="subheading" />
-  <div v-if="!playing">
-    <connect-button />
-    <cat-selection v-if="wallet && chosen.length == 0" />
-    <chosen-cat v-if="chosen.length != 0" />
+  <div v-if="!instructionsState">
+    <div v-if="!playing">
+      <connect-button />
+      <cat-selection v-if="wallet && chosen.length == 0" />
+      <chosen-cat v-if="chosen.length != 0" />
+    </div>
+    <play v-if="playing" />
   </div>
-  <play v-if="playing" />
+  <instructions v-if="!playing && !wallet" />
 </template>
 
 <script>
 import ChosenCat from "./ChosenCat.vue";
 import Headings from "./Headings.vue";
 import ConnectButton from "./ConnectButton.vue";
+import Instructions from "./Instructions.vue";
 //import rarities from "@/assets/json/rarity.json";
 //import Play from "./Play.vue";
 import CatSelection from "./CatSelection.vue";
@@ -34,6 +38,7 @@ export default {
       wallet: "getWallet",
       chosen: "getChosenCat",
       playing: "isPlaying",
+      instructionsState: "instructionsState",
     }),
   },
   mounted() {
@@ -42,6 +47,7 @@ export default {
     });
   },
   components: {
+    Instructions,
     Headings,
     ConnectButton,
     ChosenCat,

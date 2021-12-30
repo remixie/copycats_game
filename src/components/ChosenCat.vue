@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-2xl text-center mt-10">
-      You selected {{ getID }}.<br />Click it again to confirm.
+      you selected {{ getID }}.<br />click it again to confirm.
     </div>
     <copy-cat-image
       @click="play(true)"
@@ -15,14 +15,15 @@
     <div
       class="
         rounded-full
-        bg-gray-600
-        text-center
-        hover:bg-gray-800
+        text-center text-sm
+        bg-green-400
+        text-black
+        hover:bg-green-800 hover:text-white
         cursor-pointer
         mt-10
         mx-auto
         p-2
-        w-1/6
+        w-1/4
       "
       @click="changeCat('')"
     >

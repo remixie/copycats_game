@@ -3,14 +3,21 @@
     <div class="text-xl mt-6 text-center">
       {{
           my_cats.length &lt; 1
-            ? "Loading..."
-            : "Select a CopyCat:"
+            ? "loading..."
+            : "select a copycat:"
       }}
     </div>
-    <div class="grid grid-cols-5 w-1/2 mx-auto">
+    <div
+      :class="[
+        'grid',
+        'w-1/2',
+        'mx-auto',
+        ' grid-cols-' + Math.min(my_cats.length, 5),
+      ]"
+    >
       <span class="" v-for="cc in my_cats" :key="cc.mint">
         <copy-cat-image
-          class="mt-5"
+          class="mt-5 mx-auto"
           :style="{ width: '96px' }"
           @click="selectCat(cc)"
           :img="cc.image"
@@ -42,33 +49,45 @@ export default {
     ...mapActions(["setCatList", "selectCat"]),
   },
   async mounted() {
-    const nfts = await getParsedNftAccountsByOwner({
-      publicAddress: this.wallet,
-      connection: this.connection,
-      serialization: true,
-    });
+    if (this.wallet == "guest") {
+      let arr = [];
 
-    let copycat_nfts = nfts.filter(
-      (cat) =>
-        cat.updateAuthority === "9mmdJRBi9zU5t4n633TzMEGyXnRjNEEyogV98uCNH7GD" //address of the copycats project
-    );
-    let arr = [];
-    let n = copycat_nfts.length;
-
-    if (n > 0) {
-      for (let i = 0; i < n; i++) {
-        arr.push({
-          mint: copycat_nfts[i].mint,
-          image: imagemap
-            .filter(
-              (obj) => obj.id == copycat_nfts[i].data.name.split("#")[1]
-            )[0]
-            .img.toString(),
-          attributes: [], //val.data.attributes,
-          name: copycat_nfts[i].data.name,
-        });
-      }
+      arr.push({
+        mint: "guest",
+        image: "wEQtZCoiUQwP8KPodTCCd7oeFSnSLVfWZ6c4TW2v0T4",
+        attributes: [], //val.data.attributes,
+        name: "CopyCats #2433",
+      });
       this.setCatList(arr);
+    } else {
+      const nfts = await getParsedNftAccountsByOwner({
+        publicAddress: this.wallet,
+        connection: this.connection,
+        serialization: true,
+      });
+
+      let copycat_nfts = nfts.filter(
+        (cat) =>
+          cat.updateAuthority === "9mmdJRBi9zU5t4n633TzMEGyXnRjNEEyogV98uCNH7GD" //address of the copycats project
+      );
+      let arr = [];
+      let n = copycat_nfts.length;
+
+      if (n > 0) {
+        for (let i = 0; i < n; i++) {
+          arr.push({
+            mint: copycat_nfts[i].mint,
+            image: imagemap
+              .filter(
+                (obj) => obj.id == copycat_nfts[i].data.name.split("#")[1]
+              )[0]
+              .img.toString(),
+            attributes: [], //val.data.attributes,
+            name: copycat_nfts[i].data.name,
+          });
+        }
+        this.setCatList(arr);
+      }
     }
   },
 };

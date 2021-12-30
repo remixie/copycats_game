@@ -7,7 +7,8 @@ export default createStore({
     cat_list: [],
     current_cat: [],
     playing: false,
-    current_score: 0
+    current_score: 0,
+    showInstructions: false
   },
   getters: {
     getWallet(state) {
@@ -27,6 +28,9 @@ export default createStore({
     },
     currentScore(state) {
       return state.current_score
+    },
+    instructionsState(state) {
+      return state.showInstructions
     }
   },
   mutations: {
@@ -47,6 +51,9 @@ export default createStore({
     },
     changeScore(state, increment) {
       state.current_score += increment
+    },
+    toggleInstructions(state) {
+      state.showInstructions = !state.showInstructions
     }
   },
   actions: {
@@ -70,6 +77,9 @@ export default createStore({
     },
     resetScore({ dispatch, getters }) {
       dispatch('addToScore', -getters.currentScore);
+    },
+    changeInstructions({ commit }) {
+      commit('toggleInstructions')
     }
   },
 })

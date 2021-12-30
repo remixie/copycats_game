@@ -1,5 +1,5 @@
 <template>
-  <Base msg="Cut-A-Cat" subheading="by the CopyCats Team" />
+  <Base msg="arcade" subheading="https://copycats-game.vercel.app" />
 </template>
 
 <script>
@@ -14,14 +14,13 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Baloo+Tamma+2&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 html,
 body {
   margin: 0;
-  font-family: "Baloo Tamma 2" !important;
-  background-color: #666;
+  font-family: "Press Start 2P" !important;
+  background-color: #37393e;
   color: white;
-  height: 100%;
 }
 #app {
   /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
