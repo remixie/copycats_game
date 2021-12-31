@@ -15,17 +15,17 @@
         ' grid-cols-' + Math.min(my_cats.length, 5),
       ]"
     >
-      <div class="" v-for="cc in my_cats" :key="cc.mint">
-        <copy-cat-image
-          class="mt-5 mx-auto"
-          :style="{ width: '96px' }"
-          @click="selectCat(cc)"
-          :img="cc.image"
-          :spacing="0"
-          h="4px"
-          w="4px"
-        />
-      </div>
+      <copy-cat-image
+        v-for="cc in my_cats"
+        :key="cc.mint"
+        class="mt-5 mx-auto"
+        :style="{ width: '96px' }"
+        @click="selectCat(cc)"
+        :img="cc.image"
+        :spacing="0"
+        h="4px"
+        w="4px"
+      />
     </div>
   </div>
 </template>
