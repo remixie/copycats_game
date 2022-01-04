@@ -1,5 +1,16 @@
 <template>
   <div class="border-white border-2">
+    <!--<vue-slider
+      v-if="interactive && filter"
+      min="0"
+      max="765"
+      v-model="threshold"
+      :width="300"
+      class="mx-auto"
+    />
+    <div class="text-center" v-if="interactive" @click="toggleFilter()">
+      Toggle Filter
+    </div>-->
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
       <div
         @mousedown="popPixel(getMyIndex(d, i, dimensions))"
@@ -13,8 +24,11 @@
         "
         @mouseleave="hover[getMyIndex(d, i, dimensions)] = false"
         :style="{
-          backgroundColor:
-            'rgb(' + exactPixel(getMyIndex(d, i, dimensions)) + ')',
+          backgroundColor: filter
+            ? 'rgb(' +
+              applyFilter(exactPixel(getMyIndex(d, i, dimensions))) +
+              ')'
+            : 'rgb(' + exactPixel(getMyIndex(d, i, dimensions)) + ')',
           'hover:backgroundColor': 'red',
           opacity: opacity[getMyIndex(d, i, dimensions)],
           height: h,
@@ -26,6 +40,8 @@
   </div>
 </template>
 <script>
+//import "vue-slider-component/theme/antd.css";
+//import VueSlider from "vue-slider-component";
 import { mapActions } from "vuex";
 import img_data from "@/assets/json/extract_img_data.json";
 export default {
@@ -39,6 +55,9 @@ export default {
     this.num_of_game_pixels = this.pixel_data.filter((item, index) =>
       this.isThisAnEdgePixel(index)
     ).length;
+  },
+  components: {
+    //VueSlider,
   },
   props: {
     img: String,
@@ -54,6 +73,18 @@ export default {
       changeCat: "selectCat",
       resetScore: "resetScore",
     }),
+    applyFilter(color) {
+      color = color.split(",").map(Number);
+      if (color[0] + color[1] + color[2] > this.threshold) {
+        color = new Array(color.length).fill(255);
+      } else {
+        color = new Array(color.length).fill(0);
+      }
+      return color.toString();
+    },
+    toggleFilter() {
+      this.filter = !this.filter;
+    },
     getMyIndex(d, i, dimensions) {
       return (d - 1) * dimensions + i - 1;
     },
@@ -76,7 +107,6 @@ export default {
     },
     isGlide(event, d, i, dimensions) {
       if (this.detectLeftButton(event)) {
-        console.log("left click must be down");
         this.popPixel(this.getMyIndex(d, i, dimensions));
       }
     },
@@ -157,6 +187,8 @@ export default {
       num_of_game_pixels: 576,
       opacity: [],
       background_color: [],
+      filter: false,
+      threshold: 400,
     };
   },
 };

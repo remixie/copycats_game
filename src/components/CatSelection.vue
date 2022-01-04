@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="text-xl mt-6 text-center">
+    <!--<div class="text-center text-2xl mt-6">$PAW Balance: 100</div>-->
+    <div class="text-xl mt-3 text-center">
       {{
           my_cats.length &lt; 1
             ? "loading..."
@@ -30,6 +31,7 @@
   </div>
 </template>
 <script>
+//import web3 from "@solana/web3.js";
 import imagemap from "@/assets/json/img_map.json";
 import CopyCatImage from "./CopyCatImage.vue";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
@@ -65,6 +67,12 @@ export default {
         connection: this.connection,
         serialization: true,
       });
+
+      console.log(
+        this.connection.getTokenLargestAccounts(
+          "3WV4fTWGvtWNvQb8oVU4t99By8KztDLtExqHnkPfHAA9"
+        )
+      );
 
       let copycat_nfts = nfts.filter(
         (cat) =>

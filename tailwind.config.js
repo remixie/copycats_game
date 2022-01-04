@@ -7,7 +7,6 @@ module.exports = {
     "./components/**/*.{vue,js,ts,jsx,tsx}",
   ],
   presets: [],
-  //mode: "jit",
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
