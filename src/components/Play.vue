@@ -12,10 +12,11 @@
     />
   </div>
 </template>
-<script>
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
 import CopyCatImage from "./CopyCatImage.vue";
 import { mapGetters } from "vuex";
-export default {
+@Options({
   name: "Play",
   components: {
     CopyCatImage,
@@ -26,5 +27,8 @@ export default {
   props: {
     img: String,
   },
-};
+})
+export default class Play extends Vue {
+  img!: string;
+}
 </script>

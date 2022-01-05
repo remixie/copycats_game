@@ -1,4 +1,4 @@
-# copycats_game
+# copycats_game_typescript
 
 ## Project setup
 ```

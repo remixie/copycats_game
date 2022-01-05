@@ -2,15 +2,16 @@
   <Base msg="arcade" subheading="https://copycats-game.vercel.app" />
 </template>
 
-<script>
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
 import Base from "./components/Base.vue";
 
-export default {
-  name: "App",
+@Options({
   components: {
     Base,
   },
-};
+})
+export default class App extends Vue {}
 </script>
 
 <style>

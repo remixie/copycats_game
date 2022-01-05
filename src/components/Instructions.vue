@@ -22,24 +22,17 @@
     </div>
     <div
       @click="changeInstructions()"
-      class="
-        rounded-full
-        bg-green-400
-        text-black text-center
-        hover:bg-green-800 hover:text-white
-        mt-10
-        mx-auto
-        p-2
-        w-1/6
-      "
+      class="rounded-full bg-green-400 text-black text-center hover:bg-green-800 hover:text-white mt-10 mx-auto p-2 w-1/6"
     >
       close
     </div>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
 import { mapActions, mapGetters } from "vuex";
-export default {
+@Options({
   data() {
     return {
       toggle: true,
@@ -51,7 +44,8 @@ export default {
   methods: {
     ...mapActions(["changeInstructions"]),
   },
-};
+})
+export default class Instructions extends Vue {}
 </script>
 <style scoped>
 .readable {
