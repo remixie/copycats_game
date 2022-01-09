@@ -8,7 +8,6 @@
       class="mx-auto mt-2"
       style="width: 240px"
       :img="selected_cat.image"
-      :spacing="0"
       h="10px"
       w="10px"
     />

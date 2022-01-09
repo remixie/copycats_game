@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 
-export default createStore({
+export const store = createStore({
   state: {
     wallet: "",
     connection: [],
@@ -9,6 +9,9 @@ export default createStore({
     playing: false,
     current_score: 0,
     showInstructions: false,
+    filter: false,
+    filterType: "BW",
+    filterThreshold: 346, //this was chosen since it seems to work well for lots of cats as the default
   },
   getters: {
     getWallet(state) {
@@ -35,6 +38,15 @@ export default createStore({
     areTheyWorthy(state) {
       return state.cat_list.length >= 5;
     },
+    isFilterOn(state) {
+      return state.filter;
+    },
+    currentFilter(state) {
+      return state.filterType;
+    },
+    whatThreshold(state) {
+      return state.filterThreshold;
+    },
   },
   mutations: {
     changeWallet(state, address) {
@@ -57,6 +69,15 @@ export default createStore({
     },
     toggleInstructions(state) {
       state.showInstructions = !state.showInstructions;
+    },
+    toggleFilter(state) {
+      state.filter = !state.filter;
+    },
+    setFilter(state, type) {
+      state.filterType = type;
+    },
+    setFilterThreshold(state, thresh) {
+      state.filterThreshold = thresh;
     },
   },
   actions: {
@@ -83,6 +104,15 @@ export default createStore({
     },
     changeInstructions({ commit }) {
       commit("toggleInstructions");
+    },
+    filterSwitch({ commit }) {
+      commit("toggleFilter");
+    },
+    changeFilter({ commit }, type) {
+      commit("setFilter", type);
+    },
+    changeFilterThreshold({ commit }, thresh) {
+      commit("setFilterThreshold", thresh);
     },
   },
 });

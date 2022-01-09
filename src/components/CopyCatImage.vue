@@ -1,20 +1,5 @@
 <template>
   <div class="border-white border-2">
-    <vue-slider
-      v-if="interactive && filter"
-      :min="0"
-      :max="765"
-      v-model="threshold"
-      :width="300"
-      class="mx-auto"
-    />
-    <div
-      class="text-center"
-      v-if="interactive && areTheyWorthy"
-      @click="toggleFilter()"
-    >
-      Toggle B/W Filter
-    </div>
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
       <div
         @mousedown="popPixel(getMyIndex(d, i, dimensions))"
@@ -45,10 +30,11 @@ import VueSlider from "vue-slider-component";
 import { mapActions, mapGetters } from "vuex";
 import img_data from "@/assets/json/extract_img_data.json";
 import { Options, Vue } from "vue-class-component";
+import filters from "@/assets/json/filters.json";
 @Options({
   name: "CopyCatImage",
-  async mounted() {
-    this.pixel_data = await img_data.filter((item) => item.img == this.img);
+  mounted() {
+    this.pixel_data = img_data.filter((item) => item.img == this.img);
     this.pixel_data = this.pixel_data[0].data;
     this.opacity = new Array(this.pixel_data.length).fill(1);
     this.background_color = this.pixel_data[0];
@@ -61,21 +47,32 @@ import { Options, Vue } from "vue-class-component";
     VueSlider,
   },
   computed: {
-    ...mapGetters(["areTheyWorthy"]),
+    ...mapGetters([
+      "areTheyWorthy",
+      "isFilterOn",
+      "whatThreshold",
+      "currentFilter",
+    ]),
+    currentFilterData() {
+      return filters.filter((item) => {
+        return item.name == this.$store.getters.currentFilter;
+      })[0].colors;
+    },
   },
   props: {
     img: String,
-    spacing: Number,
     interactive: Boolean,
     h: String,
     w: String,
   },
   methods: {
     bgColor(d: number, i: number, dimensions: number) {
-      if (this.filter) {
+      if (this.isFilterOn) {
         return (
           "rgb(" +
-          this.applyFilter(this.exactPixel(this.getMyIndex(d, i, dimensions))) +
+          this.applyBWFilter(
+            this.exactPixel(this.getMyIndex(d, i, dimensions))
+          ) +
           ")"
         );
       } else {
@@ -90,18 +87,15 @@ import { Options, Vue } from "vue-class-component";
       changeCat: "selectCat",
       resetScore: "resetScore",
     }),
-    applyFilter(color: string) {
+    applyBWFilter(color: string) {
       let c = color.split(",").map((n) => parseInt(n, 10));
       let sum = c.reduce((a, b) => a + b);
-      if (sum > this.threshold) {
-        c = new Array(color.length).fill(255);
+      if (sum > this.whatThreshold) {
+        c = this.currentFilterData[1].hex;
       } else {
-        c = new Array(color.length).fill(0);
+        c = this.currentFilterData[0].hex;
       }
       return c[0] + "," + c[1] + "," + c[2];
-    },
-    toggleFilter() {
-      this.filter = !this.filter;
     },
     getMyIndex(d: number, i: number, dimensions: number) {
       let num = (d - 1) * dimensions + i - 1;
@@ -200,14 +194,11 @@ import { Options, Vue } from "vue-class-component";
       num_of_game_pixels: 576,
       opacity: [],
       background_color: [],
-      filter: false,
-      threshold: 400,
     };
   },
 })
 export default class CatSelection extends Vue {
   img!: string;
-  spacing!: number;
   interactive!: boolean;
   h!: string;
   w!: string;

@@ -1,0 +1,18 @@
+[
+  {
+    "name": "BW",
+    "secret": "true",
+    "colors": [
+      { "hex": [0, 0, 0], "max": "threshold" },
+      { "hex": [255, 255, 255], "max": "else" }
+    ]
+  },
+  {
+    "name": "Retro",
+    "secret": "false",
+    "colors": [
+      { "hex": [140, 191, 10], "max": "threshold" },
+      { "hex": [46, 115, 32], "max": "else" }
+    ]
+  }
+]

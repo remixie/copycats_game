@@ -23,7 +23,6 @@
         :style="{ width: '96px' }"
         @click="selectCat(cc)"
         :img="cc.image"
-        :spacing="0"
         h="4px"
         w="4px"
       />

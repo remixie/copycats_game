@@ -22,5 +22,11 @@ body {
   font-family: "Press Start 2P" !important;
   background-color: #37393e;
   color: white;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Old version of Firefox */
+  -ms-user-select: none; /* Internet Explorer or Edge */
+  user-select: none; /* All modern browsers */
 }
 </style>
