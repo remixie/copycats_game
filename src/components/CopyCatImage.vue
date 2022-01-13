@@ -33,8 +33,8 @@ import { Options, Vue } from "vue-class-component";
 import filters from "@/assets/json/filters.json";
 @Options({
   name: "CopyCatImage",
-  mounted() {
-    this.pixel_data = img_data.filter((item) => item.img == this.img);
+  async mounted() {
+    this.pixel_data = await img_data.filter((item) => item.img == this.img);
     this.pixel_data = this.pixel_data[0].data;
     this.opacity = new Array(this.pixel_data.length).fill(1);
     this.background_color = this.pixel_data[0];

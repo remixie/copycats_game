@@ -1,8 +1,7 @@
 <template>
   <div>
     <div
-      class="text-center bg-white text-black w-1/6 text-center mx-auto rounded-full cursor-pointer"
-      v-if="areTheyWorthy"
+      class="text-center bg-white text-black w-1/6 mt-10 text-center mx-auto rounded-full cursor-pointer"
       @click="toggleFilter()"
     >
       {{ isFilterOn ? "Remove" : "Activate" }} Filter
@@ -13,7 +12,7 @@
         :max="765"
         v-model="thresh"
         :width="300"
-        class="mx-auto"
+        class="mx-auto mt-2"
       />
       <div
         class="mt-2 text-center mx-auto bg-white text-black w-1/6 rounded-full cursor-pointer"
@@ -29,6 +28,7 @@
           @click="
             changeFilter(f.name);
             menu = !menu;
+            setBackground(f.background);
           "
         >
           {{ f.name }}
@@ -82,6 +82,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      setBackground: "setBackground",
       toggleFilter: "filterSwitch",
       changeFilter: "changeFilter",
       changeFilterThreshold: "changeFilterThreshold",

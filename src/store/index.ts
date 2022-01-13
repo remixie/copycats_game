@@ -3,6 +3,8 @@ import { createStore } from "vuex";
 export const store = createStore({
   state: {
     wallet: "",
+    default_background: "37393e",
+    background: "37393e",
     connection: [],
     cat_list: [],
     current_cat: [],
@@ -10,10 +12,16 @@ export const store = createStore({
     current_score: 0,
     showInstructions: false,
     filter: false,
-    filterType: "BW",
+    filterType: "B/W",
     filterThreshold: 346, //this was chosen since it seems to work well for lots of cats as the default
   },
   getters: {
+    getDefaultBackground(state) {
+      return state.default_background;
+    },
+    getBackground(state) {
+      return state.background;
+    },
     getWallet(state) {
       return state.wallet;
     },
@@ -49,6 +57,9 @@ export const store = createStore({
     },
   },
   mutations: {
+    changeBackground(state, hex) {
+      state.background = hex;
+    },
     changeWallet(state, address) {
       state.wallet = address;
     },
@@ -81,6 +92,9 @@ export const store = createStore({
     },
   },
   actions: {
+    setBackground({ commit }, hex) {
+      commit("changeBackground", hex);
+    },
     setWallet({ commit }, address) {
       commit("changeWallet", address);
     },

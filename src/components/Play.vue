@@ -1,7 +1,7 @@
 <template>
   <div class="mt-6">
     <div class="text-center text-2xl">Score: {{ score }}</div>
-    <filters />
+
     <copy-cat-image
       class="mx-auto mt-2"
       style="width: 480px"
@@ -10,6 +10,7 @@
       h="20px"
       w="20px"
     />
+    <filters />
   </div>
 </template>
 <script lang="ts">

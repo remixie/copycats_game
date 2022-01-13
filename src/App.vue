@@ -1,14 +1,23 @@
 <template>
-  <Base msg="arcade" subheading="https://copycats-game.vercel.app" />
+  <Base
+    msg="arcade"
+    class="base"
+    :style="'backgroundColor: #' + getBackground"
+    subheading="https://copycats-game.vercel.app"
+  />
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { mapGetters } from "vuex";
 import Base from "./components/Base.vue";
 
 @Options({
   components: {
     Base,
+  },
+  computed: {
+    ...mapGetters(["getBackground"]),
   },
 })
 export default class App extends Vue {}
@@ -20,7 +29,7 @@ html,
 body {
   margin: 0;
   font-family: "Press Start 2P" !important;
-  background-color: #37393e;
+  /*background-color: #37393e;*/
   color: white;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -28,5 +37,12 @@ body {
   -moz-user-select: none; /* Old version of Firefox */
   -ms-user-select: none; /* Internet Explorer or Edge */
   user-select: none; /* All modern browsers */
+}
+html,
+body,
+#app,
+.base {
+  width: 100%;
+  height: 100%;
 }
 </style>
