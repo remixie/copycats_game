@@ -28,16 +28,42 @@
           @click="
             changeFilter(f.name);
             menu = !menu;
-            setBackground(f.background);
+            setBackground(
+              currentFilter == 'CUSTOM'
+                ? bgcolor.replace('#', '')
+                : f.background
+            );
           "
         >
           {{ f.name }}
         </div>
       </div>
+      <div v-if="currentFilter == 'CUSTOM'" class="mx-auto text-center">
+        <v-swatches
+          v-model="color"
+          show-fallback
+          fallback-input-type="color"
+          popover-x="left"
+          @click="setCustomBackgroundPixel(color.replace('#', ''))"
+          class="border-solid border-2 border-white mt-5"
+          :style="'backgroundColor: #' + getCustomBackgroundPixel"
+        ></v-swatches>
+        <v-swatches
+          v-model="bgcolor"
+          show-fallback
+          fallback-input-type="color"
+          popover-x="left"
+          @click="setBackground(bgcolor.replace('#', ''))"
+          class="border-solid border-2 border-white mt-5"
+          :style="'backgroundColor: #' + getBackground"
+        ></v-swatches>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
+import "vue-swatches/dist/vue-swatches.css";
+import VSwatches from "vue3-swatches";
 import "vue-slider-component/theme/antd.css";
 import VueSlider from "vue-slider-component";
 import { mapActions, mapGetters } from "vuex";
@@ -48,6 +74,7 @@ export default {
   name: "Filters",
   components: {
     VueSlider,
+    VSwatches,
   },
   setup() {
     const store = useStore();
@@ -55,10 +82,11 @@ export default {
       get: () => {
         return store.getters.whatThreshold;
       },
-      set: (value: number) => {
+      set: (value) => {
         store.dispatch("changeFilterThreshold", value);
       },
     });
+
     return {
       thresh,
     };
@@ -73,6 +101,8 @@ export default {
       return filters;
     },
     ...mapGetters({
+      getCustomBackgroundPixel: "getCustomBackgroundPixel",
+      getBackground: "getBackground",
       areTheyWorthy: "areTheyWorthy",
       interactive: "isPlaying",
       isFilterOn: "isFilterOn",
@@ -82,6 +112,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      setCustomBackgroundPixel: "setCustomBackgroundPixel",
       setBackground: "setBackground",
       toggleFilter: "filterSwitch",
       changeFilter: "changeFilter",
@@ -90,3 +121,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
+</style>

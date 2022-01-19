@@ -4,6 +4,7 @@ export const store = createStore({
   state: {
     wallet: "",
     default_background: "37393e",
+    custom_background_pixel: "000",
     background: "37393e",
     connection: [],
     cat_list: [],
@@ -18,6 +19,9 @@ export const store = createStore({
   getters: {
     getDefaultBackground(state) {
       return state.default_background;
+    },
+    getCustomBackgroundPixel(state) {
+      return state.custom_background_pixel;
     },
     getBackground(state) {
       return state.background;
@@ -60,6 +64,9 @@ export const store = createStore({
     changeBackground(state, hex) {
       state.background = hex;
     },
+    changeCustomBackgroundPixel(state, hex) {
+      state.custom_background_pixel = hex;
+    },
     changeWallet(state, address) {
       state.wallet = address;
     },
@@ -92,6 +99,9 @@ export const store = createStore({
     },
   },
   actions: {
+    setCustomBackgroundPixel({ commit }, hex) {
+      commit("changeCustomBackgroundPixel", hex);
+    },
     setBackground({ commit }, hex) {
       commit("changeBackground", hex);
     },

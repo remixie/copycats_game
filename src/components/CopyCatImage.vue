@@ -54,9 +54,21 @@ import filters from "@/assets/json/filters.json";
       "currentFilter",
     ]),
     currentFilterData() {
-      return filters.filter((item) => {
-        return item.name == this.$store.getters.currentFilter;
-      })[0].colors;
+      if (this.$store.getters.currentFilter == "CUSTOM") {
+        return [
+          { hex: [255, 255, 255], max: "threshold" },
+          {
+            hex: this.$store.getters.getCustomBackgroundPixel
+              .match(/.{1,2}/g)
+              .map((n: string) => parseInt(n, 16)),
+            max: "else",
+          },
+        ];
+      } else {
+        return filters.filter((item) => {
+          return item.name == this.$store.getters.currentFilter;
+        })[0].colors;
+      }
     },
   },
   props: {

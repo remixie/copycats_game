@@ -4,11 +4,11 @@
 
     <copy-cat-image
       class="mx-auto mt-2"
-      style="width: 480px"
+      style="width: 360px"
       :img="selected_cat.image"
       :interactive="true"
-      h="20px"
-      w="20px"
+      h="15px"
+      w="15px"
     />
     <filters />
   </div>
