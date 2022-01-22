@@ -10,7 +10,7 @@
       class="text-xs text-center bg-purple-400 text-black hover:bg-purple-900 p-1 w-1/6 rounded-full mx-auto hover:text-white cursor-pointer mt-5"
       @click="generateGuestWallet()"
     >
-      or play as a guest
+      play as a guest
     </div>
   </div>
 </template>

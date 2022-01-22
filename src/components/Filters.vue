@@ -1,8 +1,8 @@
 <template>
   <div>
     <div
-      class="text-center bg-white text-black w-1/6 mt-10 text-center mx-auto rounded-full cursor-pointer"
-      @click="toggleFilter()"
+      class="text-center bg-white text-black w-full mt-10 text-center mx-auto rounded-full cursor-pointer"
+      @click="toggleFilter();isFilterOn? setBackground(getBackground): setBackground(getDefaultBackground)"
     >
       {{ isFilterOn ? "Remove" : "Activate" }} Filter
     </div>
@@ -11,11 +11,11 @@
         :min="0"
         :max="765"
         v-model="thresh"
-        :width="300"
+        :width="200"
         class="mx-auto mt-2"
       />
       <div
-        class="mt-2 text-center mx-auto bg-white text-black w-1/6 rounded-full cursor-pointer"
+        class="mt-2 text-center mx-auto bg-white text-black w-full rounded-full cursor-pointer"
         @click="menu = !menu"
       >
         Filter: {{ currentFilter }} &#9660;
@@ -23,7 +23,7 @@
       <div v-if="menu">
         <div
           v-for="f in filters"
-          class="mt-1 text-center mx-auto bg-white text-black w-1/6 cursor-pointer"
+          class="mt-1 text-center mx-auto bg-white text-black w-1/2 cursor-pointer"
           :key="f.name"
           @click="
             changeFilter(f.name);
@@ -101,6 +101,7 @@ export default {
       return filters;
     },
     ...mapGetters({
+      getDefaultBackground: "getDefaultBackground",
       getCustomBackgroundPixel: "getCustomBackgroundPixel",
       getBackground: "getBackground",
       areTheyWorthy: "areTheyWorthy",
