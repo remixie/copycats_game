@@ -32,7 +32,7 @@
 </template>
 <script>
 //import web3 from "@solana/web3.js";
-import imagemap from "@/assets/json/img_map.json";
+import imagemap from "@/assets/img_map.json";
 import CopyCatImage from "./CopyCatImage.vue";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { mapGetters, mapActions } from "vuex";

@@ -43,7 +43,7 @@
 //import "vue-slider-component/theme/antd.css";
 //import VueSlider from "vue-slider-component";
 import { mapActions } from "vuex";
-import img_data from "@/assets/json/extract_img_data.json";
+import img_data from "@/assets/copycats_images.json";
 export default {
   name: "CopyCatImage",
   async mounted() {
