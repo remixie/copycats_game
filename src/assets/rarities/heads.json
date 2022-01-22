@@ -6,42 +6,42 @@
   },
   {
     "name": "Deadmau5",
-    "occurs": "1",
+    "occurs": 1,
     "percentage": 0.06
   },
   {
     "name": "Squid game triangle",
-    "occurs": "1",
+    "occurs": 1,
     "percentage": 0.06
   },
   {
     "name": "Darth vader",
-    "occurs": "1",
+    "occurs": 1,
     "percentage": 0.06
   },
   {
     "name": "Pikachu",
-    "occurs": "1",
+    "occurs": 1,
     "percentage": 0.06
   },
   {
     "name": "Crown",
-    "occurs": "1",
+    "occurs": 1,
     "percentage": 0.06
   },
   {
     "name": "Sock",
-    "occurs": "1",
+    "occurs": 1,
     "percentage": 0.06
   },
   {
     "name": "Halo ring",
-    "occurs": "3",
+    "occurs": 3,
     "percentage": 0.19
   },
   {
     "name": "Solana punk hair",
-    "occurs": "4",
+    "occurs": 4,
     "percentage": 0.25
   },
   {

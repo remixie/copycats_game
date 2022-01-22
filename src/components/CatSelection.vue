@@ -23,20 +23,21 @@
         :style="{ width: '96px' }"
         @click="selectCat(cc)"
         :img="cc.image"
-        :spacing="0"
         h="4px"
         w="4px"
       />
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 //import web3 from "@solana/web3.js";
 import imagemap from "@/assets/img_map.json";
 import CopyCatImage from "./CopyCatImage.vue";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { mapGetters, mapActions } from "vuex";
-export default {
+import { Options, Vue } from "vue-class-component";
+
+@Options({
   computed: {
     ...mapGetters({
       wallet: "getWallet",
@@ -65,14 +66,13 @@ export default {
       const nfts = await getParsedNftAccountsByOwner({
         publicAddress: this.wallet,
         connection: this.connection,
-        serialization: true,
       });
 
-      console.log(
+      /*console.log(
         this.connection.getTokenLargestAccounts(
           "3WV4fTWGvtWNvQb8oVU4t99By8KztDLtExqHnkPfHAA9"
         )
-      );
+      );*/
 
       let copycat_nfts = nfts.filter(
         (cat) =>
@@ -87,7 +87,8 @@ export default {
             mint: copycat_nfts[i].mint,
             image: imagemap
               .filter(
-                (obj) => obj.id == copycat_nfts[i].data.name.split("#")[1]
+                (obj) =>
+                  obj.id.toString() == copycat_nfts[i].data.name.split("#")[1]
               )[0]
               .img.toString(),
             attributes: [], //val.data.attributes,
@@ -98,5 +99,6 @@ export default {
       }
     }
   },
-};
+})
+export default class CatSelection extends Vue {}
 </script>

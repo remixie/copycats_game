@@ -1,16 +1,5 @@
 <template>
   <div class="border-white border-2">
-    <!--<vue-slider
-      v-if="interactive && filter"
-      min="0"
-      max="765"
-      v-model="threshold"
-      :width="300"
-      class="mx-auto"
-    />
-    <div class="text-center" v-if="interactive" @click="toggleFilter()">
-      Toggle Filter
-    </div>-->
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
       <div
         @mousedown="popPixel(getMyIndex(d, i, dimensions))"
@@ -24,11 +13,7 @@
         "
         @mouseleave="hover[getMyIndex(d, i, dimensions)] = false"
         :style="{
-          backgroundColor: filter
-            ? 'rgb(' +
-              applyFilter(exactPixel(getMyIndex(d, i, dimensions))) +
-              ')'
-            : 'rgb(' + exactPixel(getMyIndex(d, i, dimensions)) + ')',
+          backgroundColor: bgColor(d, i, dimensions),
           'hover:backgroundColor': 'red',
           opacity: opacity[getMyIndex(d, i, dimensions)],
           height: h,
@@ -39,12 +24,14 @@
     </div>
   </div>
 </template>
-<script>
-//import "vue-slider-component/theme/antd.css";
-//import VueSlider from "vue-slider-component";
-import { mapActions } from "vuex";
-import img_data from "@/assets/copycats_images.json";
-export default {
+<script lang="ts">
+import "vue-slider-component/theme/antd.css";
+import VueSlider from "vue-slider-component";
+import { mapActions, mapGetters } from "vuex";
+import img_data from "@/assets/copycat_images.json";
+import { Options, Vue } from "vue-class-component";
+import filters from "@/assets/filters.json";
+@Options({
   name: "CopyCatImage",
   async mounted() {
     this.pixel_data = await img_data.filter((item) => item.img == this.img);
@@ -52,43 +39,81 @@ export default {
     this.opacity = new Array(this.pixel_data.length).fill(1);
     this.background_color = this.pixel_data[0];
 
-    this.num_of_game_pixels = this.pixel_data.filter((item, index) =>
-      this.isThisAnEdgePixel(index)
+    this.num_of_game_pixels = this.pixel_data.filter(
+      (item: string, index: number) => this.isThisAnEdgePixel(index)
     ).length;
   },
   components: {
-    //VueSlider,
+    VueSlider,
+  },
+  computed: {
+    ...mapGetters([
+      "areTheyWorthy",
+      "isFilterOn",
+      "whatThreshold",
+      "currentFilter",
+    ]),
+    currentFilterData() {
+      if (this.$store.getters.currentFilter == "CUSTOM") {
+        return [
+          { hex: [255, 255, 255], max: "threshold" },
+          {
+            hex: this.$store.getters.getCustomBackgroundPixel
+              .match(/.{1,2}/g)
+              .map((n: string) => parseInt(n, 16)),
+            max: "else",
+          },
+        ];
+      } else {
+        return filters.filter((item) => {
+          return item.name == this.$store.getters.currentFilter;
+        })[0].colors;
+      }
+    },
   },
   props: {
     img: String,
-    spacing: Number,
     interactive: Boolean,
     h: String,
     w: String,
   },
   methods: {
+    bgColor(d: number, i: number, dimensions: number) {
+      if (this.isFilterOn) {
+        return (
+          "rgb(" +
+          this.applyBWFilter(
+            this.exactPixel(this.getMyIndex(d, i, dimensions))
+          ) +
+          ")"
+        );
+      } else {
+        return (
+          "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")"
+        );
+      }
+    },
     ...mapActions({
       addPoint: "addToScore",
       setPlayStatus: "setPlayStatus",
       changeCat: "selectCat",
       resetScore: "resetScore",
     }),
-    applyFilter(color) {
-      color = color.split(",").map(Number);
-      if (color[0] + color[1] + color[2] > this.threshold) {
-        color = new Array(color.length).fill(255);
+    applyBWFilter(color: string) {
+      let c = color.split(",").map((n) => parseInt(n, 10));
+      let sum = c.reduce((a, b) => a + b);
+      if (sum > this.whatThreshold) {
+        c = this.currentFilterData[1].hex;
       } else {
-        color = new Array(color.length).fill(0);
+        c = this.currentFilterData[0].hex;
       }
-      return color.toString();
+      return c[0] + "," + c[1] + "," + c[2];
     },
-    toggleFilter() {
-      this.filter = !this.filter;
+    getMyIndex(d: number, i: number, dimensions: number) {
+      let num = (d - 1) * dimensions + i - 1;
+      return num;
     },
-    getMyIndex(d, i, dimensions) {
-      return (d - 1) * dimensions + i - 1;
-    },
-    isThisAnEdgePixel(index) {
+    isThisAnEdgePixel(index: number) {
       let neighbors = this.getNeighborIndexes(index);
       for (let i = 0; i < neighbors.length; i++) {
         if (
@@ -105,23 +130,19 @@ export default {
       }
       return false;
     },
-    isGlide(event, d, i, dimensions) {
+    isGlide(event: MouseEvent, d: number, i: number, dimensions: number) {
       if (this.detectLeftButton(event)) {
         this.popPixel(this.getMyIndex(d, i, dimensions));
       }
     },
-    detectLeftButton(event) {
+    detectLeftButton(event: MouseEvent) {
       if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
         return false;
       } else if ("buttons" in event) {
         return event.buttons === 1;
-      } else if ("which" in event) {
-        return event.which === 1;
-      } else {
-        return event.button == 1 || event.type == "click";
       }
     },
-    getNeighborIndexes(index) {
+    getNeighborIndexes(index: number) {
       let arr = [
         index - this.dimensions - 1,
         index - this.dimensions,
@@ -132,7 +153,6 @@ export default {
         index + this.dimensions,
         index + this.dimensions + 1,
       ];
-
       arr = arr.filter(
         (item) =>
           item >= 0 &&
@@ -143,7 +163,7 @@ export default {
 
       return arr;
     },
-    exactPixel(index) {
+    exactPixel(index: number) {
       if (this.pixel_data[index] != null) {
         return this.pixel_data[index].toString();
       }
@@ -154,7 +174,7 @@ export default {
       this.changeCat("");
       this.resetScore();
     },
-    popPixel(index) {
+    popPixel(index: number) {
       if (this.interactive) {
         if (
           this.opacity[index] == 1 &&
@@ -178,7 +198,6 @@ export default {
       }
     },
   },
-
   data: () => {
     return {
       hover: [],
@@ -187,11 +206,15 @@ export default {
       num_of_game_pixels: 576,
       opacity: [],
       background_color: [],
-      filter: false,
-      threshold: 400,
     };
   },
-};
+})
+export default class CatSelection extends Vue {
+  img!: string;
+  interactive!: boolean;
+  h!: string;
+  w!: string;
+}
 </script>
 <style scoped>
 .pixel {

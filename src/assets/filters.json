@@ -1,0 +1,38 @@
+[
+  {
+    "name": "B/W",
+    "secret": "true",
+    "background": "1e6e5a",
+    "colors": [
+      { "hex": [0, 0, 0], "max": "threshold" },
+      { "hex": [255, 255, 255], "max": "else" }
+    ]
+  },
+  {
+    "name": "Retro",
+    "secret": "false",
+    "background": "5a5a5a",
+    "colors": [
+      { "hex": [140, 191, 10], "max": "threshold" },
+      { "hex": [46, 115, 32], "max": "else" }
+    ]
+  },
+  {
+    "name": "OMFG",
+    "secret": "false",
+    "background": "667105",
+    "colors": [
+      { "hex": [255, 255, 255], "max": "else" },
+      { "hex": [74, 59, 80], "max": "threshold" }
+    ]
+  },
+  {
+    "name": "CUSTOM",
+    "secret": "false",
+    "background": "667105",
+    "colors": [
+      { "hex": [255, 255, 255], "max": "else" },
+      { "hex": [0, 0, 0], "max": "threshold" }
+    ]
+  }
+]

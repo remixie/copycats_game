@@ -8,23 +8,11 @@
       class="mx-auto mt-2"
       style="width: 240px"
       :img="selected_cat.image"
-      :spacing="0"
       h="10px"
       w="10px"
     />
     <div
-      class="
-        rounded-full
-        text-center text-sm
-        bg-green-400
-        text-black
-        hover:bg-green-800 hover:text-white
-        cursor-pointer
-        mt-10
-        mx-auto
-        p-2
-        w-1/4
-      "
+      class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-1/4"
       @click="changeCat('')"
     >
       Choose a different Cat
@@ -37,15 +25,18 @@
     Type: {{}}-->
   </div>
 </template>
-<script>
+<script lang="ts">
 import { mapGetters, mapActions } from "vuex";
 import CopyCatImage from "./CopyCatImage.vue";
-export default {
+import { Options, Vue } from "vue-class-component";
+@Options({
   components: { CopyCatImage },
   computed: {
     ...mapGetters({ selected_cat: "getChosenCat" }),
     getID() {
-      return this.selected_cat.name.replace("CopyCats", "");
+      return this.selected_cat.name
+        ? this.selected_cat.name.replace("CopyCats", "")
+        : "";
     },
   },
   methods: {
@@ -54,5 +45,6 @@ export default {
   setup() {
     return {};
   },
-};
+})
+export default class ChosenCat extends Vue {}
 </script>
