@@ -10,7 +10,7 @@
         w="15px"
       />
       <div class="col-span-3">
-        <div>
+        <!--<div>
           <br />
           <input type="checkbox" name="eyes" :value="mapper.eyes" checked />
           <label for="eyes"> Eyes: {{ mapper.eyes }}</label>
@@ -42,7 +42,13 @@
             checked
           />
           <label for="background"> Background: {{ mapper.background }}</label>
-        </div>
+        </div>-->
+        <div
+      class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-full"
+      @click="resetGame()"
+    >
+      Choose a different Cat
+    </div>
         <filters />
       </div>
     </div>
@@ -52,7 +58,7 @@
 import mapper from "@/assets/asset_pixels/mapper.json";
 import { Options, Vue } from "vue-class-component";
 import CopyCatInteractive from "./CopyCatInteractive.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Filters from "./Filters.vue";
 @Options({
   name: "Play",
@@ -72,6 +78,16 @@ import Filters from "./Filters.vue";
       })[0];
     },
     ...mapGetters({ selected_cat: "getChosenCat", score: "currentScore" }),
+  },
+  methods:{
+    resetGame() {
+      this.setPlayStatus(false);
+      this.changeCat("");
+      this.resetScore();
+    },
+    ...mapActions({setPlayStatus: "setPlayStatus",
+      changeCat: "selectCat",
+      resetScore: "resetScore",})
   },
   props: {
     img: String,
