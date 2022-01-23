@@ -2,7 +2,12 @@
   <div>
     <div
       class="text-center bg-white text-black w-full mt-10 text-center mx-auto rounded-full cursor-pointer"
-      @click="toggleFilter();isFilterOn? setBackground(getBackground): setBackground(getDefaultBackground)"
+      @click="
+        toggleFilter();
+        isFilterOn
+          ? setBackground(getBackground)
+          : setBackground(getDefaultBackground);
+      "
     >
       {{ isFilterOn ? "Remove" : "Activate" }} Filter
     </div>

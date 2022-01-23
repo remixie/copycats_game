@@ -1,5 +1,6 @@
 <template>
   <div class="border-white border-2">
+    {{toggleTest}}
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
       <div
         @mousedown="popPixel(getMyIndex(d, i, dimensions))"
@@ -43,35 +44,33 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       return item.id == this.id;
     })[0];
 
-     let backgrounds_pixels = backgrounds_data.filter((item) => {
+    let backgrounds_pixels = backgrounds_data.filter((item) => {
       return item.trait_name == this.mapped_data.background;
     })[0].data;
-    /*let type_pixels = type_data.filter((item) => {
-      return item.trait_name == this.mapped_data.type;
-    })[0].data; */
 
-    let type_pixels = this.getTraitPixels("type",backgrounds_pixels.length,type_data);
-    let clothes_pixels = this.getTraitPixels("clothes",backgrounds_pixels.length,clothes_data);
-    let mouth_pixels = this.getTraitPixels("mouth",backgrounds_pixels.length,mouths_data);
-    let mask_pixels = this.getTraitPixels("mask",backgrounds_pixels.length,masks_data);
-    let head_pixels = this.getTraitPixels("head",backgrounds_pixels.length,heads_data);
-    let eyes_pixels = this.getTraitPixels("eyes",backgrounds_pixels.length,eyes_data);
-    
+    let type_pixels = this.getTraitPixels("type",backgrounds_pixels.length,type_data,this.mapped_data);
+    let clothes_pixels = this.getTraitPixels("clothes",backgrounds_pixels.length,clothes_data,this.mapped_data);
+    let mouth_pixels = this.getTraitPixels("mouth",backgrounds_pixels.length,mouths_data,this.mapped_data);
+    let mask_pixels = this.getTraitPixels("mask",backgrounds_pixels.length,masks_data,this.mapped_data);
+    let head_pixels = this.getTraitPixels("head",backgrounds_pixels.length,heads_data,this.mapped_data);
+    let eyes_pixels = this.getTraitPixels("eyes",backgrounds_pixels.length,eyes_data,this.mapped_data);
+
     this.pixel_data = backgrounds_pixels;
 
     for (var i = 0; i < type_pixels.length; i++) {
-      if (eyes_pixels[i][3] == 255) {
-        this.pixel_data[i] = eyes_pixels[i];
-      } else if (head_pixels[i][3] == 255) {
-        this.pixel_data[i] = head_pixels[i];
-      } else if (mask_pixels[i][3] == 255) {
-        this.pixel_data[i] = mask_pixels[i];
-      } else if (mouth_pixels[i][3] == 255) {
-        this.pixel_data[i] = mouth_pixels[i];
-      } else if (clothes_pixels[i][3] == 255) {
-        this.pixel_data[i] = clothes_pixels[i];
-      } else if (type_pixels[i][3] == 255) {
+
+      if (type_pixels[i][3] != 0) {
         this.pixel_data[i] = type_pixels[i];
+      }if (clothes_pixels[i][3] != 0) {
+        this.pixel_data[i] = clothes_pixels[i];
+      }if (mouth_pixels[i][3] != 0) {
+        this.pixel_data[i] = mouth_pixels[i];
+      }if (mask_pixels [i][3] != 0) {
+        this.pixel_data[i] = mask_pixels[i];
+      } if (head_pixels [i][3] != 0) {
+        this.pixel_data[i] = head_pixels[i];
+      }if (eyes_pixels[i][3] != 0) {
+        this.pixel_data[i] = eyes_pixels[i];
       }
     }
 
@@ -115,11 +114,11 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     w: String,
   },
   methods: {
-    getTraitPixels(trait: string, length: number, json_file: any) {
-      return this.mapped_data[trait] == "None"
-        ? Array.from(Array(length), (_) => Array(3).fill(0))
+    getTraitPixels(trait: string, length: number, json_file: any, mapped_data: any) {
+      return mapped_data[trait] == "None"
+        ? Array.from(Array(length), (_) => Array(4).fill(0))
         : json_file.filter((item: any) => {
-            return item.trait_name == this.mapped_data[trait];
+            return item.trait_name == mapped_data[trait];
           })[0].data;
     },
     bgColor(d: number, i: number, dimensions: number) {
@@ -244,6 +243,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
   },
   data: () => {
     return {
+      toggleTest: true,
       hover: [],
       dimensions: 24,
       pixel_data: [],
@@ -253,7 +253,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     };
   },
 })
-export default class CatSelection extends Vue {
+export default class CopyCatInteractive extends Vue {
   img!: string;
   interactive!: boolean;
   h!: string;

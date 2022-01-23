@@ -204,7 +204,7 @@ import filters from "@/assets/filters.json";
     };
   },
 })
-export default class CatSelection extends Vue {
+export default class CopyCatImage extends Vue {
   img!: string;
   interactive!: boolean;
   h!: string;
