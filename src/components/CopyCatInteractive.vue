@@ -26,14 +26,55 @@
 </template>
 <script lang="ts">
 import { mapActions, mapGetters } from "vuex";
-import img_data from "@/assets/copycat_images.json";
 import { Options, Vue } from "vue-class-component";
 import filters from "@/assets/filters.json";
+import mapper from "@/assets/asset_pixels/mapper.json";
+import backgrounds_data from "@/assets/asset_pixels/backgrounds_pixels.json";
+import clothes_data from "@/assets/asset_pixels/clothes_pixels.json";
+import heads_data from "@/assets/asset_pixels/heads_pixels.json";
+import mouths_data from "@/assets/asset_pixels/mouths_pixels.json";
+import eyes_data from "@/assets/asset_pixels/eyes_pixels.json";
+import masks_data from "@/assets/asset_pixels/masks_pixels.json";
+import type_data from "@/assets/asset_pixels/type_pixels.json";
 @Options({
-  name: "CopyCatImage",
-  async mounted() {
-    this.pixel_data = await img_data.filter((item) => item.img == this.img);
-    this.pixel_data = this.pixel_data[0].data;
+  name: "CopyCatInteractive",
+  mounted() {
+    this.mapped_data = mapper.filter((item) => {
+      return item.id == this.id;
+    })[0];
+
+     let backgrounds_pixels = backgrounds_data.filter((item) => {
+      return item.trait_name == this.mapped_data.background;
+    })[0].data;
+    /*let type_pixels = type_data.filter((item) => {
+      return item.trait_name == this.mapped_data.type;
+    })[0].data; */
+
+    let type_pixels = this.getTraitPixels("type",backgrounds_pixels.length,type_data);
+    let clothes_pixels = this.getTraitPixels("clothes",backgrounds_pixels.length,clothes_data);
+    let mouth_pixels = this.getTraitPixels("mouth",backgrounds_pixels.length,mouths_data);
+    let mask_pixels = this.getTraitPixels("mask",backgrounds_pixels.length,masks_data);
+    let head_pixels = this.getTraitPixels("head",backgrounds_pixels.length,heads_data);
+    let eyes_pixels = this.getTraitPixels("eyes",backgrounds_pixels.length,eyes_data);
+    
+    this.pixel_data = backgrounds_pixels;
+
+    for (var i = 0; i < type_pixels.length; i++) {
+      if (eyes_pixels[i][3] == 255) {
+        this.pixel_data[i] = eyes_pixels[i];
+      } else if (head_pixels[i][3] == 255) {
+        this.pixel_data[i] = head_pixels[i];
+      } else if (mask_pixels[i][3] == 255) {
+        this.pixel_data[i] = mask_pixels[i];
+      } else if (mouth_pixels[i][3] == 255) {
+        this.pixel_data[i] = mouth_pixels[i];
+      } else if (clothes_pixels[i][3] == 255) {
+        this.pixel_data[i] = clothes_pixels[i];
+      } else if (type_pixels[i][3] == 255) {
+        this.pixel_data[i] = type_pixels[i];
+      }
+    }
+
     this.opacity = new Array(this.pixel_data.length).fill(1);
     this.background_color = this.pixel_data[0];
 
@@ -68,11 +109,19 @@ import filters from "@/assets/filters.json";
   },
   props: {
     img: String,
+    id: Number,
     interactive: Boolean,
     h: String,
     w: String,
   },
   methods: {
+    getTraitPixels(trait: string, length: number, json_file: any) {
+      return this.mapped_data[trait] == "None"
+        ? Array.from(Array(length), (_) => Array(3).fill(0))
+        : json_file.filter((item: any) => {
+            return item.trait_name == this.mapped_data[trait];
+          })[0].data;
+    },
     bgColor(d: number, i: number, dimensions: number) {
       if (this.isFilterOn) {
         return (
