@@ -27,7 +27,7 @@ import { nextTick } from "@vue/runtime-core";
 
 @Options({
   setup() {
-    let connection = new Connection("https://api.mainnet-beta.solana.com");
+    let connection = new Connection("https://solana-mainnet.phantom.tech");
     return { connection };
   },
   computed: {
