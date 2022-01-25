@@ -27,7 +27,7 @@ import { nextTick } from "@vue/runtime-core";
 
 @Options({
   setup() {
-    let connection = new Connection("https://solana-mainnet.phantom.tech");
+    let connection = new Connection("https://free.rpcpool.com");
     return { connection };
   },
   computed: {
