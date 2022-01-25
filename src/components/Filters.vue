@@ -110,7 +110,6 @@ export default {
       getCustomBackgroundPixel: "getCustomBackgroundPixel",
       getBackground: "getBackground",
       areTheyWorthy: "areTheyWorthy",
-      interactive: "isPlaying",
       isFilterOn: "isFilterOn",
       whatThreshold: "whatThreshold",
       currentFilter: "currentFilter",

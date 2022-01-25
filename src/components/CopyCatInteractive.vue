@@ -1,7 +1,7 @@
 <template>
   <div class="border-white border-2">
     <div class="cursor-pointer p-5 text-sm" v-if="areTheyWorthy">
-    <!--<div
+      <!--<div
       @click="
         toggleType = !toggleType;
         rerun();
@@ -9,47 +9,47 @@
     >
     Type:  {{ toggleType }}
     </div>-->
-    <div
-      @click="
-        toggleClothes = !toggleClothes;
-        rerun();
-      "
-    >
-    Clothes:  {{ toggleClothes }}
+      <div
+        @click="
+          toggleClothes = !toggleClothes;
+          rerun();
+        "
+      >
+        Clothes: {{ toggleClothes }}
+      </div>
+      <div
+        @click="
+          toggleMouth = !toggleMouth;
+          rerun();
+        "
+      >
+        Beard: {{ toggleMouth }}
+      </div>
+      <div
+        @click="
+          toggleMask = !toggleMask;
+          rerun();
+        "
+      >
+        Mask: {{ toggleMask }}
+      </div>
+      <div
+        @click="
+          toggleHead = !toggleHead;
+          rerun();
+        "
+      >
+        Headwear: {{ toggleHead }}
+      </div>
+      <div
+        @click="
+          toggleEyes = !toggleEyes;
+          rerun();
+        "
+      >
+        Eyewear: {{ toggleEyes }}
+      </div>
     </div>
-    <div
-      @click="
-        toggleMouth = !toggleMouth;
-        rerun();
-      "
-    >
-    Mouth:  {{ toggleMouth }}
-    </div>
-    <div
-      @click="
-        toggleMask = !toggleMask;
-        rerun();
-      "
-    >
-    Mask:  {{ toggleMask }}
-    </div>
-    <div
-      @click="
-        toggleHead = !toggleHead;
-        rerun();
-      "
-    >
-    Head:  {{ toggleHead }}
-    </div>
-    <div
-      @click="
-        toggleEyes = !toggleEyes;
-        rerun();
-      "
-    >
-    Eyes:  {{ toggleEyes }}
-    </div>
-</div>
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
       <div
         @mousedown="popPixel(getMyIndex(d, i, dimensions))"
@@ -91,49 +91,6 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
   created() {
     this.rerun();
   },
-  mounted() {
-    //this.rerun();
-    /*this.mapped_data = mapper.filter((item) => {
-      return item.id == this.id;
-    })[0];
-
-    let backgrounds_pixels = backgrounds_data.filter((item) => {
-      return item.trait_name == this.mapped_data.background;
-    })[0].data;
-
-    let type_pixels = this.getTraitPixels("type",backgrounds_pixels.length,type_data,this.mapped_data);
-    let clothes_pixels = this.getTraitPixels("clothes",backgrounds_pixels.length,clothes_data,this.mapped_data);
-    let mouth_pixels = this.getTraitPixels("mouth",backgrounds_pixels.length,mouths_data,this.mapped_data);
-    let mask_pixels = this.getTraitPixels("mask",backgrounds_pixels.length,masks_data,this.mapped_data);
-    let head_pixels = this.getTraitPixels("head",backgrounds_pixels.length,heads_data,this.mapped_data);
-    let eyes_pixels = this.getTraitPixels("eyes",backgrounds_pixels.length,eyes_data,this.mapped_data);
-
-    this.pixel_data = backgrounds_pixels;
-
-    for (var i = 0; i < type_pixels.length; i++) {
-
-      if (type_pixels[i][3] != 0) {
-        this.pixel_data[i] = type_pixels[i];
-      }if (clothes_pixels[i][3] != 0) {
-        this.pixel_data[i] = clothes_pixels[i];
-      }if (mouth_pixels[i][3] != 0) {
-        this.pixel_data[i] = mouth_pixels[i];
-      }if (mask_pixels [i][3] != 0) {
-        this.pixel_data[i] = mask_pixels[i];
-      } if (head_pixels [i][3] != 0) {
-        this.pixel_data[i] = head_pixels[i];
-      }if (eyes_pixels[i][3] != 0) {
-        this.pixel_data[i] = eyes_pixels[i];
-      }
-    }
-
-    this.opacity = new Array(this.pixel_data.length).fill(1);
-    this.background_color = this.pixel_data[0];
-
-    this.num_of_game_pixels = this.pixel_data.filter(
-      (item: string, index: number) => this.isThisAnEdgePixel(index)
-    ).length;*/
-  },
   computed: {
     ...mapGetters([
       "areTheyWorthy",
@@ -160,15 +117,12 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     },
   },
   props: {
-    img: String,
     id: Number,
-    interactive: Boolean,
     h: String,
     w: String,
   },
   methods: {
     async rerun() {
-      //await this.$nextTick();
       this.mapped_data = await mapper.filter((item) => {
         return item.id == this.id;
       })[0];
@@ -288,7 +242,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       }
       return c[0] + "," + c[1] + "," + c[2];
     },
-    getMyIndex(d: number, i: number, dimensions: number) {
+    getMyIndex(d: number, i: number, dimensions: number): number {
       let num = (d - 1) * dimensions + i - 1;
       return num;
     },
@@ -346,6 +300,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       if (this.pixel_data[index] != null) {
         return this.pixel_data[index].toString();
       }
+      return "0,0,0,0";
     },
     resetGame() {
       this.setPlayStatus(false);
@@ -353,26 +308,24 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       this.resetScore();
     },
     popPixel(index: number) {
-      if (this.interactive) {
-        if (
-          this.opacity[index] == 1 &&
-          this.pixel_data[index][0] == this.background_color[0] &&
-          this.pixel_data[index][1] == this.background_color[1] &&
-          this.pixel_data[index][2] == this.background_color[2]
-        ) {
-          if (this.isThisAnEdgePixel(index)) {
-            this.num_of_game_pixels -= 1;
-            this.addPoint(1);
-          }
-          this.opacity[index] = 0;
-          if (this.num_of_game_pixels == 0) {
-            alert("You Win!");
-            this.resetGame();
-          }
-        } else if (this.opacity[index] == 1) {
-          alert("Game Over!");
+      if (
+        this.opacity[index] == 1 &&
+        this.pixel_data[index][0] == this.background_color[0] &&
+        this.pixel_data[index][1] == this.background_color[1] &&
+        this.pixel_data[index][2] == this.background_color[2]
+      ) {
+        if (this.isThisAnEdgePixel(index)) {
+          this.num_of_game_pixels -= 1;
+          this.addPoint(1);
+        }
+        this.opacity[index] = 0;
+        if (this.num_of_game_pixels == 0) {
+          alert("You Win!");
           this.resetGame();
         }
+      } else if (this.opacity[index] == 1) {
+        alert("Game Over!");
+        this.resetGame();
       }
     },
   },
@@ -394,8 +347,6 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
   },
 })
 export default class CopyCatInteractive extends Vue {
-  img!: string;
-  interactive!: boolean;
   h!: string;
   w!: string;
 }
