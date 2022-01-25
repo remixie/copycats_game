@@ -1,9 +1,9 @@
 <template>
   <Base
-    msg="arcade"
+    msg="sketchette"
     class="base"
     :style="'backgroundColor: #' + getBackground"
-    subheading="https://copycats-game.vercel.app"
+    subheading="https://sketchette.com"
   />
 </template>
 
