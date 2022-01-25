@@ -27,7 +27,7 @@ import { nextTick } from "@vue/runtime-core";
 
 @Options({
   setup() {
-    let connection = new Connection("https://free.rpcpool.com");
+    let connection = new Connection("http://api.metaplex.solana.com");
     return { connection };
   },
   computed: {
