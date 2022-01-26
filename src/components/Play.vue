@@ -9,85 +9,72 @@
         w="15px"
       />
       <div class="col-span-3">
-        <!--<div>
-          <br />
-          <input type="checkbox" name="eyes" :value="mapper.eyes" checked />
-          <label for="eyes"> Eyes: {{ mapper.eyes }}</label>
-          <br />
-          <input type="checkbox" name="head" :value="mapper.head" checked />
-          <label for="head"> Head: {{ mapper.head }}</label>
-          <br />
-          <input type="checkbox" name="mask" :value="mapper.mask" checked />
-          <label for="mask"> Mask: {{ mapper.mask }}</label>
-          <br />
-          <input type="checkbox" name="mouth" :value="mapper.mouth" checked />
-          <label for="mouth"> Mouth: {{ mapper.mouth }}</label>
-          <br />
-          <input
-            type="checkbox"
-            name="clothes"
-            :value="mapper.clothes"
-            checked
-          />
-          <label for="clothes"> Clothes: {{ mapper.clothes }}</label>
-          <br />
-          <input type="checkbox" name="type" :value="mapper.type" checked />
-          <label for="type"> Type: {{ mapper.type }}</label>
-          <br />
-          <input
-            type="checkbox"
-            name="background"
-            :value="mapper.background"
-            checked
-          />
-          <label for="background"> Background: {{ mapper.background }}</label>
-        </div>-->
-        <div class="grid grid-cols-7">
-          <asset-image
-            class="mx-auto w-max cursor-pointer"
-            h="2px"
-            w="2px"
-            :img="mapper.id"
-            trait="head"
-          />
-          <asset-image
-            class="mx-auto w-max cursor-pointer"
-            h="2px"
-            w="2px"
-            :img="mapper.id"
-            trait="eyes"
-          />
-          <asset-image
-            class="mx-auto w-max cursor-pointer"
-            h="2px"
-            w="2px"
-            :img="mapper.id"
-            trait="mouth"
-          />
-          <asset-image
-            class="mx-auto w-max cursor-pointer"
-            h="2px"
-            w="2px"
-            :img="mapper.id"
-            trait="clothes"
-          />
-          <asset-image
-            class="mx-auto w-max cursor-pointer"
-            h="2px"
-            w="2px"
-            :img="mapper.id"
-            trait="type"
-          />
-          <asset-image
-            class="mx-auto w-max cursor-pointer"
-            h="2px"
-            w="2px"
-            :img="mapper.id"
-            trait="background"
-          />
+        <div class="inline-grid grid-cols-7">
+          <div v-for="cc in my_cats" :key="cc.mint" class="">
+            <asset-image
+              class="mx-auto w-max cursor-pointer"
+              h="2px"
+              w="2px"
+              :img="parseInt(cc.name.replace('CopyCats #', ''))"
+              trait="head"
+            />
+            <asset-image
+              class="mx-auto w-max cursor-pointer"
+              h="2px"
+              w="2px"
+              :img="parseInt(cc.name.replace('CopyCats #', ''))"
+              trait="eyes"
+            />
+            <asset-image
+              class="mx-auto w-max cursor-pointer"
+              h="2px"
+              w="2px"
+              :img="parseInt(cc.name.replace('CopyCats #', ''))"
+              trait="mouth"
+            />
+            <asset-image
+              class="mx-auto w-max cursor-pointer"
+              h="2px"
+              w="2px"
+              :img="parseInt(cc.name.replace('CopyCats #', ''))"
+              trait="clothes"
+            />
+            <asset-image
+              class="mx-auto w-max cursor-pointer"
+              h="2px"
+              w="2px"
+              :img="parseInt(cc.name.replace('CopyCats #', ''))"
+              trait="mask"
+            />
+            <!--<asset-image
+              class="mx-auto w-max cursor-pointer"
+              h="2px"
+              w="2px"
+              :img="parseInt(cc.name.replace('CopyCats #', ''))"
+              trait="type"
+            />-->
+            <asset-image
+              class="mx-auto w-max cursor-pointer"
+              h="2px"
+              w="2px"
+              :img="parseInt(cc.name.replace('CopyCats #', ''))"
+              trait="background"
+            />
+          </div>
         </div>
         <div
-          class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-full"
+          class="
+            rounded-full
+            text-center text-sm
+            bg-green-400
+            text-black
+            hover:bg-green-800 hover:text-white
+            cursor-pointer
+            mt-10
+            mx-auto
+            p-2
+            w-full
+          "
           @click="resetGame()"
         >
           Choose a different Cat
@@ -122,7 +109,11 @@ import Filters from "./Filters.vue";
         );
       })[0];
     },
-    ...mapGetters({ selected_cat: "getChosenCat", score: "currentScore" }),
+    ...mapGetters({
+      selected_cat: "getChosenCat",
+      score: "currentScore",
+      my_cats: "getCatList",
+    }),
   },
   methods: {
     resetGame() {

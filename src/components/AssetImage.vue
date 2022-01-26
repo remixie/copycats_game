@@ -112,7 +112,7 @@ import filters from "@/assets/filters.json";
         if (specific_pixels[i][3] != 0) {
           this.pixel_data[i] = specific_pixels[i];
         } else {
-          this.pixel_data[i] = [255, 255, 255, 255];
+          this.pixel_data[i] = [57, 255, 7, 255];
         }
       }
     },

@@ -1,6 +1,24 @@
 <template>
   <div>
     <!--<div class="text-center text-2xl mt-6">$PAW Balance: 100</div>-->
+    <div
+      class="
+        text-xs text-center
+        bg-purple-400
+        text-black
+        hover:bg-purple-900
+        p-1
+        w-1/4
+        rounded-full
+        mx-auto
+        hover:text-white
+        cursor-pointer
+        mt-5
+      "
+      @click="ethConnect"
+    >
+      {{ eth_wallet_address ? "ETH wallet Connected" : "Connect to Metamask" }}
+    </div>
     <div class="text-xl mt-3 text-center">
       {{
           my_cats.length &lt; 1
@@ -13,7 +31,7 @@
         'grid',
         'w-1/2',
         'mx-auto',
-        ' grid-cols-' + Math.min(my_cats.length, 5),
+        ' grid-cols-' + Math.min(my_cats.length, 6),
       ]"
     >
       <copy-cat-image
@@ -36,7 +54,7 @@ import CopyCatImage from "./CopyCatImage.vue";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { mapGetters, mapActions } from "vuex";
 import { Options, Vue } from "vue-class-component";
-
+declare var window: any;
 @Options({
   computed: {
     ...mapGetters({
@@ -48,8 +66,21 @@ import { Options, Vue } from "vue-class-component";
   components: {
     CopyCatImage,
   },
+  data() {
+    return {
+      eth_wallet_address: "",
+    };
+  },
   methods: {
     ...mapActions(["setCatList", "selectCat"]),
+    async ethConnect() {
+      if (typeof window.ethereum !== "undefined") {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        this.eth_wallet_address = accounts[0];
+      }
+    },
   },
   async mounted() {
     if (this.wallet == "guest") {

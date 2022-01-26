@@ -1,14 +1,6 @@
 <template>
-  <div class="border-white border-2">
-    <div class="cursor-pointer p-5 text-sm" v-if="areTheyWorthy">
-      <!--<div
-      @click="
-        toggleType = !toggleType;
-        rerun();
-      "
-    >
-    Type:  {{ toggleType }}
-    </div>-->
+  <div class="">
+    <div class="cursor-pointer text-sm" v-if="areTheyWorthy">
       <div
         @click="
           toggleClothes = !toggleClothes;
@@ -39,7 +31,14 @@
           rerun();
         "
       >
-        Headwear: {{ toggleHead }}
+        Headwear:
+        <span
+          :class="[
+            { 'text-green-500': toggleHead },
+            { 'text-red-500': !toggleHead },
+          ]"
+          >{{ toggleHead }}</span
+        >
       </div>
       <div
         @click="
