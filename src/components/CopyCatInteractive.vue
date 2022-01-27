@@ -106,6 +106,8 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         return item.id == this.id;
       })[0];
 
+      
+
       let backgrounds_pixels = await backgrounds_data.filter((item) => {
         return item.trait_name == this.mapped_data.background;
       })[0].data;

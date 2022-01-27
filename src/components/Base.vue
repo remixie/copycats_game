@@ -3,7 +3,8 @@
     <headings :title="msg" :subtitle="subheading" />
     <div v-if="!instructionsState">
       <div v-if="!playing">
-        <connect-button />
+        <connect-buttons />
+        
         <cat-selection v-if="wallet && chosen.length == 0" />
         <chosen-cat v-if="chosen.length != 0" />
       </div>
@@ -16,14 +17,13 @@
 <script lang="ts">
 import ChosenCat from "./ChosenCat.vue";
 import Headings from "./Headings.vue";
-import ConnectButton from "./ConnectButton.vue";
+import ConnectButtons from "./ConnectButtons.vue";
 import Instructions from "./Instructions.vue";
 import CatSelection from "./CatSelection.vue";
 import Play from "./Play.vue";
 import { Options, Vue } from "vue-class-component";
-import { Connection } from "@solana/web3.js";
 import { mapActions, mapGetters } from "vuex";
-import { nextTick } from "@vue/runtime-core";
+
 
 @Options({
   computed: {
@@ -41,7 +41,7 @@ import { nextTick } from "@vue/runtime-core";
   components: {
     Headings,
     Instructions,
-    ConnectButton,
+    ConnectButtons,
     ChosenCat,
     CatSelection,
     Play,

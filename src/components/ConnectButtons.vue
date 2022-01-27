@@ -6,8 +6,9 @@
     >
       connect your SOL wallet
     </div>
+    <eth-connect-button/>
     <div
-      class="text-xs text-center bg-purple-400 text-black hover:bg-purple-900 p-1 w-1/6 rounded-full mx-auto hover:text-white cursor-pointer mt-5"
+      class="text-xs text-center bg-gray-400 text-black hover:bg-gray-900 p-1 w-1/6 rounded-full mx-auto hover:text-white cursor-pointer mt-5"
       @click="generateGuestWallet()"
     >
       play as a guest
@@ -17,10 +18,13 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { Options, Vue } from "vue-class-component";
-
+import EthConnectButton from "./EthConnectButton.vue"
 @Options({
   data: () => {
     return {};
+  },
+  components:{
+    EthConnectButton,
   },
   computed: {
     ...mapGetters({ wallet: "getWallet" }),

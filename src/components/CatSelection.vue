@@ -1,18 +1,8 @@
 <template>
-  <div>
+  <div class=' text-center'>
     <!--<div class="text-center text-2xl mt-6">$PAW Balance: 100</div>-->
-    <div
-      :class="[
-        { 'bg-gray-500 hover:bg-black cursor-pointer': noEthWallet },
-        'text-xs text-center p-1 w-1/4 rounded-full mx-auto hover:text-white  mt-5',
-      ]"
-      @click="ethConnect()"
-    >
-      {{
-        getEthWallet != "" ? "ETH wallet Connected" : "Connect your ETH wallet"
-      }}
-    </div>
-    <div class="text-xl mt-3 text-center">
+    <div class="mt-5" v-if="exec_wallet">hello <span class="text-green-400">Executive</span>  {{exec_wallet.username}}. please</div>
+    <div class="text-xl mt-3">
       {{
           my_cats.length &lt; 1
             ? "loading..."
@@ -41,23 +31,22 @@
   </div>
 </template>
 <script lang="ts">
+import exec_wallets from "@/assets/executive_wallets.json"
 import imagemap from "@/assets/img_map.json";
 import CopyCatImage from "./CopyCatImage.vue";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { mapGetters, mapActions } from "vuex";
 import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
-declare var window: any;
 @Options({
   computed: {
-    noEthWallet() {
+    exec_wallet(){
       const store = useStore();
-      return store.getters.getEthWallet == '';
+      return exec_wallets.filter(item => {return item.wallet_addr == store.getters.getWallet})[0]
     },
     ...mapGetters({
       wallet: "getWallet",
       my_cats: "getCatList",
-      getEthWallet: "getEthWallet",
     }),
   },
   components: {
@@ -67,16 +56,7 @@ declare var window: any;
     return {};
   },
   methods: {
-    
     ...mapActions(["setCatList", "selectCat", "setEthWallet"]),
-    async ethConnect() {
-      if (typeof window.ethereum !== "undefined") {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        this.setEthWallet(accounts[0]);
-      }
-    },
   },
   async mounted() {
     if (this.wallet == "guest") {
