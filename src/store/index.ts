@@ -4,7 +4,7 @@ export const store = createStore({
   state: {
     wallet: "",
     default_background: "37393e",
-    custom_background_pixel: "000",
+    custom_background_pixel: "999999",
     background: "37393e",
     connection: [],
     cat_list: [],
@@ -100,10 +100,10 @@ export const store = createStore({
   },
   actions: {
     setCustomBackgroundPixel({ commit }, hex) {
-      commit("changeCustomBackgroundPixel", hex);
+      commit("changeCustomBackgroundPixel", hex.replace('#',''));
     },
     setBackground({ commit }, hex) {
-      commit("changeBackground", hex);
+      commit("changeBackground", hex.replace('#',''));
     },
     setWallet({ commit }, address) {
       commit("changeWallet", address);

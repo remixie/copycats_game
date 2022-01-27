@@ -1,9 +1,6 @@
 <template>
   <div class="">
-    <div
-      class="text-sm border-2 border-white p-5"
-      v-if="areTheyWorthy"
-    >
+    <div class="text-sm border-2 border-white p-5" v-if="areTheyWorthy">
       <div v-for="(m, i) in mapped_data" :key="m">
         <div
           v-if="
@@ -30,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="border-2 border-white">
+    <div class="border-2 border-white cursor-pointer">
       <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
         <div
           @mousedown="popPixel(getMyIndex(d, i, dimensions))"
@@ -150,10 +147,10 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         this.mapped_data
       );
 
+      this.opacity = new Array(this.pixel_data.length).fill(1);
+
       for (var i = 0; i < backgrounds_pixels.length; i++) {
-        if (backgrounds_pixels[i][3] != 0) {
           this.pixel_data[i] = backgrounds_pixels[i];
-        }
         if (type_pixels[i][3] != 0 && this.toggleTraits["type"]) {
           this.pixel_data[i] = type_pixels[i];
         }
@@ -172,9 +169,9 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         if (eyes_pixels[i][3] != 0 && this.toggleTraits["eyes"]) {
           this.pixel_data[i] = eyes_pixels[i];
         }
+        this.opacity[i] = this.pixel_data[i][3] / 255;
       }
 
-      this.opacity = new Array(this.pixel_data.length).fill(1);
       this.background_color = this.pixel_data[0];
 
       this.num_of_game_pixels = this.pixel_data.filter(
@@ -216,13 +213,15 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     }),
     applyBWFilter(color: string) {
       let c = color.split(",").map((n) => parseInt(n, 10));
+      let o = c[3];
+      c = [c[0], c[1], c[2]];
       let sum = c.reduce((a, b) => a + b);
       if (sum > this.whatThreshold) {
         c = this.currentFilterData[1].hex;
       } else {
         c = this.currentFilterData[0].hex;
       }
-      return c[0] + "," + c[1] + "," + c[2];
+      return c[0] + "," + c[1] + "," + c[2] + "," + o;
     },
     getMyIndex(d: number, i: number, dimensions: number): number {
       let num = (d - 1) * dimensions + i - 1;
@@ -282,7 +281,9 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       if (this.pixel_data[index] != null) {
         return this.pixel_data[index].toString();
       }
-      return "0,0,0,0";
+      else{
+        return "0,0,0,255";
+      }
     },
     resetGame() {
       this.setPlayStatus(false);
@@ -290,24 +291,26 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       this.resetScore();
     },
     popPixel(index: number) {
-      if (
-        this.opacity[index] == 1 &&
-        this.pixel_data[index][0] == this.background_color[0] &&
-        this.pixel_data[index][1] == this.background_color[1] &&
-        this.pixel_data[index][2] == this.background_color[2]
-      ) {
-        if (this.isThisAnEdgePixel(index)) {
-          this.num_of_game_pixels -= 1;
-          this.addPoint(1);
-        }
-        this.opacity[index] = 0;
-        if (this.num_of_game_pixels == 0) {
-          alert("You Win!");
+      if (this.opacity[index] != 0) {
+        if (
+          this.pixel_data[index][0] == this.background_color[0] &&
+          this.pixel_data[index][1] == this.background_color[1] &&
+          this.pixel_data[index][2] == this.background_color[2]
+        ) {
+          if (this.isThisAnEdgePixel(index)) {
+            this.num_of_game_pixels -= 1;
+            this.addPoint(1);
+          }
+          this.opacity[index] = 0;
+
+          if (this.num_of_game_pixels == 0) {
+            alert("You Win!");
+            this.resetGame();
+          }
+        } else {
+          alert("Game Over!");
           this.resetGame();
         }
-      } else if (this.opacity[index] == 1) {
-        alert("Game Over!");
-        this.resetGame();
       }
     },
   },
