@@ -1,5 +1,9 @@
 <template>
-  <div class="border-white border-2" v-if="assetExists(trait)">
+  <div
+    class="border-white border-2 inline-block cursor-pointer"
+    v-if="assetExists(trait)"
+    :title="trait + ': '+mapped_data[trait]"
+  >
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24 gap-0">
       <div
         v-for="i in dimensions"
@@ -112,7 +116,12 @@ import filters from "@/assets/filters.json";
         if (specific_pixels[i][3] != 0) {
           this.pixel_data[i] = specific_pixels[i];
         } else {
-          this.pixel_data[i] = [57, 255, 7, 255];
+          this.pixel_data[i] = [
+            255 - 3 * ((i / this.dimensions) % this.dimensions),
+            255 - 3 * ((i / this.dimensions) % this.dimensions),
+            255 - 3 * ((i / this.dimensions) % this.dimensions),
+            255,
+          ];
         }
       }
     },
@@ -129,7 +138,7 @@ import filters from "@/assets/filters.json";
           })[0].data;
     },
     bgColor(d: number, i: number, dimensions: number) {
-      if (this.isFilterOn) {
+      /*if (this.isFilterOn) {
         return (
           "rgb(" +
           this.applyBWFilter(
@@ -141,9 +150,10 @@ import filters from "@/assets/filters.json";
         return (
           "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")"
         );
-      }
+      }*/
+      return "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")";
     },
-    applyBWFilter(color: string) {
+    /*applyBWFilter(color: string) {
       let c = color.split(",").map((n) => parseInt(n, 10));
 
       let sum = c.reduce((a, b) => a + b);
@@ -153,7 +163,7 @@ import filters from "@/assets/filters.json";
         c = this.currentFilterData[0].hex;
       }
       return c[0] + "," + c[1] + "," + c[2];
-    },
+    },*/
     getMyIndex(d: number, i: number, dimensions: number) {
       let num = (d - 1) * dimensions + i - 1;
       return num;

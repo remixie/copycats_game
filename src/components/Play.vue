@@ -3,14 +3,15 @@
     <div class="text-center text-2xl">Score: {{ score }}</div>
     <div class="grid grid-cols-12 mt-5">
       <copy-cat-interactive
-        class="mx-auto mt-2 col-span-8"
+        class="mx-auto mt-2 col-span-7"
         :id="mapper.id"
         h="15px"
         w="15px"
       />
-      <div class="col-span-3">
-        <div class="inline-grid grid-cols-7">
-          <div v-for="cc in my_cats" :key="cc.mint" class="">
+      <div class="col-span-4">
+        <div class="">
+          <div class="mb-2">My Assets:</div>
+          <div v-for="cc in my_cats" :key="cc.mint" class="inline-block">
             <asset-image
               class="mx-auto w-max cursor-pointer"
               h="2px"
@@ -63,22 +64,12 @@
           </div>
         </div>
         <div
-          class="
-            rounded-full
-            text-center text-sm
-            bg-green-400
-            text-black
-            hover:bg-green-800 hover:text-white
-            cursor-pointer
-            mt-10
-            mx-auto
-            p-2
-            w-full
-          "
+          class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-2/3"
           @click="resetGame()"
         >
           Choose a different Cat
         </div>
+        
         <filters />
       </div>
     </div>

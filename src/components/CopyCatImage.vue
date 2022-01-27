@@ -1,5 +1,5 @@
 <template>
-  <div class="border-white border-2">
+  <div class="border-white border-2 cursor-pointer">
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
       <div
         v-for="i in dimensions"
@@ -57,7 +57,7 @@ import filters from "@/assets/filters.json";
   },
   methods: {
     bgColor(d: number, i: number, dimensions: number) {
-      if (this.isFilterOn) {
+      /*if (this.isFilterOn) {
         return (
           "rgb(" +
           this.applyBWFilter(
@@ -69,9 +69,12 @@ import filters from "@/assets/filters.json";
         return (
           "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")"
         );
-      }
+      }*/
+      return (
+          "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")"
+        );
     },
-    applyBWFilter(color: string) {
+    /*applyBWFilter(color: string) {
       let c = color.split(",").map((n) => parseInt(n, 10));
       let sum = c.reduce((a, b) => a + b);
       if (sum > this.whatThreshold) {
@@ -80,7 +83,7 @@ import filters from "@/assets/filters.json";
         c = this.currentFilterData[0].hex;
       }
       return c[0] + "," + c[1] + "," + c[2];
-    },
+    },*/
     getMyIndex(d: number, i: number, dimensions: number) {
       let num = (d - 1) * dimensions + i - 1;
       return num;

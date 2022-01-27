@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="text-center bg-white text-black w-full mt-10 text-center mx-auto rounded-full cursor-pointer"
+      class="text-center bg-white text-black w-2/3 mt-10 text-center mx-auto rounded-full cursor-pointer p-2"
       @click="
         toggleFilter();
         isFilterOn
@@ -20,7 +20,7 @@
         class="mx-auto mt-2"
       />
       <div
-        class="mt-2 text-center mx-auto bg-white text-black w-full rounded-full cursor-pointer"
+        class="mt-2 text-center mx-auto bg-white text-black w-2/3 rounded-full cursor-pointer"
         @click="menu = !menu"
       >
         Filter: {{ currentFilter }} &#9660;
@@ -28,7 +28,7 @@
       <div v-if="menu">
         <div
           v-for="f in filters"
-          class="mt-1 text-center mx-auto bg-white text-black w-1/2 cursor-pointer"
+          class="mt-1 text-center mx-auto bg-white text-black w-full cursor-pointer"
           :key="f.name"
           @click="
             changeFilter(f.name);

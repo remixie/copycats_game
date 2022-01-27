@@ -4,7 +4,7 @@
       @click="connectToWallet()"
       class="rounded-full bg-green-400 text-black text-center hover:bg-green-800 hover:text-white mt-10 mx-auto p-2 w-1/4"
     >
-      connect your wallet
+      connect your SOL wallet
     </div>
     <div
       class="text-xs text-center bg-purple-400 text-black hover:bg-purple-900 p-1 w-1/6 rounded-full mx-auto hover:text-white cursor-pointer mt-5"

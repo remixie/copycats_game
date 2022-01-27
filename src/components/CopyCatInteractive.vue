@@ -1,75 +1,58 @@
 <template>
   <div class="">
-    <div class="cursor-pointer text-sm" v-if="areTheyWorthy">
-      <div
-        @click="
-          toggleClothes = !toggleClothes;
-          rerun();
-        "
-      >
-        Clothes: {{ toggleClothes }}
-      </div>
-      <div
-        @click="
-          toggleMouth = !toggleMouth;
-          rerun();
-        "
-      >
-        Beard: {{ toggleMouth }}
-      </div>
-      <div
-        @click="
-          toggleMask = !toggleMask;
-          rerun();
-        "
-      >
-        Mask: {{ toggleMask }}
-      </div>
-      <div
-        @click="
-          toggleHead = !toggleHead;
-          rerun();
-        "
-      >
-        Headwear:
-        <span
-          :class="[
-            { 'text-green-500': toggleHead },
-            { 'text-red-500': !toggleHead },
-          ]"
-          >{{ toggleHead }}</span
+    <div
+      class="text-sm border-2 border-white p-5"
+      v-if="areTheyWorthy"
+    >
+      <div v-for="(m, i) in mapped_data" :key="m">
+        <div
+          v-if="
+            m != 'None' &&
+            !Number.isFinite(m) &&
+            i != 'background' &&
+            i != 'type'
+          "
+          class="m-2"
         >
-      </div>
-      <div
-        @click="
-          toggleEyes = !toggleEyes;
-          rerun();
-        "
-      >
-        Eyewear: {{ toggleEyes }}
+          {{ i.charAt(0).toUpperCase() + i.slice(1) + ": " }}
+          <span
+            :class="[
+              { 'bg-green-500': toggleTraits[i] },
+              { 'bg-red-500': !toggleTraits[i] },
+              'text-white rounded-md p-1 hover:bg-black cursor-pointer',
+            ]"
+            @click="
+              toggleTraits[i] = !toggleTraits[i];
+              rerun();
+            "
+            >{{ toggleTraits[i] }}</span
+          >
+        </div>
       </div>
     </div>
-    <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
-      <div
-        @mousedown="popPixel(getMyIndex(d, i, dimensions))"
-        v-for="i in dimensions"
-        :key="i"
-        @mouseenter="
-          [
-            (hover[getMyIndex(d, i, dimensions)] = true),
-            isGlide($event, d, i, dimensions),
-          ]
-        "
-        @mouseleave="hover[getMyIndex(d, i, dimensions)] = false"
-        :style="{
-          backgroundColor: bgColor(d, i, dimensions),
-          'hover:backgroundColor': 'red',
-          opacity: opacity[getMyIndex(d, i, dimensions)],
-          height: h,
-          width: w,
-        }"
-        :class="[{ pixel: hover[getMyIndex(d, i, dimensions)] }]"
-      ></div>
+    <div class="border-2 border-white">
+      <div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
+        <div
+          @mousedown="popPixel(getMyIndex(d, i, dimensions))"
+          v-for="i in dimensions"
+          :key="i"
+          @mouseenter="
+            [
+              (hover[getMyIndex(d, i, dimensions)] = true),
+              isGlide($event, d, i, dimensions),
+            ]
+          "
+          @mouseleave="hover[getMyIndex(d, i, dimensions)] = false"
+          :style="{
+            backgroundColor: bgColor(d, i, dimensions),
+            'hover:backgroundColor': 'red',
+            opacity: opacity[getMyIndex(d, i, dimensions)],
+            height: h,
+            width: w,
+          }"
+          :class="[{ pixel: hover[getMyIndex(d, i, dimensions)] }]"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
@@ -171,22 +154,22 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         if (backgrounds_pixels[i][3] != 0) {
           this.pixel_data[i] = backgrounds_pixels[i];
         }
-        if (type_pixels[i][3] != 0 && this.toggleType) {
+        if (type_pixels[i][3] != 0 && this.toggleTraits["type"]) {
           this.pixel_data[i] = type_pixels[i];
         }
-        if (clothes_pixels[i][3] != 0 && this.toggleClothes) {
+        if (clothes_pixels[i][3] != 0 && this.toggleTraits["clothes"]) {
           this.pixel_data[i] = clothes_pixels[i];
         }
-        if (mouth_pixels[i][3] != 0 && this.toggleMouth) {
+        if (mouth_pixels[i][3] != 0 && this.toggleTraits["mouth"]) {
           this.pixel_data[i] = mouth_pixels[i];
         }
-        if (mask_pixels[i][3] != 0 && this.toggleMask) {
+        if (mask_pixels[i][3] != 0 && this.toggleTraits["mask"]) {
           this.pixel_data[i] = mask_pixels[i];
         }
-        if (head_pixels[i][3] != 0 && this.toggleHead) {
+        if (head_pixels[i][3] != 0 && this.toggleTraits["head"]) {
           this.pixel_data[i] = head_pixels[i];
         }
-        if (eyes_pixels[i][3] != 0 && this.toggleEyes) {
+        if (eyes_pixels[i][3] != 0 && this.toggleTraits["eyes"]) {
           this.pixel_data[i] = eyes_pixels[i];
         }
       }
@@ -328,15 +311,30 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       }
     },
   },
+  assetExists(trait: string) {
+    this.mapped_data = mapper.filter((item) => {
+      return item.id == this.img;
+    })[0];
+
+    if (this.mapped_data[trait] == "None") {
+      return false;
+    } else {
+      return true;
+    }
+  },
   data: () => {
     return {
-      toggleType: true,
-      toggleClothes: true,
-      toggleMouth: true,
-      toggleMask: true,
-      toggleHead: true,
-      toggleEyes: true,
+      toggleTraits: {
+        type: true,
+        clothes: true,
+        mouth: true,
+        mask: true,
+        head: true,
+        eyes: true,
+        background: true,
+      },
       hover: [],
+      mapped_data: [],
       dimensions: 24,
       pixel_data: [],
       num_of_game_pixels: 576,

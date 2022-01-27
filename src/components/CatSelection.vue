@@ -2,22 +2,12 @@
   <div>
     <!--<div class="text-center text-2xl mt-6">$PAW Balance: 100</div>-->
     <div
-      class="
-        text-xs text-center
-        bg-purple-400
-        text-black
-        hover:bg-purple-900
-        p-1
-        w-1/4
-        rounded-full
-        mx-auto
-        hover:text-white
-        cursor-pointer
-        mt-5
-      "
+      class="text-xs text-center bg-gray-400 text-black hover:bg-gray-900 p-1 w-1/4 rounded-full mx-auto hover:text-white cursor-pointer mt-5"
       @click="ethConnect"
     >
-      {{ eth_wallet_address ? "ETH wallet Connected" : "Connect to Metamask" }}
+      {{
+        eth_wallet_address ? "ETH wallet Connected" : "Connect your ETH wallet"
+      }}
     </div>
     <div class="text-xl mt-3 text-center">
       {{
