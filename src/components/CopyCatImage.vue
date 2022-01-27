@@ -12,7 +12,7 @@
           height: h,
           width: w,
         }"
-        :class="[{ pixel: hover[getMyIndex(d, i, dimensions)] }]"
+        :class="{ pixel: hover[getMyIndex(d, i, dimensions)] }"
       ></div>
     </div>
   </div>

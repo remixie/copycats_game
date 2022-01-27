@@ -26,10 +26,6 @@ import { mapActions, mapGetters } from "vuex";
 import { nextTick } from "@vue/runtime-core";
 
 @Options({
-  setup() {
-    let connection = new Connection("http://api.metaplex.solana.com");
-    return { connection };
-  },
   computed: {
     ...mapGetters({
       wallet: "getWallet",
@@ -37,10 +33,6 @@ import { nextTick } from "@vue/runtime-core";
       playing: "isPlaying",
       instructionsState: "instructionsState",
     }),
-  },
-  async mounted() {
-    await nextTick();
-    this.startSOLConnection(this.connection);
   },
   props: {
     msg: String,

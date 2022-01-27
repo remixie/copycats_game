@@ -2,11 +2,14 @@
   <div>
     <!--<div class="text-center text-2xl mt-6">$PAW Balance: 100</div>-->
     <div
-      class="text-xs text-center bg-gray-400 text-black hover:bg-gray-900 p-1 w-1/4 rounded-full mx-auto hover:text-white cursor-pointer mt-5"
-      @click="ethConnect"
+      :class="[
+        { 'bg-gray-500 hover:bg-black cursor-pointer': noEthWallet },
+        'text-xs text-center p-1 w-1/4 rounded-full mx-auto hover:text-white  mt-5',
+      ]"
+      @click="ethConnect()"
     >
       {{
-        eth_wallet_address ? "ETH wallet Connected" : "Connect your ETH wallet"
+        getEthWallet != "" ? "ETH wallet Connected" : "Connect your ETH wallet"
       }}
     </div>
     <div class="text-xl mt-3 text-center">
@@ -38,37 +41,40 @@
   </div>
 </template>
 <script lang="ts">
-//import web3 from "@solana/web3.js";
 import imagemap from "@/assets/img_map.json";
 import CopyCatImage from "./CopyCatImage.vue";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { mapGetters, mapActions } from "vuex";
 import { Options, Vue } from "vue-class-component";
+import { useStore } from "vuex";
 declare var window: any;
 @Options({
   computed: {
+    noEthWallet() {
+      const store = useStore();
+      return store.getters.getEthWallet == '';
+    },
     ...mapGetters({
       wallet: "getWallet",
-      connection: "getSOLConnection",
       my_cats: "getCatList",
+      getEthWallet: "getEthWallet",
     }),
   },
   components: {
     CopyCatImage,
   },
   data() {
-    return {
-      eth_wallet_address: "",
-    };
+    return {};
   },
   methods: {
-    ...mapActions(["setCatList", "selectCat"]),
+    
+    ...mapActions(["setCatList", "selectCat", "setEthWallet"]),
     async ethConnect() {
       if (typeof window.ethereum !== "undefined") {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
-        this.eth_wallet_address = accounts[0];
+        this.setEthWallet(accounts[0]);
       }
     },
   },
