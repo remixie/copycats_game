@@ -5,13 +5,13 @@
       Rem#0001 on discord.
     </div>
     <img src="/logo.png" class="mx-auto w-1/6 mt-10" />
-    <div class="text-5xl mt-2 text-center bg-slate-300 subtitle">{{ title }}</div>
-    
+    <div class="text-5xl mt-2 text-center bg-slate-300 subtitle">
+      {{ title }}
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-
 import { Options, Vue } from "vue-class-component";
 
 @Options({
@@ -19,7 +19,6 @@ import { Options, Vue } from "vue-class-component";
     title: String,
     subtitle: String,
   },
-  
 })
 export default class Headings extends Vue {
   msg!: string;
@@ -27,7 +26,7 @@ export default class Headings extends Vue {
 }
 </script>
 <style scoped>
-.subtitle{
+.subtitle {
   text-shadow: 0px 5px #000;
 }
 </style>

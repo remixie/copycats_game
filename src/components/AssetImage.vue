@@ -2,7 +2,7 @@
   <div
     class="border-white border-2 inline-block cursor-pointer"
     v-if="assetExists(trait)"
-    :title="trait + ': '+mapped_data[trait]"
+    :title="trait + ': ' + mapped_data[trait]"
   >
     <div v-for="d in dimensions" :key="d" class="grid grid-cols-24 gap-0">
       <div
@@ -132,38 +132,14 @@ import filters from "@/assets/filters.json";
       mapped_data: any
     ) {
       return mapped_data[trait] == "None"
-        ? Array.from(Array(length), (_) => Array(4).fill(0))
+        ? Array.from(Array(length), () => Array(4).fill(0))
         : json_file.filter((item: any) => {
             return item.trait_name == mapped_data[trait];
           })[0].data;
     },
     bgColor(d: number, i: number, dimensions: number) {
-      /*if (this.isFilterOn) {
-        return (
-          "rgb(" +
-          this.applyBWFilter(
-            this.exactPixel(this.getMyIndex(d, i, dimensions))
-          ) +
-          ")"
-        );
-      } else {
-        return (
-          "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")"
-        );
-      }*/
       return "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")";
     },
-    /*applyBWFilter(color: string) {
-      let c = color.split(",").map((n) => parseInt(n, 10));
-
-      let sum = c.reduce((a, b) => a + b);
-      if (sum > this.whatThreshold) {
-        c = this.currentFilterData[1].hex;
-      } else {
-        c = this.currentFilterData[0].hex;
-      }
-      return c[0] + "," + c[1] + "," + c[2];
-    },*/
     getMyIndex(d: number, i: number, dimensions: number) {
       let num = (d - 1) * dimensions + i - 1;
       return num;

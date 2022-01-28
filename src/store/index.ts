@@ -17,7 +17,7 @@ export const store = createStore({
     filterThreshold: 346, //this was chosen since it seems to work well for lots of cats as the default
   },
   getters: {
-    getEthWallet(state){
+    getEthWallet(state) {
       return state.eth_wallet;
     },
     getDefaultBackground(state) {
@@ -61,8 +61,8 @@ export const store = createStore({
     },
   },
   mutations: {
-    changeEthWallet(state,wallet_addr){
-      state.eth_wallet = wallet_addr
+    changeEthWallet(state, wallet_addr) {
+      state.eth_wallet = wallet_addr;
     },
     changeBackground(state, hex) {
       state.background = hex;
@@ -99,14 +99,14 @@ export const store = createStore({
     },
   },
   actions: {
-    setEthWallet({commit},wallet_addr){
+    setEthWallet({ commit }, wallet_addr) {
       commit("changeEthWallet", wallet_addr);
     },
     setCustomBackgroundPixel({ commit }, hex) {
-      commit("changeCustomBackgroundPixel", hex.replace('#',''));
+      commit("changeCustomBackgroundPixel", hex.replace("#", ""));
     },
     setBackground({ commit }, hex) {
-      commit("changeBackground", hex.replace('#',''));
+      commit("changeBackground", hex.replace("#", ""));
     },
     setWallet({ commit }, address) {
       commit("changeWallet", address);

@@ -22,7 +22,7 @@
               toggleTraits[i] = !toggleTraits[i];
               rerun();
             "
-            >{{ toggleTraits[i] }}</span
+            >{{ toggleTraits[i] ? "on" : off }}</span
           >
         </div>
       </div>
@@ -106,8 +106,6 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         return item.id == this.id;
       })[0];
 
-      
-
       let backgrounds_pixels = await backgrounds_data.filter((item) => {
         return item.trait_name == this.mapped_data.background;
       })[0].data;
@@ -152,7 +150,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       this.opacity = new Array(this.pixel_data.length).fill(1);
 
       for (var i = 0; i < backgrounds_pixels.length; i++) {
-          this.pixel_data[i] = backgrounds_pixels[i];
+        this.pixel_data[i] = backgrounds_pixels[i];
         if (type_pixels[i][3] != 0 && this.toggleTraits["type"]) {
           this.pixel_data[i] = type_pixels[i];
         }
@@ -282,8 +280,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     exactPixel(index: number) {
       if (this.pixel_data[index] != null) {
         return this.pixel_data[index].toString();
-      }
-      else{
+      } else {
         return "0,0,0,255";
       }
     },

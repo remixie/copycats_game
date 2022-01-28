@@ -5,13 +5,13 @@
       @click="
         toggleFilter();
         isFilterOn
-          ? (currentFilter == 'CUSTOM'
-          ? setBackground(bgcolor.replace('#', '')) : setBackground(
-              filters.filter((item) => {
-                return item.name == currentFilter;
-              })[0].background
-            ))
-          
+          ? currentFilter == 'CUSTOM'
+            ? setBackground(bgcolor.replace('#', ''))
+            : setBackground(
+                filters.filter((item) => {
+                  return item.name == currentFilter;
+                })[0].background
+              )
           : setBackground(getDefaultBackground);
       "
     >
@@ -95,30 +95,30 @@ export default {
         store.dispatch("changeFilterThreshold", value);
       },
     });
-    
+
     const foreground = computed({
       get: () => {
-        return store.getters.getCustomBackgroundPixel
+        return store.getters.getCustomBackgroundPixel;
       },
       set: (value) => {
-        store.dispatch("setCustomBackgroundPixel",value)
-      }
-    })
+        store.dispatch("setCustomBackgroundPixel", value);
+      },
+    });
 
     const background = computed({
       get: () => {
-        return store.getters.getBackground
+        return store.getters.getBackground;
       },
       set: (value) => {
         //setBackground(bgcolor.replace('#', ''))
-        store.dispatch("setBackground",value)
-      }
+        store.dispatch("setBackground", value);
+      },
     });
 
     return {
       thresh,
       foreground,
-      background
+      background,
     };
   },
   data() {

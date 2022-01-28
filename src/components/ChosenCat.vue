@@ -41,7 +41,7 @@ import { Options, Vue } from "vue-class-component";
   },
   methods: {
     ...mapActions({ changeCat: "selectCat", play: "setPlayStatus" }),
-  }
+  },
 })
 export default class ChosenCat extends Vue {}
 </script>

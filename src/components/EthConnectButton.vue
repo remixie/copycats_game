@@ -1,15 +1,18 @@
 <template>
-        <div
-      :class="[
-        { 'bg-purple-400 hover:bg-purple-800 cursor-pointer hover:text-white text-black': noEthWallet },
-        'text-xs text-center p-1 w-1/5 rounded-full mx-auto   mt-5',
-      ]"
-      @click="ethConnect()"
-    >
-      {{
-        getEthWallet != "" ? "head5 connection established" : "connect to head5"
-      }}
-    </div>
+  <div
+    :class="[
+      {
+        'bg-purple-400 hover:bg-purple-800 cursor-pointer hover:text-white text-black':
+          noEthWallet,
+      },
+      'text-xs text-center p-1 w-1/5 rounded-full mx-auto   mt-5',
+    ]"
+    @click="ethConnect()"
+  >
+    {{
+      getEthWallet != "" ? "head5 connection established" : "connect to head5"
+    }}
+  </div>
 </template>
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
@@ -20,7 +23,7 @@ declare var window: any;
   computed: {
     noEthWallet() {
       const store = useStore();
-      return store.getters.getEthWallet == '';
+      return store.getters.getEthWallet == "";
     },
     ...mapGetters({
       wallet: "getWallet",
@@ -28,8 +31,8 @@ declare var window: any;
       getEthWallet: "getEthWallet",
     }),
   },
-  methods:{
-          async ethConnect() {
+  methods: {
+    async ethConnect() {
       if (typeof window.ethereum !== "undefined") {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
@@ -37,9 +40,8 @@ declare var window: any;
         this.setEthWallet(accounts[0]);
       }
     },
-     ...mapActions(["setEthWallet"]),
-  }
+    ...mapActions(["setEthWallet"]),
+  },
 })
 export default class EthConnectButton extends Vue {}
-
 </script>

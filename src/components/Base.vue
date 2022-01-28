@@ -4,7 +4,6 @@
     <div v-if="!instructionsState">
       <div v-if="!playing">
         <connect-buttons />
-        
         <cat-selection v-if="wallet && chosen.length == 0" />
         <chosen-cat v-if="chosen.length != 0" />
       </div>
@@ -19,12 +18,9 @@ import ChosenCat from "./ChosenCat.vue";
 import Headings from "./Headings.vue";
 import ConnectButtons from "./ConnectButtons.vue";
 import Instructions from "./Instructions.vue";
-import CatSelection from "./CatSelection.vue";
-import Play from "./Play.vue";
 import { Options, Vue } from "vue-class-component";
 import { mapActions, mapGetters } from "vuex";
-
-
+import { defineAsyncComponent } from "vue";
 @Options({
   computed: {
     ...mapGetters({
@@ -43,15 +39,17 @@ import { mapActions, mapGetters } from "vuex";
     Instructions,
     ConnectButtons,
     ChosenCat,
-    CatSelection,
-    Play,
+    CatSelection: defineAsyncComponent({
+      loader: () => import("./CatSelection.vue"),
+    }),
+    Play: defineAsyncComponent({
+      loader: () => import("./Play.vue"),
+      loadingComponent: Headings,
+    }),
   },
   methods: {
     ...mapActions(["startSOLConnection"]),
   },
 })
-export default class Base extends Vue {
-  msg!: string;
-  subheading!: string;
-}
+export default class Base extends Vue {}
 </script>
