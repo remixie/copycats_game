@@ -4,7 +4,7 @@
     <div class="grid grid-cols-12 mt-5">
       <copy-cat-interactive
         class="mx-auto mt-2 col-span-7"
-        :id="mapper.id"
+        :cat_info="passCat"
         h="15px"
         w="15px"
       />
@@ -35,15 +35,8 @@ import AssetsManager from "./AssetsManager.vue";
     AssetsManager,
   },
   computed: {
-    mapper() {
-      return mapper.filter((item) => {
-        return (
-          item.id ==
-          parseInt(
-            this.$store.getters.getChosenCat.name.replace("CopyCats #", "")
-          )
-        );
-      })[0];
+    passCat() {
+      return this.$store.getters.getChosenCat;
     },
     ...mapGetters({
       playing: "isPlaying",

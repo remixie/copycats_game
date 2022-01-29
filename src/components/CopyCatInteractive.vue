@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="text-sm border-2 border-white p-5" v-if="areTheyWorthy">
-      <div v-for="(m, i) in mapped_data" :key="m">
+      <div v-for="(m, i) in cat_info.attributes" :key="m">
         <div
           v-if="
             m != 'None' &&
@@ -57,13 +57,12 @@
 import { mapActions, mapGetters } from "vuex";
 import { Options, Vue } from "vue-class-component";
 import filters from "@/assets/filters.json";
-import mapper from "@/assets/asset_pixels/mapper.json";
-import backgrounds_data from "@/assets/asset_pixels/backgrounds_pixels.json";
+import background_data from "@/assets/asset_pixels/backgrounds_pixels.json";
 import clothes_data from "@/assets/asset_pixels/clothes_pixels.json";
-import heads_data from "@/assets/asset_pixels/heads_pixels.json";
-import mouths_data from "@/assets/asset_pixels/mouths_pixels.json";
+import head_data from "@/assets/asset_pixels/heads_pixels.json";
+import mouth_data from "@/assets/asset_pixels/mouths_pixels.json";
 import eyes_data from "@/assets/asset_pixels/eyes_pixels.json";
-import masks_data from "@/assets/asset_pixels/masks_pixels.json";
+import mask_data from "@/assets/asset_pixels/masks_pixels.json";
 import type_data from "@/assets/asset_pixels/type_pixels.json";
 @Options({
   name: "CopyCatInteractive",
@@ -96,99 +95,91 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     },
   },
   props: {
-    id: Number,
+    cat_info: Object,
     h: String,
     w: String,
   },
   methods: {
     async rerun() {
-      this.mapped_data = await mapper.filter((item) => {
-        return item.id == this.id;
-      })[0];
+      //console.log(this.cat_info)
 
-      let backgrounds_pixels = await backgrounds_data.filter((item) => {
-        return item.trait_name == this.mapped_data.background;
-      })[0].data;
-
-      let type_pixels = this.getTraitPixels(
-        "type",
-        backgrounds_pixels.length,
+      let json_files = {
+        background_data,
         type_data,
-        this.mapped_data
-      );
-      let clothes_pixels = this.getTraitPixels(
-        "clothes",
-        backgrounds_pixels.length,
         clothes_data,
-        this.mapped_data
-      );
-      let mouth_pixels = this.getTraitPixels(
-        "mouth",
-        backgrounds_pixels.length,
-        mouths_data,
-        this.mapped_data
-      );
-      let mask_pixels = this.getTraitPixels(
-        "mask",
-        backgrounds_pixels.length,
-        masks_data,
-        this.mapped_data
-      );
-      let head_pixels = this.getTraitPixels(
-        "head",
-        backgrounds_pixels.length,
-        heads_data,
-        this.mapped_data
-      );
-      let eyes_pixels = this.getTraitPixels(
-        "eyes",
-        backgrounds_pixels.length,
+        mouth_data,
+        mask_data,
+        head_data,
         eyes_data,
-        this.mapped_data
-      );
+      };
 
-      this.opacity = new Array(this.pixel_data.length).fill(1);
+      let asset_info = [];
+      
+      let trait = "";
+      for (let asset in json_files) {
+        trait = asset.replace("_data", "");
+        if (this.assetExists(trait)) {
+          asset_info.push(this.getTraitPixels(trait));
+        }
+      }
 
-      for (var i = 0; i < backgrounds_pixels.length; i++) {
-        this.pixel_data[i] = backgrounds_pixels[i];
-        if (type_pixels[i][3] != 0 && this.toggleTraits["type"]) {
-          this.pixel_data[i] = type_pixels[i];
+      //console.log(asset_info);
+      //expected output for asset_info:
+      //0: {trait_name: 'Violet', data: Array(578)}
+      //1: {trait_name: 'Evil', data: Array(576)}
+      //2: {trait_name: 'Black collar', data: Array(576)}
+
+      for(var i = 0; i < asset_info.length; i++){
+        for (var d = 0; d < asset_info[i].data.length; d++) {
+          if (asset_info[i].data[d][3] != 0 && this.toggleTraits[asset_info[i].trait]) {
+            this.pixel_data[d] = asset_info[i].data[d];
+          }
         }
-        if (clothes_pixels[i][3] != 0 && this.toggleTraits["clothes"]) {
-          this.pixel_data[i] = clothes_pixels[i];
-        }
-        if (mouth_pixels[i][3] != 0 && this.toggleTraits["mouth"]) {
-          this.pixel_data[i] = mouth_pixels[i];
-        }
-        if (mask_pixels[i][3] != 0 && this.toggleTraits["mask"]) {
-          this.pixel_data[i] = mask_pixels[i];
-        }
-        if (head_pixels[i][3] != 0 && this.toggleTraits["head"]) {
-          this.pixel_data[i] = head_pixels[i];
-        }
-        if (eyes_pixels[i][3] != 0 && this.toggleTraits["eyes"]) {
-          this.pixel_data[i] = eyes_pixels[i];
-        }
-        this.opacity[i] = this.pixel_data[i][3] / 255;
       }
 
       this.background_color = this.pixel_data[0];
-
       this.num_of_game_pixels = this.pixel_data.filter(
         (item: string, index: number) => this.isThisAnEdgePixel(index)
       ).length;
     },
-    getTraitPixels(
-      trait: string,
-      length: number,
-      json_file: any,
-      mapped_data: any
-    ) {
-      return mapped_data[trait] == "None"
-        ? Array.from(Array(length), (_) => Array(4).fill(0))
-        : json_file.filter((item: any) => {
-            return item.trait_name == mapped_data[trait];
-          })[0].data;
+    getTraitPixels(trait: string) {
+      let json_file;
+
+      switch (trait) {
+        case "head":
+          json_file = head_data;
+          break;
+        case "eyes":
+          json_file = eyes_data;
+          break;
+        case "background":
+          json_file = background_data;
+          break;
+        case "mouth":
+          json_file = mouth_data;
+          break;
+        case "mask":
+          json_file = mask_data;
+          break;
+        case "type":
+          json_file = type_data;
+          break;
+        case "clothes":
+          json_file = clothes_data;
+          break;
+        default:
+        // code block
+      }
+
+      if (json_file) {
+        let obj = {
+          ...json_file.filter((item: any) => {
+            return item.trait_name == this.cat_info.attributes[trait];
+          })[0],
+          trait,
+        };
+        return obj;
+      }
     },
     bgColor(d: number, i: number, dimensions: number) {
       if (this.isFilterOn) {
@@ -210,6 +201,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       setPlayStatus: "setPlayStatus",
       changeCat: "selectCat",
       resetScore: "resetScore",
+      setCurrentTrait: "setCurrentTrait",
     }),
     applyBWFilter(color: string) {
       let c = color.split(",").map((n) => parseInt(n, 10));
@@ -312,18 +304,11 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         }
       }
     },
+    assetExists(trait: string) {
+      return this.cat_info.attributes[trait] != "None";
+    },
   },
-  assetExists(trait: string) {
-    this.mapped_data = mapper.filter((item) => {
-      return item.id == this.img;
-    })[0];
 
-    if (this.mapped_data[trait] == "None") {
-      return false;
-    } else {
-      return true;
-    }
-  },
   data: () => {
     return {
       toggleTraits: {

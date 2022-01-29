@@ -39,6 +39,7 @@ import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { mapGetters, mapActions } from "vuex";
 import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
+import mapper from "@/assets/asset_pixels/mapper.json";
 @Options({
   computed: {
     exec_wallet() {
@@ -93,7 +94,11 @@ import { useStore } from "vuex";
                   obj.id.toString() == copycat_nfts[i].data.name.split("#")[1]
               )[0]
               .img.toString(),
-            attributes: [], //val.data.attributes,
+            attributes: mapper.filter((item) => {
+              return (
+                item.id == parseInt(copycat_nfts[i].data.name.split("#")[1])
+              );
+            })[0],
             name: copycat_nfts[i].data.name,
           });
         }
