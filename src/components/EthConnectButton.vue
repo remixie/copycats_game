@@ -10,7 +10,7 @@
     @click="ethConnect()"
   >
     {{
-      getEthWallet != "" ? "head5 connection established" : "connect to head5"
+      getEthWallet != "" ? "head5.io connection established" : "connect to head5.io"
     }}
   </div>
 </template>

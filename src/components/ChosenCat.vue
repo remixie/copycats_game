@@ -4,12 +4,10 @@
       you selected {{ getID }}.<br />click it again to confirm.
     </div>
     <copy-cat-image
+      class="mt-5"
       @click="play(true)"
-      class="mx-auto mt-2"
-      style="width: 240px"
       :img="selected_cat.image"
-      h="10px"
-      w="10px"
+      :scale="12"
     />
     <div
       class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-1/4"

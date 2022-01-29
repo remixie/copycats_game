@@ -2,7 +2,7 @@
   <div v-if="wallet == ''">
     <div
       @click="connectToWallet()"
-      class="rounded-full bg-green-400 text-black text-center hover:bg-green-800 hover:text-white mt-10 mx-auto p-2 w-1/4"
+      class="rounded-full bg-green-400 text-black text-center hover:bg-green-800 hover:text-white mt-10 mx-auto p-2 w-1/4 cursor-pointer"
     >
       connect your SOL wallet
     </div>
@@ -46,8 +46,3 @@ import EthConnectButton from "./EthConnectButton.vue";
 })
 export default class ConnectButton extends Vue {}
 </script>
-<style scoped>
-div {
-  cursor: pointer;
-}
-</style>

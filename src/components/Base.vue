@@ -10,6 +10,12 @@
       <play v-if="playing" />
     </div>
     <instructions v-if="!playing && !wallet" />
+    <div v-if="!playing && !wallet" class="mx-auto text-center text-xs readable mt-10" >
+      <span class="font-bold text-green-400">Note:</span>  Sketchette will NOT ask you to sign anything at this time.<br>
+      It will ONLY ask you to connect your wallet. This allow us to get your wallet address.<br>
+      If you need clarification, contact Rem#0001 on Discord.
+    </div>
+        
   </div>
 </template>
 
@@ -53,3 +59,8 @@ import { defineAsyncComponent } from "vue";
 })
 export default class Base extends Vue {}
 </script>
+<style scoped>
+.readable {
+  font-family: arial;
+}
+</style>

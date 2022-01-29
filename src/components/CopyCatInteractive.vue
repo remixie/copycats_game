@@ -22,7 +22,7 @@
               toggleTraits[i] = !toggleTraits[i];
               rerun();
             "
-            >{{ toggleTraits[i] ? "on" : off }}</span
+            >{{ toggleTraits[i] ? "on" : "off" }}</span
           >
         </div>
       </div>

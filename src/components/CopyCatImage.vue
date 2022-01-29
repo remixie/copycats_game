@@ -1,25 +1,10 @@
 <template>
-  <div class="border-white border-2 cursor-pointer">
-    <!--<div v-for="d in dimensions" :key="d" class="grid grid-cols-24">
-      <div
-        v-for="i in dimensions"
-        :key="i"
-        @mouseenter="[(hover[getMyIndex(d, i, dimensions)] = true)]"
-        @mouseleave="hover[getMyIndex(d, i, dimensions)] = false"
-        :style="{
-          backgroundColor: bgColor(d, i, dimensions),
-          'hover:backgroundColor': 'red',
-          height: h,
-          width: w,
-        }"
-        :class="{ pixel: hover[getMyIndex(d, i, dimensions)] }"
-      ></div>
-    </div>-->
-    <canvas
-      :id="img"
-      resize="true"
-    />
-  </div>
+  <canvas
+    :id="img"
+    :width="24 * scale"
+    :height="24 * scale"
+    class="border-white bg-white mx-auto cursor-pointer"
+  />
 </template>
 <script lang="ts">
 import paper from "paper";
@@ -27,60 +12,26 @@ import { mapGetters } from "vuex";
 import img_data from "@/assets/copycat_images.json";
 import { Options, Vue } from "vue-class-component";
 import filters from "@/assets/filters.json";
-//import fs from "fs";
 @Options({
   name: "CopyCatImage",
   async mounted() {
-    this.pixel_data = await img_data.filter((item) => item.img == this.img);
+    this.pixel_data = await img_data.filter((item) => {
+      return item.img == this.img;
+    });
     this.pixel_data = this.pixel_data[0].data;
     this.opacity = new Array(this.pixel_data.length).fill(1);
     this.background_color = this.pixel_data[0];
-
     this.scope = new paper.PaperScope();
     this.scope.setup(this.img);
-
-    // Create an empty raster placed at view center.
-    let raster = new paper.Raster(
-      new paper.Size(96,96),
-      this.scope.view.center
-      
-    );
-
-    //let scaler= 4;
-    // For all of its pixels...
-    /*for (let q = 0; q < 24*scaler; q+=scaler) {
-      for (let j = 0; j < 24*scaler; j+=scaler) {
-        for(let r = q; r < q+scaler; r++) {
-          for(let k = j; k < j+scaler; k++) {
-            //console.log(j/scaler+ " and "+ q/scaler + " meanwhile "+r+" and "+ k)
-            raster.setPixel(
-              4*q+k,
-              4*j+r,
-              new paper.Color(this.bgColor(j/scaler, q/scaler, this.dimensions))
-            ); //
-          }
-        }
-      }
-    }*/
-    //console.log()
-
-     for (let q = 1; q <= 24; q++) {
-      for (let j = 1; j <= 24; j++) {
-        for (let k = 0; k < 4; k++) {
-          for (let r = 0; r < 4; r++) {
-            //console.log((4*q+k)+" and "+ (4*j+r) +" is "+this.bgColor(j, q, 24))
-            raster.setPixel(
-              4*q+k,
-              4*j+r,
-              new paper.Color(this.bgColor(j,q, 24))
-            ); //
-          }
-        }
-      }
-    }
-    console.log(raster.width)
-    raster.position = new paper.Point(24, 24);
-    // Draw the view now:
+    let raster = new paper.Raster({
+      size: new paper.Size(24, 24),
+      smoothing: false,
+    });
+    raster.position = this.scope.view.center;
+    this.pixel_data = [].concat(...this.pixel_data);
+    let arr = new ImageData(new Uint8ClampedArray(this.pixel_data), 24, 24);
+    raster.scale(this.scale);
+    raster.setImageData(arr, new paper.Point(0, 0));
     this.scope.view.draw();
   },
   computed: {
@@ -105,13 +56,13 @@ import filters from "@/assets/filters.json";
   },
   props: {
     img: String,
-    h: String,
-    w: String,
+    scale: Number,
   },
   methods: {
     async capture() {
       return false;
     },
+
     bgColor(d: number, i: number, dimensions: number) {
       return "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")";
     },
@@ -125,8 +76,9 @@ import filters from "@/assets/filters.json";
     exactPixel(index: number) {
       if (this.pixel_data[index] != null) {
         return this.pixel_data[index].toString();
+      } else {
+        return "0,0,0";
       }
-      return "0,0,0";
     },
   },
   data: () => {
@@ -141,15 +93,17 @@ import filters from "@/assets/filters.json";
     };
   },
 })
-export default class CopyCatImage extends Vue {
-  img!: string;
-  h!: string;
-  w!: string;
-}
+export default class CopyCatImage extends Vue {}
 </script>
 <style scoped>
 .pixel {
   border: 2px solid black;
   filter: invert(100%);
+}
+</style>
+<style>
+canvas[resize] {
+  width: 100%;
+  height: 100%;
 }
 </style>

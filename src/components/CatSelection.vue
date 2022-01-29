@@ -17,20 +17,17 @@
         'grid',
         'w-1/2',
         'mx-auto',
-        ' grid-cols-' + Math.min(my_cats.length, 6),
+        'grid-cols-' + Math.min(my_cats.length, 6),
       ]"
     >
-      <keep-alive>
-        <copy-cat-image
-          v-for="cc in my_cats"
-          :key="cc.mint"
-          class="mt-5 mx-auto"
-          @click="selectCat(cc)"
-          :img="cc.image"
-          h="4px"
-          w="4px"
-        />
-      </keep-alive>
+      <copy-cat-image
+        v-for="cc in my_cats"
+        :key="cc.mint"
+        class="mt-5 mx-auto"
+        @click="selectCat(cc)"
+        :img="cc.image"
+        :scale="4"
+      />
     </div>
   </div>
 </template>

@@ -4,17 +4,12 @@
     v-if="assetExists(trait)"
     :title="trait + ': ' + mapped_data[trait]"
   >
-    <div v-for="d in dimensions" :key="d" class="grid grid-cols-24 gap-0">
-      <div
-        v-for="i in dimensions"
-        :key="i"
-        :style="{
-          backgroundColor: bgColor(d, i, dimensions),
-          height: h,
-          width: w,
-        }"
-      ></div>
-    </div>
+    <canvas
+      :id="img + '_' + trait"
+      :width="24 * scale"
+      :height="24 * scale"
+      class="border-white mx-auto cursor-pointer"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -29,9 +24,10 @@ import masks_data from "@/assets/asset_pixels/masks_pixels.json";
 import type_data from "@/assets/asset_pixels/type_pixels.json";
 import { Options, Vue } from "vue-class-component";
 import filters from "@/assets/filters.json";
+import paper from "paper";
 @Options({
   name: "AssetImage",
-  async created() {
+  mounted() {
     this.rerun();
   },
   computed: {
@@ -57,8 +53,7 @@ import filters from "@/assets/filters.json";
   props: {
     img: Number,
     trait: String,
-    h: String,
-    w: String,
+    scale: Number,
   },
   methods: {
     assetExists(trait: string) {
@@ -73,56 +68,72 @@ import filters from "@/assets/filters.json";
       }
     },
     rerun() {
-      this.mapped_data = mapper.filter((item) => {
-        return item.id == this.img;
-      })[0];
+      if (this.assetExists(this.trait)) {
+        this.mapped_data = mapper.filter((item) => {
+          return item.id == this.img;
+        })[0];
 
-      let json_file;
+        let json_file;
 
-      switch (this.trait) {
-        case "head":
-          json_file = heads_data;
-          break;
-        case "eyes":
-          json_file = eyes_data;
-          break;
-        case "background":
-          json_file = backgrounds_data;
-          break;
-        case "mouth":
-          json_file = mouths_data;
-          break;
-        case "mask":
-          json_file = masks_data;
-          break;
-        case "type":
-          json_file = type_data;
-          break;
-        case "clothes":
-          json_file = clothes_data;
-          break;
-        default:
-        // code block
-      }
-
-      let specific_pixels = this.getTraitPixels(
-        this.trait,
-        576,
-        json_file,
-        this.mapped_data
-      );
-
-      for (var i = 0; i < 576; i++) {
-        if (specific_pixels[i][3] != 0) {
-          this.pixel_data[i] = specific_pixels[i];
-        } else {
-          this.pixel_data[i] = [
-            255 - 3 * ((i / this.dimensions) % this.dimensions),
-            255 - 3 * ((i / this.dimensions) % this.dimensions),
-            255 - 3 * ((i / this.dimensions) % this.dimensions),
-            255,
-          ];
+        switch (this.trait) {
+          case "head":
+            json_file = heads_data;
+            break;
+          case "eyes":
+            json_file = eyes_data;
+            break;
+          case "background":
+            json_file = backgrounds_data;
+            break;
+          case "mouth":
+            json_file = mouths_data;
+            break;
+          case "mask":
+            json_file = masks_data;
+            break;
+          case "type":
+            json_file = type_data;
+            break;
+          case "clothes":
+            json_file = clothes_data;
+            break;
+          default:
+          // code block
         }
+
+        let specific_pixels = this.getTraitPixels(
+          this.trait,
+          576,
+          json_file,
+          this.mapped_data
+        );
+
+        for (var i = 0; i < 576; i++) {
+          if (specific_pixels[i][3] != 0) {
+            this.pixel_data[i] = specific_pixels[i];
+          } else {
+            this.pixel_data[i] = [
+              255 - 3 * ((i / this.dimensions) % this.dimensions),
+              255 - 3 * ((i / this.dimensions) % this.dimensions),
+              255 - 3 * ((i / this.dimensions) % this.dimensions),
+              255,
+            ];
+          }
+        }
+        //console.log(this.img+'_'+this.trait)
+
+        this.scope = new paper.PaperScope();
+        this.scope.setup(this.img + "_" + this.trait);
+        let raster = new paper.Raster({
+          size: new paper.Size(24, 24),
+          smoothing: false,
+        });
+        raster.position = this.scope.view.center;
+        this.pixel_data = [].concat(...this.pixel_data);
+        let arr = new ImageData(new Uint8ClampedArray(this.pixel_data), 24, 24);
+        raster.scale(this.scale);
+        raster.setImageData(arr, new paper.Point(0, 0));
+        this.scope.view.draw();
       }
     },
     getTraitPixels(
@@ -158,8 +169,5 @@ import filters from "@/assets/filters.json";
     };
   },
 })
-export default class AssetImage extends Vue {
-  h!: string;
-  w!: string;
-}
+export default class AssetImage extends Vue {}
 </script>
