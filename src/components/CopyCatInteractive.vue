@@ -3,21 +3,17 @@
     <div class="text-sm border-2 border-white p-5">
       <div v-for="(m, i) in cat_info.attributes" :key="m">
         <div
-        v-if="
-            !Number.isFinite(m) &&
-            i != 'background' &&
-            i != 'type'
-          "
+          v-if="!Number.isFinite(m) && i != 'background' && i != 'type'"
           class="m-2"
         >
           {{ i.charAt(0).toUpperCase() + i.slice(1) + ": " }}
           <span
-          v-if="
-            m != 'None' &&
-            !Number.isFinite(m) &&
-            i != 'background' &&
-            i != 'type'
-          "
+            v-if="
+              m != 'None' &&
+              !Number.isFinite(m) &&
+              i != 'background' &&
+              i != 'type'
+            "
             :class="[
               { 'bg-green-500': toggleTraits[i] },
               { 'bg-red-500': !toggleTraits[i] },
@@ -71,24 +67,23 @@ import mask_data from "@/assets/asset_pixels/masks_pixels.json";
 import type_data from "@/assets/asset_pixels/type_pixels.json";
 @Options({
   name: "CopyCatInteractive",
-  created(){
-    this.rerun()
+  created() {
+    this.rerun();
   },
-    watch:{
-    current_cat (newcat,oldcat){
-      console.log(newcat +" and "+ oldcat)
-      this.rerun()
-    }
+  watch: {
+    current_cat(newcat, oldcat) {
+      //console.log(newcat + " and " + oldcat);
+      this.rerun();
+    },
   },
   computed: {
-    current_cat(){
-      return this.$store.getters.getChosenCat.attributes
+    current_cat() {
+      return this.$store.getters.getChosenCat.attributes;
     },
     ...mapGetters([
-      "areTheyWorthy",
       "isFilterOn",
       "whatThreshold",
-      "currentFilter"
+      "currentFilter",
     ]),
     currentFilterData() {
       if (this.$store.getters.currentFilter == "CUSTOM") {
@@ -126,7 +121,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       };
 
       let asset_info = [];
-      
+
       let trait = "";
       for (let asset in json_files) {
         trait = asset.replace("_data", "");
@@ -135,15 +130,18 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         }
       }
 
-      console.log(asset_info);
+      //console.log(asset_info);
       //expected output for asset_info:
       //0: {trait_name: 'Violet', data: Array(578)}
       //1: {trait_name: 'Evil', data: Array(576)}
       //2: {trait_name: 'Black collar', data: Array(576)}
 
-      for(var i = 0; i < asset_info.length; i++){
+      for (var i = 0; i < asset_info.length; i++) {
         for (var d = 0; d < asset_info[i].data.length; d++) {
-          if (asset_info[i].data[d][3] != 0 && this.toggleTraits[asset_info[i].trait]) {
+          if (
+            asset_info[i].data[d][3] != 0 &&
+            this.toggleTraits[asset_info[i].trait]
+          ) {
             this.pixel_data[d] = asset_info[i].data[d];
           }
         }
@@ -317,7 +315,10 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       }
     },
     assetExists(trait: string) {
-      return this.cat_info.attributes[trait] != "None" && this.cat_info.attributes[trait] != undefined;
+      return (
+        this.cat_info.attributes[trait] != "None" &&
+        this.cat_info.attributes[trait] != undefined
+      );
     },
   },
 

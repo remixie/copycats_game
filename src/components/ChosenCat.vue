@@ -4,7 +4,7 @@
       you selected {{ getID }}.<br />click it again to confirm.
     </div>
     <copy-cat-image
-      class="mt-5"
+      class="mt-5 border-4 border-white"
       @click="play(true)"
       :img="selected_cat.image"
       :scale="10"

@@ -1,19 +1,22 @@
 <template>
   <div
-    class="border-white border-2 inline-block cursor-pointer"
-    v-if="assetExists(trait)"
-    :title="trait + ': ' + mapped_data[trait]"
-    @click="setCurrentTrait({
-          attributes: {
-            ...getChosenCat.attributes,
-          [trait] : mapped_data[trait]}
-        })"
+    class="inline-block cursor-pointer"
+    v-if="assetExists()"
+    :title="trait + ': ' + traitName"
+    @click="
+      setCurrentTrait({
+        attributes: {
+          ...getChosenCat.attributes,
+          [trait]: traitName,
+        },
+      })
+    "
   >
     <canvas
-      :id="img + '_' + trait"
+      :id="traitName.replace(' ','_')"
       :width="24 * scale"
       :height="24 * scale"
-      class="border-white mx-auto cursor-pointer"
+      class="mx-auto cursor-pointer"
     />
   </div>
 </template>
@@ -36,7 +39,12 @@ import paper from "paper";
     this.rerun();
   },
   computed: {
-    ...mapGetters(["isFilterOn", "whatThreshold", "currentFilter","getChosenCat"]),
+    ...mapGetters([
+      "isFilterOn",
+      "whatThreshold",
+      "currentFilter",
+      "getChosenCat",
+    ]),
     currentFilterData() {
       if (this.$store.getters.currentFilter == "CUSTOM") {
         return [
@@ -56,30 +64,24 @@ import paper from "paper";
     },
   },
   props: {
-    img: Number,
     trait: String,
+    traitName: String,
     scale: Number,
   },
   methods: {
-    ...mapActions([
-      'setCurrentTrait'
-    ]),
-    assetExists(trait: string) {
-      this.mapped_data = mapper.filter((item) => {
-        return item.id == this.img;
-      })[0];
-
-      if (this.mapped_data[trait] == "None") {
+    ...mapActions(["setCurrentTrait"]),
+    assetExists() {
+      if (this.traitName == "None") {
         return false;
       } else {
         return true;
       }
     },
     rerun() {
-      if (this.assetExists(this.trait)) {
-        this.mapped_data = mapper.filter((item) => {
-          return item.id == this.img;
-        })[0];
+      if (this.assetExists()) {
+        /*this.mapped_data = mapper.filter((item) => {
+          return item.id == this.cat_id;
+        })[0];*/
 
         let json_file;
 
@@ -110,10 +112,8 @@ import paper from "paper";
         }
 
         let specific_pixels = this.getTraitPixels(
-          this.trait,
           576,
-          json_file,
-          this.mapped_data
+          json_file
         );
 
         for (var i = 0; i < 576; i++) {
@@ -128,10 +128,10 @@ import paper from "paper";
             ];
           }
         }
-        //console.log(this.img+'_'+this.trait)
+        //console.log(this.cat_id+'_'+this.trait)
 
         this.scope = new paper.PaperScope();
-        this.scope.setup(this.img + "_" + this.trait);
+        this.scope.setup(this.traitName.replace(' ','_'));
         let raster = new paper.Raster({
           size: new paper.Size(24, 24),
           smoothing: false,
@@ -145,15 +145,13 @@ import paper from "paper";
       }
     },
     getTraitPixels(
-      trait: string,
       length: number,
       json_file: any,
-      mapped_data: any
     ) {
-      return mapped_data[trait] == "None"
+      return this.traitName == "None"
         ? Array.from(Array(length), () => Array(4).fill(0))
         : json_file.filter((item: any) => {
-            return item.trait_name == mapped_data[trait];
+            return item.trait_name == this.traitName;
           })[0].data;
     },
     bgColor(d: number, i: number, dimensions: number) {

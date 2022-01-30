@@ -9,6 +9,7 @@ export const store = createStore({
     background: "37393e",
     cat_list: [],
     current_cat: [],
+    keyword: "",
     playing: false,
     current_score: 0,
     showInstructions: false,
@@ -19,6 +20,9 @@ export const store = createStore({
   getters: {
     getEthWallet(state) {
       return state.eth_wallet;
+    },
+    getKeyword(state) {
+      return state.keyword;
     },
     getDefaultBackground(state) {
       return state.default_background;
@@ -61,10 +65,12 @@ export const store = createStore({
     },
   },
   mutations: {
+    changeKeyword(state, word) {
+      state.keyword = word;
+    },
     changeCurrentTrait(state, payload) {
       state.current_cat = Object.assign(state.current_cat, {
-        attributes: 
-          payload.attributes
+        attributes: payload.attributes,
       });
     },
     changeEthWallet(state, wallet_addr) {
@@ -105,6 +111,9 @@ export const store = createStore({
     },
   },
   actions: {
+    setKeyword({ commit }, word) {
+      commit("changeKeyword", word);
+    },
     setCurrentTrait({ commit }, payload) {
       commit("changeCurrentTrait", payload);
     },

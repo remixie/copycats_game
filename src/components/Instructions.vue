@@ -51,7 +51,4 @@ export default class Instructions extends Vue {}
 .readable {
   font-family: arial;
 }
-.close-btn {
-  cursor: pointer;
-}
 </style>

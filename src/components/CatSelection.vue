@@ -23,7 +23,7 @@
       <copy-cat-image
         v-for="cc in my_cats"
         :key="cc.mint"
-        class="mt-5 mx-auto"
+        class="mt-5 mx-auto border-2 border-white"
         @click="selectCat(cc)"
         :img="cc.image"
         :scale="4"
@@ -70,10 +70,8 @@ import mapper from "@/assets/asset_pixels/mapper.json";
         mint: "guest",
         image: "wEQtZCoiUQwP8KPodTCCd7oeFSnSLVfWZ6c4TW2v0T4",
         attributes: mapper.filter((item) => {
-              return (
-                item.id == 2433
-              );
-            })[0],
+          return item.id == 2433;
+        })[0],
         name: "CopyCats #2433",
       });
       store.dispatch("setCatList", arr);
