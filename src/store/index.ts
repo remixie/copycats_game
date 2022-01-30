@@ -9,14 +9,6 @@ export const store = createStore({
     background: "37393e",
     cat_list: [],
     current_cat: [],
-    current_traits: [] as string[],
-    //head: "",
-    //mask: "",
-    //background: "",
-    //type: "",
-    //mouth: "",
-    //eyes: "",
-    //clothes: ""
     playing: false,
     current_score: 0,
     showInstructions: false,
@@ -27,9 +19,6 @@ export const store = createStore({
   getters: {
     getEthWallet(state) {
       return state.eth_wallet;
-    },
-    getCurrentTraits(state) {
-      return state.current_traits;
     },
     getDefaultBackground(state) {
       return state.default_background;
@@ -73,7 +62,10 @@ export const store = createStore({
   },
   mutations: {
     changeCurrentTrait(state, payload) {
-      state.current_traits[payload.trait] = payload.value;
+      state.current_cat = Object.assign(state.current_cat, {
+        attributes: 
+          payload.attributes
+      });
     },
     changeEthWallet(state, wallet_addr) {
       state.eth_wallet = wallet_addr;

@@ -7,7 +7,7 @@
       class="mt-5"
       @click="play(true)"
       :img="selected_cat.image"
-      :scale="12"
+      :scale="10"
     />
     <div
       class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-1/4"

@@ -69,7 +69,11 @@ import mapper from "@/assets/asset_pixels/mapper.json";
       arr.push({
         mint: "guest",
         image: "wEQtZCoiUQwP8KPodTCCd7oeFSnSLVfWZ6c4TW2v0T4",
-        attributes: [], //val.data.attributes,
+        attributes: mapper.filter((item) => {
+              return (
+                item.id == 2433
+              );
+            })[0],
         name: "CopyCats #2433",
       });
       store.dispatch("setCatList", arr);

@@ -3,6 +3,11 @@
     class="border-white border-2 inline-block cursor-pointer"
     v-if="assetExists(trait)"
     :title="trait + ': ' + mapped_data[trait]"
+    @click="setCurrentTrait({
+          attributes: {
+            ...getChosenCat.attributes,
+          [trait] : mapped_data[trait]}
+        })"
   >
     <canvas
       :id="img + '_' + trait"
@@ -13,7 +18,7 @@
   </div>
 </template>
 <script lang="ts">
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import mapper from "@/assets/asset_pixels/mapper.json";
 import backgrounds_data from "@/assets/asset_pixels/backgrounds_pixels.json";
 import clothes_data from "@/assets/asset_pixels/clothes_pixels.json";
@@ -31,7 +36,7 @@ import paper from "paper";
     this.rerun();
   },
   computed: {
-    ...mapGetters(["isFilterOn", "whatThreshold", "currentFilter"]),
+    ...mapGetters(["isFilterOn", "whatThreshold", "currentFilter","getChosenCat"]),
     currentFilterData() {
       if (this.$store.getters.currentFilter == "CUSTOM") {
         return [
@@ -56,6 +61,9 @@ import paper from "paper";
     scale: Number,
   },
   methods: {
+    ...mapActions([
+      'setCurrentTrait'
+    ]),
     assetExists(trait: string) {
       this.mapped_data = mapper.filter((item) => {
         return item.id == this.img;

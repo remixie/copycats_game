@@ -9,7 +9,7 @@
         w="15px"
       />
       <div class="col-span-4">
-        <assets-manager />
+        <assets-manager  v-if="areTheyWorthy" />
         <div
           class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-2/3"
           @click="resetGame()"
@@ -41,6 +41,9 @@ import AssetsManager from "./AssetsManager.vue";
     ...mapGetters({
       playing: "isPlaying",
       score: "currentScore",
+      getDefaultBackground: "getDefaultBackground",
+      isFilterOn: "isFilterOn",
+      areTheyWorthy: "areTheyWorthy"
     }),
   },
   methods: {
@@ -48,11 +51,17 @@ import AssetsManager from "./AssetsManager.vue";
       this.setPlayStatus(false);
       this.changeCat("");
       this.resetScore();
+      if (this.isFilterOn) {
+        this.toggleFilter();
+        this.setBackground(this.getDefaultBackground);
+      }
     },
     ...mapActions({
       setPlayStatus: "setPlayStatus",
       changeCat: "selectCat",
       resetScore: "resetScore",
+      toggleFilter: "filterSwitch",
+      setBackground: "setBackground",
     }),
   },
   props: {

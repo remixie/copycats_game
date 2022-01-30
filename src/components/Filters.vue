@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="text-center bg-white text-black w-2/3 mt-10 mx-auto rounded-full cursor-pointer p-2"
+      class="text-center bg-white text-black hover:bg-black hover:text-white w-2/3 mt-10 mx-auto rounded-full cursor-pointer p-2"
       @click="
         toggleFilter();
         isFilterOn
@@ -26,7 +26,7 @@
         class="mx-auto mt-2"
       />
       <div
-        class="mt-2 text-center mx-auto bg-white text-black w-2/3 rounded-full cursor-pointer"
+        class="mt-2 text-center mx-auto bg-white hover:bg-black hover:text-white text-black w-2/3 rounded-full cursor-pointer"
         @click="menu = !menu"
       >
         Filter: {{ currentFilter }} &#9660;
@@ -34,7 +34,7 @@
       <div v-if="menu">
         <div
           v-for="f in filters"
-          class="mt-1 text-center mx-auto bg-white text-black w-1/3 cursor-pointer"
+          class="mt-1 text-center mx-auto bg-white hover:bg-black hover:text-white text-black w-1/3 cursor-pointer"
           :key="f.name"
           @click="
             changeFilter(f.name);
@@ -110,7 +110,6 @@ export default {
         return store.getters.getBackground;
       },
       set: (value) => {
-        //setBackground(bgcolor.replace('#', ''))
         store.dispatch("setBackground", value);
       },
     });
@@ -134,7 +133,6 @@ export default {
       getDefaultBackground: "getDefaultBackground",
       getCustomBackgroundPixel: "getCustomBackgroundPixel",
       getBackground: "getBackground",
-      areTheyWorthy: "areTheyWorthy",
       isFilterOn: "isFilterOn",
       whatThreshold: "whatThreshold",
       currentFilter: "currentFilter",
