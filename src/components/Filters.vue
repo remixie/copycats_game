@@ -1,11 +1,17 @@
 <template>
   <div>
     <div
-      class="text-center bg-white text-black w-full mt-10 text-center mx-auto rounded-full cursor-pointer"
+      class="text-center bg-white text-black hover:bg-black hover:text-white w-2/3 mt-10 mx-auto rounded-full cursor-pointer p-2"
       @click="
         toggleFilter();
         isFilterOn
-          ? setBackground(getBackground)
+          ? currentFilter == 'CUSTOM'
+            ? setBackground(bgcolor.replace('#', ''))
+            : setBackground(
+                filters.filter((item) => {
+                  return item.name == currentFilter;
+                })[0].background
+              )
           : setBackground(getDefaultBackground);
       "
     >
@@ -20,7 +26,7 @@
         class="mx-auto mt-2"
       />
       <div
-        class="mt-2 text-center mx-auto bg-white text-black w-full rounded-full cursor-pointer"
+        class="mt-2 text-center mx-auto bg-white hover:bg-black hover:text-white text-black w-2/3 rounded-full cursor-pointer"
         @click="menu = !menu"
       >
         Filter: {{ currentFilter }} &#9660;
@@ -28,7 +34,7 @@
       <div v-if="menu">
         <div
           v-for="f in filters"
-          class="mt-1 text-center mx-auto bg-white text-black w-1/2 cursor-pointer"
+          class="mt-1 text-center mx-auto bg-white hover:bg-black hover:text-white text-black w-1/3 cursor-pointer"
           :key="f.name"
           @click="
             changeFilter(f.name);
@@ -45,22 +51,20 @@
       </div>
       <div v-if="currentFilter == 'CUSTOM'" class="mx-auto text-center">
         <v-swatches
-          v-model="color"
+          v-model="foreground"
           show-fallback
           fallback-input-type="color"
           popover-x="left"
-          @click="setCustomBackgroundPixel(color.replace('#', ''))"
           class="border-solid border-2 border-white mt-5"
-          :style="'backgroundColor: #' + getCustomBackgroundPixel"
+          :style="'backgroundColor: #' + foreground"
         ></v-swatches>
         <v-swatches
-          v-model="bgcolor"
+          v-model="background"
           show-fallback
           fallback-input-type="color"
           popover-x="left"
-          @click="setBackground(bgcolor.replace('#', ''))"
           class="border-solid border-2 border-white mt-5"
-          :style="'backgroundColor: #' + getBackground"
+          :style="'backgroundColor: #' + background"
         ></v-swatches>
       </div>
     </div>
@@ -92,8 +96,28 @@ export default {
       },
     });
 
+    const foreground = computed({
+      get: () => {
+        return store.getters.getCustomBackgroundPixel;
+      },
+      set: (value) => {
+        store.dispatch("setCustomBackgroundPixel", value);
+      },
+    });
+
+    const background = computed({
+      get: () => {
+        return store.getters.getBackground;
+      },
+      set: (value) => {
+        store.dispatch("setBackground", value);
+      },
+    });
+
     return {
       thresh,
+      foreground,
+      background,
     };
   },
   data() {
@@ -109,8 +133,6 @@ export default {
       getDefaultBackground: "getDefaultBackground",
       getCustomBackgroundPixel: "getCustomBackgroundPixel",
       getBackground: "getBackground",
-      areTheyWorthy: "areTheyWorthy",
-      interactive: "isPlaying",
       isFilterOn: "isFilterOn",
       whatThreshold: "whatThreshold",
       currentFilter: "currentFilter",

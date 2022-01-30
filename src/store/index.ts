@@ -3,12 +3,13 @@ import { createStore } from "vuex";
 export const store = createStore({
   state: {
     wallet: "",
+    eth_wallet: "",
     default_background: "37393e",
-    custom_background_pixel: "000",
+    custom_background_pixel: "999999",
     background: "37393e",
-    connection: [],
     cat_list: [],
     current_cat: [],
+    keyword: "",
     playing: false,
     current_score: 0,
     showInstructions: false,
@@ -17,6 +18,12 @@ export const store = createStore({
     filterThreshold: 346, //this was chosen since it seems to work well for lots of cats as the default
   },
   getters: {
+    getEthWallet(state) {
+      return state.eth_wallet;
+    },
+    getKeyword(state) {
+      return state.keyword;
+    },
     getDefaultBackground(state) {
       return state.default_background;
     },
@@ -28,9 +35,6 @@ export const store = createStore({
     },
     getWallet(state) {
       return state.wallet;
-    },
-    getSOLConnection(state) {
-      return state.connection;
     },
     getCatList(state) {
       return state.cat_list;
@@ -61,6 +65,17 @@ export const store = createStore({
     },
   },
   mutations: {
+    changeKeyword(state, word) {
+      state.keyword = word;
+    },
+    changeCurrentTrait(state, payload) {
+      state.current_cat = Object.assign(state.current_cat, {
+        attributes: payload.attributes,
+      });
+    },
+    changeEthWallet(state, wallet_addr) {
+      state.eth_wallet = wallet_addr;
+    },
     changeBackground(state, hex) {
       state.background = hex;
     },
@@ -69,9 +84,6 @@ export const store = createStore({
     },
     changeWallet(state, address) {
       state.wallet = address;
-    },
-    setSOLConnection(state, connection) {
-      state.connection = connection;
     },
     createCatList(state, list) {
       state.cat_list = list;
@@ -99,17 +111,23 @@ export const store = createStore({
     },
   },
   actions: {
+    setKeyword({ commit }, word) {
+      commit("changeKeyword", word);
+    },
+    setCurrentTrait({ commit }, payload) {
+      commit("changeCurrentTrait", payload);
+    },
+    setEthWallet({ commit }, wallet_addr) {
+      commit("changeEthWallet", wallet_addr);
+    },
     setCustomBackgroundPixel({ commit }, hex) {
-      commit("changeCustomBackgroundPixel", hex);
+      commit("changeCustomBackgroundPixel", hex.replace("#", ""));
     },
     setBackground({ commit }, hex) {
-      commit("changeBackground", hex);
+      commit("changeBackground", hex.replace("#", ""));
     },
     setWallet({ commit }, address) {
       commit("changeWallet", address);
-    },
-    startSOLConnection({ commit }, connection) {
-      commit("setSOLConnection", connection);
     },
     setCatList({ commit }, list) {
       commit("createCatList", list);

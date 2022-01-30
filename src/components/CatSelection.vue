@@ -1,7 +1,11 @@
 <template>
-  <div>
+  <div class="text-center">
     <!--<div class="text-center text-2xl mt-6">$PAW Balance: 100</div>-->
-    <div class="text-xl mt-3 text-center">
+    <div class="mt-5" v-if="exec_wallet">
+      hello <span class="text-green-400">Executive</span>
+      {{ exec_wallet.username }}. please
+    </div>
+    <div class="text-xl mt-3">
       {{
           my_cats.length &lt; 1
             ? "loading..."
@@ -13,67 +17,68 @@
         'grid',
         'w-1/2',
         'mx-auto',
-        ' grid-cols-' + Math.min(my_cats.length, 5),
+        'grid-cols-' + Math.min(my_cats.length, 6),
       ]"
     >
       <copy-cat-image
         v-for="cc in my_cats"
         :key="cc.mint"
-        class="mt-5 mx-auto"
-        :style="{ width: '96px' }"
+        class="mt-5 mx-auto border-2 border-white"
         @click="selectCat(cc)"
         :img="cc.image"
-        h="4px"
-        w="4px"
+        :scale="4"
       />
     </div>
   </div>
 </template>
 <script lang="ts">
-//import web3 from "@solana/web3.js";
+import exec_wallets from "@/assets/executive_wallets.json";
 import imagemap from "@/assets/img_map.json";
 import CopyCatImage from "./CopyCatImage.vue";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { mapGetters, mapActions } from "vuex";
 import { Options, Vue } from "vue-class-component";
-
+import { useStore } from "vuex";
+import mapper from "@/assets/asset_pixels/mapper.json";
 @Options({
   computed: {
+    exec_wallet() {
+      const store = useStore();
+      return exec_wallets.filter((item) => {
+        return item.wallet_addr == store.getters.getWallet;
+      })[0];
+    },
     ...mapGetters({
-      wallet: "getWallet",
-      connection: "getSOLConnection",
       my_cats: "getCatList",
     }),
   },
   components: {
     CopyCatImage,
   },
+  data() {
+    return {};
+  },
   methods: {
-    ...mapActions(["setCatList", "selectCat"]),
+    ...mapActions(["setCatList", "selectCat", "setEthWallet"]),
   },
   async mounted() {
-    if (this.wallet == "guest") {
+    const store = useStore();
+    if (store.getters.getWallet == "guest") {
       let arr = [];
 
       arr.push({
         mint: "guest",
         image: "wEQtZCoiUQwP8KPodTCCd7oeFSnSLVfWZ6c4TW2v0T4",
-        attributes: [], //val.data.attributes,
+        attributes: mapper.filter((item) => {
+          return item.id == 2433;
+        })[0],
         name: "CopyCats #2433",
       });
-      this.setCatList(arr);
-    } else {
+      store.dispatch("setCatList", arr);
+    } else if (!store.getters.getCatList.length) {
       const nfts = await getParsedNftAccountsByOwner({
-        publicAddress: this.wallet,
-        connection: this.connection,
+        publicAddress: store.getters.getWallet,
       });
-
-      /*console.log(
-        this.connection.getTokenLargestAccounts(
-          "3WV4fTWGvtWNvQb8oVU4t99By8KztDLtExqHnkPfHAA9"
-        )
-      );*/
-
       let copycat_nfts = nfts.filter(
         (cat) =>
           cat.updateAuthority === "9mmdJRBi9zU5t4n633TzMEGyXnRjNEEyogV98uCNH7GD" //address of the copycats project
@@ -91,11 +96,15 @@ import { Options, Vue } from "vue-class-component";
                   obj.id.toString() == copycat_nfts[i].data.name.split("#")[1]
               )[0]
               .img.toString(),
-            attributes: [], //val.data.attributes,
+            attributes: mapper.filter((item) => {
+              return (
+                item.id == parseInt(copycat_nfts[i].data.name.split("#")[1])
+              );
+            })[0],
             name: copycat_nfts[i].data.name,
           });
         }
-        this.setCatList(arr);
+        store.dispatch("setCatList", arr);
       }
     }
   },

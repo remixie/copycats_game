@@ -3,33 +3,35 @@
     <headings :title="msg" :subtitle="subheading" />
     <div v-if="!instructionsState">
       <div v-if="!playing">
-        <connect-button />
+        <connect-buttons />
         <cat-selection v-if="wallet && chosen.length == 0" />
         <chosen-cat v-if="chosen.length != 0" />
       </div>
       <play v-if="playing" />
     </div>
     <instructions v-if="!playing && !wallet" />
+    <div
+      v-if="!playing && !wallet"
+      class="mx-auto text-center text-xs readable mt-10"
+    >
+      <span class="font-bold text-green-400">Note:</span> Sketchette will NOT
+      ask you to sign anything at this time.<br />
+      It will ONLY ask you to connect your wallet. This allow us to get your
+      wallet address.<br />
+      If you need clarification, contact Rem#0001 on Discord.
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import ChosenCat from "./ChosenCat.vue";
 import Headings from "./Headings.vue";
-import ConnectButton from "./ConnectButton.vue";
+import ConnectButtons from "./ConnectButtons.vue";
 import Instructions from "./Instructions.vue";
-import CatSelection from "./CatSelection.vue";
-import Play from "./Play.vue";
 import { Options, Vue } from "vue-class-component";
-import { Connection } from "@solana/web3.js";
 import { mapActions, mapGetters } from "vuex";
-import { nextTick } from "@vue/runtime-core";
-
+import { defineAsyncComponent } from "vue";
 @Options({
-  setup() {
-    let connection = new Connection("http://api.metaplex.solana.com");
-    return { connection };
-  },
   computed: {
     ...mapGetters({
       wallet: "getWallet",
@@ -38,10 +40,6 @@ import { nextTick } from "@vue/runtime-core";
       instructionsState: "instructionsState",
     }),
   },
-  async mounted() {
-    await nextTick();
-    this.startSOLConnection(this.connection);
-  },
   props: {
     msg: String,
     subheading: String,
@@ -49,17 +47,24 @@ import { nextTick } from "@vue/runtime-core";
   components: {
     Headings,
     Instructions,
-    ConnectButton,
+    ConnectButtons,
     ChosenCat,
-    CatSelection,
-    Play,
+    CatSelection: defineAsyncComponent({
+      loader: () => import("./CatSelection.vue"),
+    }),
+    Play: defineAsyncComponent({
+      loader: () => import("./Play.vue"),
+      loadingComponent: Headings,
+    }),
   },
   methods: {
     ...mapActions(["startSOLConnection"]),
   },
 })
-export default class Base extends Vue {
-  msg!: string;
-  subheading!: string;
-}
+export default class Base extends Vue {}
 </script>
+<style scoped>
+.readable {
+  font-family: arial;
+}
+</style>
