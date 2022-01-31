@@ -6,7 +6,7 @@
         toggleFilter();
         isFilterOn
           ? currentFilter == 'CUSTOM'
-            ? setBackground(bgcolor.replace('#', ''))
+            ? setBackground(background)
             : setBackground(
                 filters.filter((item) => {
                   return item.name == currentFilter;
@@ -41,7 +41,7 @@
             menu = !menu;
             setBackground(
               currentFilter == 'CUSTOM'
-                ? bgcolor.replace('#', '')
+                ? background
                 : f.background
             );
           "
@@ -56,7 +56,7 @@
           fallback-input-type="color"
           popover-x="left"
           class="border-solid border-2 border-white mt-5"
-          :style="'backgroundColor: #' + foreground"
+          :style="'backgroundColor: ' + foreground"
         ></v-swatches>
         <v-swatches
           v-model="background"
@@ -64,7 +64,7 @@
           fallback-input-type="color"
           popover-x="left"
           class="border-solid border-2 border-white mt-5"
-          :style="'backgroundColor: #' + background"
+          :style="'backgroundColor: ' + background"
         ></v-swatches>
       </div>
     </div>

@@ -55,7 +55,7 @@
   </div>
 </template>
 <script lang="ts">
-import { mapActions, mapGetters, useStore } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import { Options, Vue } from "vue-class-component";
 import filters from "@/assets/filters.json";
 import background_data from "@/assets/asset_pixels/backgrounds_pixels.json";
@@ -71,8 +71,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     this.rerun();
   },
   watch: {
-    current_cat(newcat, oldcat) {
-      //console.log(newcat + " and " + oldcat);
+    current_cat() {
       this.rerun();
     },
   },
@@ -80,17 +79,14 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     current_cat() {
       return this.$store.getters.getChosenCat.attributes;
     },
-    ...mapGetters([
-      "isFilterOn",
-      "whatThreshold",
-      "currentFilter",
-    ]),
+    ...mapGetters(["isFilterOn", "whatThreshold", "currentFilter"]),
     currentFilterData() {
       if (this.$store.getters.currentFilter == "CUSTOM") {
         return [
           { hex: [255, 255, 255], max: "threshold" },
           {
             hex: this.$store.getters.getCustomBackgroundPixel
+              .replace("#", "")
               .match(/.{1,2}/g)
               .map((n: string) => parseInt(n, 16)),
             max: "else",
@@ -116,8 +112,8 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         clothes_data,
         mouth_data,
         mask_data,
-        head_data,
         eyes_data,
+        head_data,
       };
 
       let asset_info = [];
@@ -194,7 +190,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
     bgColor(d: number, i: number, dimensions: number) {
       if (this.isFilterOn) {
         return (
-          "rgb(" +
+          "rgba(" +
           this.applyBWFilter(
             this.exactPixel(this.getMyIndex(d, i, dimensions))
           ) +
@@ -202,7 +198,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         );
       } else {
         return (
-          "rgb(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")"
+          "rgba(" + this.exactPixel(this.getMyIndex(d, i, dimensions)) + ")"
         );
       }
     },
@@ -214,8 +210,9 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       setCurrentTrait: "setCurrentTrait",
     }),
     applyBWFilter(color: string) {
-      let c = color.split(",").map((n) => parseInt(n, 10));
+      let c = color.split(",").map((n) => parseFloat(n));
       let o = c[3];
+      //console.log(o)
       c = [c[0], c[1], c[2]];
       let sum = c.reduce((a, b) => a + b);
       if (sum > this.whatThreshold) {
@@ -280,8 +277,11 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       return arr;
     },
     exactPixel(index: number) {
+      //console.log(s[0] + "," + s[1] + ","+ s[2] + "," + o);
       if (this.pixel_data[index] != null) {
-        return this.pixel_data[index].toString();
+        let s = this.pixel_data[index].toString().split(/,/);
+        let o = parseInt(s[3]) / 255;
+        return s[0] + "," + s[1] + "," + s[2] + "," + o;
       } else {
         return "0,0,0,255";
       }

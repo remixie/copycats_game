@@ -13,7 +13,7 @@
     "
   >
     <canvas
-      :id="traitName.replace(' ','_')"
+      :id="traitName.replace(' ', '_')"
       :width="24 * scale"
       :height="24 * scale"
       class="mx-auto cursor-pointer"
@@ -31,7 +31,6 @@ import eyes_data from "@/assets/asset_pixels/eyes_pixels.json";
 import masks_data from "@/assets/asset_pixels/masks_pixels.json";
 import type_data from "@/assets/asset_pixels/type_pixels.json";
 import { Options, Vue } from "vue-class-component";
-import filters from "@/assets/filters.json";
 import paper from "paper";
 @Options({
   name: "AssetImage",
@@ -40,28 +39,8 @@ import paper from "paper";
   },
   computed: {
     ...mapGetters([
-      "isFilterOn",
-      "whatThreshold",
-      "currentFilter",
       "getChosenCat",
     ]),
-    currentFilterData() {
-      if (this.$store.getters.currentFilter == "CUSTOM") {
-        return [
-          { hex: [255, 255, 255], max: "threshold" },
-          {
-            hex: this.$store.getters.getCustomBackgroundPixel
-              .match(/.{1,2}/g)
-              .map((n: string) => parseInt(n, 16)),
-            max: "else",
-          },
-        ];
-      } else {
-        return filters.filter((item) => {
-          return item.name == this.$store.getters.currentFilter;
-        })[0].colors;
-      }
-    },
   },
   props: {
     trait: String,
@@ -111,10 +90,7 @@ import paper from "paper";
           // code block
         }
 
-        let specific_pixels = this.getTraitPixels(
-          576,
-          json_file
-        );
+        let specific_pixels = this.getTraitPixels(576, json_file);
 
         for (var i = 0; i < 576; i++) {
           if (specific_pixels[i][3] != 0) {
@@ -131,7 +107,7 @@ import paper from "paper";
         //console.log(this.cat_id+'_'+this.trait)
 
         this.scope = new paper.PaperScope();
-        this.scope.setup(this.traitName.replace(' ','_'));
+        this.scope.setup(this.traitName.replace(" ", "_"));
         let raster = new paper.Raster({
           size: new paper.Size(24, 24),
           smoothing: false,
@@ -144,10 +120,7 @@ import paper from "paper";
         this.scope.view.draw();
       }
     },
-    getTraitPixels(
-      length: number,
-      json_file: any,
-    ) {
+    getTraitPixels(length: number, json_file: any) {
       return this.traitName == "None"
         ? Array.from(Array(length), () => Array(4).fill(0))
         : json_file.filter((item: any) => {

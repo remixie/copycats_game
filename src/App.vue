@@ -2,7 +2,7 @@
   <Base
     msg="sketchette"
     class="base"
-    :style="'backgroundColor: #' + getBackground"
+    :style="'backgroundColor: ' + getBackground"
     subheading="https://sketchette.com"
   />
 </template>
