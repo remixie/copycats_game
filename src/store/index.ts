@@ -28,10 +28,10 @@ export const store = createStore({
       return state.default_background;
     },
     getCustomBackgroundPixel(state) {
-      return state.custom_background_pixel;
+      return "#"+state.custom_background_pixel;
     },
     getBackground(state) {
-      return state.background;
+      return "#"+state.background;
     },
     getWallet(state) {
       return state.wallet;

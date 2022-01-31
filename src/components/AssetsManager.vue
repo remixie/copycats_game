@@ -1,16 +1,21 @@
 <template>
   <div>
     <div>My Assets:</div>
-    <input class="text-black p-2 mt-2 text-sm readable font-bold" @input="acceptInput($event.target.value)" placeholder="Search by asset name" />
-    <div class="mt-2"><asset-image
-      class="mx-auto border-white border-2 cursor-pointer inline-block"
-      v-for="a in asset_list"
-      :key="a.trait_name"
-      :scale="2"
-      :trait="a.trait"
-      :trait-name="a.trait_name"
-    /></div>
-    
+    <input
+      class="text-black p-2 mt-2 text-sm readable font-bold"
+      @input="acceptInput($event.target.value)"
+      placeholder="Search by asset name"
+    />
+    <div class="mt-2">
+      <asset-image
+        class="mx-auto border-white border-2 cursor-pointer inline-block"
+        v-for="a in asset_list"
+        :key="a.trait_name"
+        :scale="2"
+        :trait="a.trait"
+        :trait-name="a.trait_name"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -49,7 +54,9 @@ import AssetImage from "./AssetImage.vue";
         for (var t = 0; t < this.traits.length; t++) {
           if (
             this.$store.getters.getKeyword.length === 0 ||
-            x[this.traits[t]].toLowerCase().includes(this.$store.getters.getKeyword.toLowerCase())
+            x[this.traits[t]]
+              .toLowerCase()
+              .includes(this.$store.getters.getKeyword.toLowerCase())
           ) {
             tarr.push({ trait: this.traits[t], trait_name: x[this.traits[t]] });
           }

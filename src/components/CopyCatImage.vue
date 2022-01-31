@@ -8,10 +8,8 @@
 </template>
 <script lang="ts">
 import paper from "paper";
-import { mapGetters } from "vuex";
 import img_data from "@/assets/copycat_images.json";
 import { Options, Vue } from "vue-class-component";
-import filters from "@/assets/filters.json";
 @Options({
   name: "CopyCatImage",
   async mounted() {
@@ -33,26 +31,6 @@ import filters from "@/assets/filters.json";
     raster.scale(this.scale);
     raster.setImageData(arr, new paper.Point(0, 0));
     this.scope.view.draw();
-  },
-  computed: {
-    ...mapGetters(["isFilterOn", "whatThreshold", "currentFilter"]),
-    currentFilterData() {
-      if (this.$store.getters.currentFilter == "CUSTOM") {
-        return [
-          { hex: [255, 255, 255], max: "threshold" },
-          {
-            hex: this.$store.getters.getCustomBackgroundPixel
-              .match(/.{1,2}/g)
-              .map((n: string) => parseInt(n, 16)),
-            max: "else",
-          },
-        ];
-      } else {
-        return filters.filter((item) => {
-          return item.name == this.$store.getters.currentFilter;
-        })[0].colors;
-      }
-    },
   },
   props: {
     img: String,
