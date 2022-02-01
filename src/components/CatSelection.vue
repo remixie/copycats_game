@@ -1,11 +1,11 @@
 <template>
   <div class="text-center">
     <!--<div class="text-center text-2xl mt-6">$PAW Balance: 100</div>-->
-    <div class="mt-5" v-if="exec_wallet">
+    <div class="mt-4 md:mt-5" v-if="exec_wallet">
       hello <span class="text-green-400">Executive</span>
       {{ exec_wallet.username }}. please
     </div>
-    <div class="text-xl mt-3">
+    <div class="text-xl mt-5 md:mt-3">
       {{
           my_cats.length &lt; 1
             ? "loading..."
@@ -14,16 +14,18 @@
     </div>
     <div
       :class="[
+        'mt-3',
         'grid',
         'w-1/2',
         'mx-auto',
-        'grid-cols-' + Math.min(my_cats.length, 6),
+        'grid-cols-2',
+        'md:grid-cols-' + Math.min(my_cats.length, 6),
       ]"
     >
       <copy-cat-image
         v-for="cc in my_cats"
         :key="cc.mint"
-        class="mt-5 mx-auto border-2 border-white"
+        class="mt-1 md:mt-5 mx-auto border-2 border-white"
         @click="selectCat(cc)"
         :img="cc.image"
         :scale="4"

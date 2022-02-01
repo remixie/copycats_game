@@ -1,11 +1,11 @@
 <template>
   <div class="text-l text-center">
-    <div class="text-xs bg-purple-400 text-purple-900 p-1">
+    <div class="text-xs bg-purple-400 text-purple-900 p-2">
       verify that this site's URL reads as {{ subtitle }}. If unsure, consult
       Rem#0001 on discord.
     </div>
     <img src="/logo.png" class="mx-auto w-1/6 mt-10" />
-    <div class="text-5xl mt-2 text-center bg-slate-300 subtitle">
+    <div class="text-2xl md:text-5xl mt-2 text-center bg-slate-300 subtitle">
       {{ title }}
     </div>
   </div>

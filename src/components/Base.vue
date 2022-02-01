@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-20">
     <headings :title="msg" :subtitle="subheading" />
     <div v-if="!instructionsState">
       <div v-if="!playing">
@@ -17,8 +17,7 @@
       <span class="font-bold text-green-400">Note:</span> Sketchette will NOT
       ask you to sign anything at this time.<br />
       It will ONLY ask you to connect your wallet. This allow us to get your
-      wallet address.<br />
-      If you need clarification, contact Rem#0001 on Discord.
+      wallet address. If you need clarification, contact Rem#0001 on Discord.
     </div>
   </div>
 </template>

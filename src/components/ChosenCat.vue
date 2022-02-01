@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-2xl text-center mt-10">
+    <div class="text-sm md:text-2xl text-center mt-10">
       you selected {{ getID }}.<br />click it again to confirm.
     </div>
     <copy-cat-image
@@ -10,7 +10,19 @@
       :scale="10"
     />
     <div
-      class="rounded-full text-center text-sm bg-green-400 text-black hover:bg-green-800 hover:text-white cursor-pointer mt-10 mx-auto p-2 w-1/4"
+      class="
+        rounded-full
+        text-center text-sm
+        bg-green-400
+        text-black
+        hover:bg-green-800 hover:text-white
+        cursor-pointer
+        mt-10
+        mx-auto
+        p-2
+        w-1/2
+        md:w-1/4
+      "
       @click="changeCat('')"
     >
       Choose a different Cat

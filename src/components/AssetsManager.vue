@@ -1,17 +1,20 @@
 <template>
-  <div>
-    <div>My Assets:</div>
-    <input
-      class="text-black p-2 mt-2 text-sm readable font-bold"
-      @input="acceptInput($event.target.value)"
-      placeholder="Search by asset name"
-    />
-    <div class="mt-2">
+  <div class="mt-5 md:mt-0">
+    <div class="text-center md:text-left text-lg md:text-md">My Assets:</div>
+    <div class="mx-auto text-center md:text-left">
+      <input
+        class="text-black p-2 mt-2 txt-md md:text-sm readable font-bold w-2/3"
+        @input="acceptInput($event.target.value)"
+        placeholder="Search by asset name"
+      />
+    </div>
+
+    <div class="mt-2 text-center md:text-left">
       <asset-image
         class="mx-auto border-white border-2 cursor-pointer inline-block"
         v-for="a in asset_list"
         :key="a.trait_name"
-        :scale="2"
+        :scale="2.5"
         :trait="a.trait"
         :trait-name="a.trait_name"
       />

@@ -38,11 +38,20 @@ body {
   -ms-user-select: none; /* Internet Explorer or Edge */
   user-select: none; /* All modern browsers */
 }
+
+html,
+body {
+  overflow-x: hidden;
+}
+body {
+  position: relative;
+}
+
 html,
 body,
 #app,
 .base {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  min-height: 100vh;
 }
 </style>
