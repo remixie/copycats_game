@@ -18,7 +18,7 @@
         'grid',
         'w-1/2',
         'mx-auto',
-        'grid-cols-2',
+        'grid-cols-' + Math.min(my_cats.length, 2),
         'md:grid-cols-' + Math.min(my_cats.length, 6),
       ]"
     >
