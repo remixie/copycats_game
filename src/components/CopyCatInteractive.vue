@@ -65,6 +65,7 @@ import mouth_data from "@/assets/asset_pixels/mouths_pixels.json";
 import eyes_data from "@/assets/asset_pixels/eyes_pixels.json";
 import mask_data from "@/assets/asset_pixels/masks_pixels.json";
 import type_data from "@/assets/asset_pixels/type_pixels.json";
+import head5_data from "@/assets/asset_pixels/head5_heads_pixels.json"
 @Options({
   name: "CopyCatInteractive",
   created() {
@@ -113,6 +114,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         mouth_data,
         mask_data,
         eyes_data,
+        head5_data,
         head_data,
       };
 
@@ -152,6 +154,9 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
       let json_file;
 
       switch (trait) {
+        case "head5":
+          json_file = head5_data;
+          break;
         case "head":
           json_file = head_data;
           break;
@@ -332,6 +337,7 @@ import type_data from "@/assets/asset_pixels/type_pixels.json";
         head: true,
         eyes: true,
         background: true,
+        head5: true
       },
       hover: [],
       mapped_data: [],

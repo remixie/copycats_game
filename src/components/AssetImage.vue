@@ -22,7 +22,6 @@
 </template>
 <script lang="ts">
 import { mapGetters, mapActions } from "vuex";
-import mapper from "@/assets/asset_pixels/mapper.json";
 import backgrounds_data from "@/assets/asset_pixels/backgrounds_pixels.json";
 import clothes_data from "@/assets/asset_pixels/clothes_pixels.json";
 import heads_data from "@/assets/asset_pixels/heads_pixels.json";
@@ -30,6 +29,7 @@ import mouths_data from "@/assets/asset_pixels/mouths_pixels.json";
 import eyes_data from "@/assets/asset_pixels/eyes_pixels.json";
 import masks_data from "@/assets/asset_pixels/masks_pixels.json";
 import type_data from "@/assets/asset_pixels/type_pixels.json";
+import head5_data from "@/assets/asset_pixels/head5_heads_pixels.json"
 import { Options, Vue } from "vue-class-component";
 import paper from "paper";
 @Options({
@@ -58,13 +58,13 @@ import paper from "paper";
     },
     rerun() {
       if (this.assetExists()) {
-        /*this.mapped_data = mapper.filter((item) => {
-          return item.id == this.cat_id;
-        })[0];*/
 
         let json_file;
 
         switch (this.trait) {
+          case "head5":
+            json_file = head5_data;
+            break;
           case "head":
             json_file = heads_data;
             break;
@@ -121,6 +121,7 @@ import paper from "paper";
       }
     },
     getTraitPixels(length: number, json_file: any) {
+
       return this.traitName == "None"
         ? Array.from(Array(length), () => Array(4).fill(0))
         : json_file.filter((item: any) => {

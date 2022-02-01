@@ -1,3 +1,4 @@
+import State from "vue-slider-component/typings/utils/state";
 import { createStore } from "vuex";
 
 export const store = createStore({
@@ -11,6 +12,7 @@ export const store = createStore({
     current_cat: [],
     keyword: "",
     playing: false,
+    head5_toggle: false,
     current_score: 0,
     showInstructions: false,
     filter: false,
@@ -18,6 +20,9 @@ export const store = createStore({
     filterThreshold: 346, //this was chosen since it seems to work well for lots of cats as the default
   },
   getters: {
+    isHead5On(state) {
+      return state.head5_toggle;
+    },
     getEthWallet(state) {
       return state.eth_wallet;
     },
@@ -28,10 +33,10 @@ export const store = createStore({
       return state.default_background;
     },
     getCustomBackgroundPixel(state) {
-      return "#"+state.custom_background_pixel;
+      return "#" + state.custom_background_pixel;
     },
     getBackground(state) {
-      return "#"+state.background;
+      return "#" + state.background;
     },
     getWallet(state) {
       return state.wallet;
@@ -65,6 +70,9 @@ export const store = createStore({
     },
   },
   mutations: {
+    toggleHead5(state) {
+      state.head5_toggle = !state.head5_toggle
+    },
     changeKeyword(state, word) {
       state.keyword = word;
     },
@@ -111,6 +119,9 @@ export const store = createStore({
     },
   },
   actions: {
+    setHead5Toggle({ commit }) {
+      commit("toggleHead5");
+    },
     setKeyword({ commit }, word) {
       commit("changeKeyword", word);
     },

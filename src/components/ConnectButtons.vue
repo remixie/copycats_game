@@ -19,7 +19,7 @@
     >
       connect your SOL wallet
     </div>
-    <!--<eth-connect-button />-->
+    <eth-connect-button />
     <div
       class="
         text-xs text-center

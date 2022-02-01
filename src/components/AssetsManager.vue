@@ -18,6 +18,13 @@
         :trait="a.trait"
         :trait-name="a.trait_name"
       />
+      <asset-image
+        v-if="getEthWallet"
+        class="mx-auto border-white border-2 cursor-pointer inline-block"
+        :scale="2.5"
+        trait="head5"
+        trait-name="2360"
+      />
     </div>
   </div>
 </template>
@@ -88,6 +95,7 @@ import AssetImage from "./AssetImage.vue";
   computed: {
     ...mapGetters({
       my_cats: "getCatList",
+      getEthWallet: "getEthWallet"
     }),
   },
 
