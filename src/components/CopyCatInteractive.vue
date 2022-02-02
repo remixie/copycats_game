@@ -111,10 +111,10 @@ import head5_data from "@/assets/asset_pixels/head5_heads_pixels.json"
         background_data,
         type_data,
         clothes_data,
+        head5_data,
         mouth_data,
         mask_data,
         eyes_data,
-        head5_data,
         head_data,
       };
 
