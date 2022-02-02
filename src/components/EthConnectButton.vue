@@ -11,9 +11,9 @@
   >
     {{
       getEthWallet == "error"
-        ? "Disconnect this wallet, refresh this page and connect to a wallet that has at least one head5."
+        ? "disconnect this wallet, refresh this page and connect to a wallet that has at least one head5."
         : getEthWallet != ""
-        ? "Successfully connected to head5.io"
+        ? "successfully connected to head5.io"
         : "connect to head5.io"
     }}
   </div>

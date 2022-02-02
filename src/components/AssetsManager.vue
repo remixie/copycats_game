@@ -23,6 +23,13 @@
         class="mx-auto border-white border-2 cursor-pointer inline-block"
         :scale="2.5"
         trait="head5"
+        trait-name="1217"
+      />
+      <asset-image
+        v-if="getEthWallet"
+        class="mx-auto border-white border-2 cursor-pointer inline-block"
+        :scale="2.5"
+        trait="head5"
         trait-name="2360"
       />
     </div>

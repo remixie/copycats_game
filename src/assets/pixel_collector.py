@@ -4,7 +4,7 @@ from PIL import Image
 import json
 import os
 
-f = open("./asset_pixels/head5_heads_pixels.json", "a", encoding='utf8')
+f = open("./asset_pixels/head5_heads_pixels_2.json", "a", encoding='utf8')
 f.write('[')
 
 for p in os.listdir('./head5/'):

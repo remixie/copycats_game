@@ -15,7 +15,7 @@
           : setBackground(getDefaultBackground);
       "
     >
-      {{ isFilterOn ? "Remove" : "Activate" }} Filter
+      {{ isFilterOn ? "remove" : "activate" }} filter
     </div>
     <div v-if="isFilterOn">
       <vue-slider
@@ -29,7 +29,7 @@
         class="mt-2 text-center mx-auto bg-white hover:bg-black hover:text-white text-black w-2/3 rounded-full cursor-pointer"
         @click="menu = !menu"
       >
-        Filter: {{ currentFilter }} &#9660;
+        filter: {{ currentFilter }} &#9660;
       </div>
       <div v-if="menu">
         <div

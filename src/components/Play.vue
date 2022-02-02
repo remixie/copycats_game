@@ -25,7 +25,7 @@
           "
           @click="resetGame()"
         >
-          Choose a different Cat
+          choose a different cat
         </div>
         <filters />
       </div>

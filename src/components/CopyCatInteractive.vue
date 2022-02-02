@@ -6,7 +6,7 @@
           v-if="!Number.isFinite(m) && i != 'background' && i != 'type'"
           class="m-2"
         >
-          {{ i.charAt(0).toUpperCase() + i.slice(1) + ": " }}
+          {{ i.charAt(0) + i.slice(1) + ": " }}
           <span
             v-if="
               m != 'None' &&

@@ -57,7 +57,7 @@ export const store = createStore({
       return state.showInstructions;
     },
     areTheyWorthy(state) {
-      return state.cat_list.length >= 5;
+      return state.cat_list.length >= 5 || (state.eth_wallet != '' && state.eth_wallet !='error');
     },
     isFilterOn(state) {
       return state.filter;

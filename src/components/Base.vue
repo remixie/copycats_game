@@ -12,7 +12,7 @@
     <instructions v-if="!playing && !wallet" />
     <div
       v-if="!playing && !wallet"
-      class="mx-auto text-center text-xs readable mt-10"
+      class="mx-auto text-center text-xs readable mt-10 w-5/6 md:w-1/4"
     >
       <span class="font-bold text-green-400">Note:</span> Sketchette will NOT
       ask you to sign anything at this time.<br />

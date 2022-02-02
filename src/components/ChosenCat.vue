@@ -25,7 +25,7 @@
       "
       @click="changeCat('')"
     >
-      Choose a different Cat
+      choose a different cat
     </div>
     <!--<br />
     <br />
