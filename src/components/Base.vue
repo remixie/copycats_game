@@ -53,6 +53,7 @@ import { defineAsyncComponent } from "vue";
     msg: String,
     subheading: String,
   },
+
   components: {
     Headings,
     Instructions,
