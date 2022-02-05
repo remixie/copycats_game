@@ -4,6 +4,15 @@
     <div v-if="!instructionsState">
       <div v-if="!playing">
         <connect-buttons />
+        <a
+          v-if="!wallet"
+          href="https://windy-dracorex-29f.notion.site/CopyCats-White-Paper-WIP-72e4589db15248ca97d0fcaa88252287"
+          ><div
+            class="text-xs text-center bg-yellow-100 text-yellow-900 hover:bg-yellow-900 p-1 w-1/2 md:w-1/6 rounded-full mx-auto hover:text-white cursor-pointer mt-5 close-btn"
+          >
+            white paper
+          </div></a
+        >
         <cat-selection v-if="wallet && chosen.length == 0" />
         <chosen-cat v-if="chosen.length != 0" />
       </div>

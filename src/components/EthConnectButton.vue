@@ -5,7 +5,7 @@
         'bg-purple-400 hover:bg-purple-800 cursor-pointer hover:text-white text-black':
           noEthWallet,
       },
-      'text-xs text-center p-1 w-1/2 md:w-1/4 rounded-full mx-auto   mt-5',
+      'text-xs text-center p-1 w-1/2 md:w-1/4 rounded-full mx-auto  mt-5',
     ]"
     @click="ethConnect()"
   >
