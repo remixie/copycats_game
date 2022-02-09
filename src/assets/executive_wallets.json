@@ -1,10 +1,14 @@
 [
-    {
-        "username": "Sud",
-        "wallet_addr": "uFymRh2ZMvAKnPvF1kUgBUz9auEVmkvz95RrYkuaDe1"
-    },
-    {
-        "username": "Rem",
-        "wallet_addr": "ABmybPZTEhhWpCQ2dyX92r9kprhKvDqBcJs1zMyBKT4J"
-    }
+  {
+    "username": "Rem",
+    "wallet_addr": "ABmybPZTEhhWpCQ2dyX92r9kprhKvDqBcJs1zMyBKT4J"
+  },
+  {
+    "username": "Sud",
+    "wallet_addr": "uFymRh2ZMvAKnPvF1kUgBUz9auEVmkvz95RrYkuaDe1"
+  },
+  {
+    "username": "Dleip$",
+    "wallet_addr": "83zo8SVcfpqNnnVJuBrDkMKXTvAcmLJzLmTk9f166sPE"
+  }
 ]
