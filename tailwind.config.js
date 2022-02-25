@@ -498,6 +498,9 @@ module.exports = {
           animationTimingFunction: "cubic-bezier(0,0,0.2,1)",
         },
       },
+      anim:{
+
+      }
     },
     letterSpacing: {
       tighter: "-0.05em",

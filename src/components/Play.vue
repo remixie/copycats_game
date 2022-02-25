@@ -9,7 +9,7 @@
         w="15px"
       />
       <div class="col-span-12 md:col-span-4">
-        <assets-manager v-if="areTheyWorthy" />
+        <assets-manager v-if="atLeastTwo" />
         <div
           class="
             rounded-full
@@ -33,7 +33,6 @@
   </div>
 </template>
 <script lang="ts">
-import mapper from "@/assets/asset_pixels/mapper.json";
 import { Options, Vue } from "vue-class-component";
 import CopyCatInteractive from "./CopyCatInteractive.vue";
 import { mapGetters, mapActions } from "vuex";
@@ -54,12 +53,13 @@ import AssetsManager from "./AssetsManager.vue";
       score: "currentScore",
       getDefaultBackground: "getDefaultBackground",
       isFilterOn: "isFilterOn",
-      areTheyWorthy: "areTheyWorthy",
+      atLeastTwo: "atLeastTwo",
     }),
   },
   methods: {
     resetGame() {
       this.setPlayStatus(false);
+      this.setKeyword("");
       this.changeCat("");
       this.resetScore();
       if (this.isFilterOn) {
@@ -68,6 +68,7 @@ import AssetsManager from "./AssetsManager.vue";
       }
     },
     ...mapActions({
+      setKeyword:"setKeyword",
       setPlayStatus: "setPlayStatus",
       changeCat: "selectCat",
       resetScore: "resetScore",
